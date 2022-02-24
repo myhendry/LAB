@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
 import { NavBar, ThemeChanger } from "../components/common";
 
@@ -18,6 +19,9 @@ const Home: NextPage<IProps> = () => {
       <div className="flex flex-col items-center">
         <ThemeChanger />
       </div>
+      <Link href={"/second"}>
+        <a>Second</a>
+      </Link>
     </>
   );
 };
