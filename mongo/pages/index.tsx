@@ -1,40 +1,37 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { NextSeo } from "next-seo";
+import { NextPage } from "next";
 import Link from "next/link";
 
-import { NavBar, ThemeChanger } from "../components/common";
-import clientPromise from "../lib/mongodb";
-
-// https://daisyui.com/components/hero
-// https://github.com/garmeeh/next-seo
+import { Layout } from "../components/common";
 
 interface IProps {}
 
 const Home: NextPage<IProps> = () => {
   return (
-    <>
-      {/* <NextSeo
-
-      /> */}
-      <NavBar title="M O N G O " />
-      <div className="flex flex-col items-center">
-        <ThemeChanger />
+    <Layout title="D B">
+      <div className="flex flex-col">
+        <div>
+          <h1 className="font-bold">
+            Static Rendering with Dynamic Parameters
+          </h1>
+          <Link href="/posts">
+            <a className="ml-5 cursor-pointer">Posts</a>
+          </Link>
+        </div>
+        <div>
+          <h1 className="font-bold">Static Rendering</h1>
+          <Link href="/cars">
+            <a className="ml-5 cursor-pointer">Cars</a>
+          </Link>
+        </div>
+        <div>
+          <h1 className="font-bold">Server Side Rendering</h1>
+          <Link href="/toys">
+            <a className="ml-5 cursor-pointer">Toys</a>
+          </Link>
+        </div>
       </div>
-      <Link href={"/second"}>
-        <a>Second</a>
-      </Link>
-    </>
+    </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const client = await clientPromise;
-  const db = await client.db();
-  const data = await db.collection("samples").find({}).toArray();
-  console.log("data", data);
-  return {
-    props: {},
-  };
 };
 
 export default Home;
