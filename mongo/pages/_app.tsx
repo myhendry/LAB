@@ -2,10 +2,10 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { DefaultSeo } from "next-seo";
-import { SWRConfig } from "swr";
-import axios from "axios";
 
 import { DefaultSeoValues } from "../next-seo.config";
+import { SWRConfig } from "swr";
+import axios from "axios";
 
 // export function reportWebVitals(metric: any) {
 //   console.log("Metric", metric);
