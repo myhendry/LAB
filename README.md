@@ -1,15 +1,32 @@
-T29
+T67
 
-git push --set-upstream origin <branch>
+### TODOS
+
+- [ ] Nextjs with Mongoose
+- [ ] Nextjs with Firebase
+- [ ] Github Actions
+- [ ] Next-Auth Roles
+- [ ] Admin
+- [x] Solidity Deployment to Rinkeby
+- [x] CRUD Comments
+- [x] Cascade Delete Project & Comments
+- [x] Tags
+- [x] Change Git Remote
+- [x] Formik Custom Field
+- [x] GetStaticProps & GetStaticPath
+- [x] Nextjs-Redux
+- [x] Redux Typings
+- [ ] Mongoose Models Race Condition
+- [ ] Mongoose - Find in Array
+- [ ] Formik Form CRUD Comments
+- [ ] Like Project
+- [ ] Like Comment
 
 [How to build stunning 3D scenes with React Three Fiber](https://varun.ca/modular-webgl/) \
 
-// Solidity & Ethereum in React (Next JS): The Complete Guide
-// NEXT: L184
-
 [LAB TODOS](#todos)
 
-GITHUB REFERENCE CODES](#github_reference_codes)
+[GITHUB REFERENCE CODES](#github_reference_codes)
 
 [VIM SHORTCUT](#vim)
 
@@ -44,24 +61,6 @@ GITHUB REFERENCE CODES](#github_reference_codes)
 [TYPESCRIPT](#typescript)
 
 [TROUBLESHOOT](#troubleshoot)
-
-### TODOS
-
-- [ ] Solidity Deployment to Rinkeby
-- [ ] Out of Gas
-- [x] CRUD Comments
-- [x] Cascade Delete Project & Comments
-- [x] Tags
-- [x] Change Git Remote
-- [x] Formik Custom Field
-- [x] GetStaticProps & GetStaticPath
-- [x] Nextjs-Redux
-- [x] Redux Typings
-- [ ] Mongoose Models Race Condition
-- [ ] Mongoose - Find in Array
-- [ ] Formik Form CRUD Comments
-- [ ] Like Project
-- [ ] Like Comment
 
 ### VIM
 
@@ -1102,6 +1101,8 @@ git remote set-url origin  // Update git remote
 
 git remote add <id> <url.git>
 git push <id>
+
+git push --set-upstream origin <branch>
 
 # COLLABORATION
 
