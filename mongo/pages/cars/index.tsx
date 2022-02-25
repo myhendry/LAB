@@ -15,6 +15,7 @@ interface IProps {
 }
 
 const Cars: NextPage<IProps> = ({ users, samples }) => {
+  //! Static Rendering
   return (
     <>
       {/* <NextSeo

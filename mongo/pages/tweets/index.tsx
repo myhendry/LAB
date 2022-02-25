@@ -12,11 +12,12 @@ interface IProps {
 }
 
 const Tweets: NextPage<IProps> = ({ tweets }) => {
+  //!  Server Side Rendering with Dynamic Parameters
   return (
     <Layout>
       <div className="flex flex-col">
         {tweets.map((t) => (
-          <Link key={t._id} href={`tweets/${t._id}`}>
+          <Link key={t._id} href={`/tweets/${t._id}`}>
             <a>{t.name}</a>
           </Link>
         ))}

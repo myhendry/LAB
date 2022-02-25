@@ -27,13 +27,15 @@ const Tweet: NextPage<IProps> = ({ tweet }) => {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const tweetId = context.query.tweetId!;
+  const { params, req, res } = context;
+  //console.log(req, res)
+  const tweetId = params?.tweetId as string;
 
   const client = await clientPromise;
   const db = await client.db();
   const tweet = await db
     .collection("samples")
-    .findOne({ _id: new ObjectID(tweetId as string) });
+    .findOne({ _id: new ObjectID(tweetId) });
 
   return {
     props: {

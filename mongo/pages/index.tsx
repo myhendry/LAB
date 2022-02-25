@@ -37,6 +37,22 @@ const Home: NextPage<IProps> = () => {
             <a className="ml-5 cursor-pointer">Tweets</a>
           </Link>
         </div>
+        <div>
+          <h1 className="font-bold">
+            Client Side Rendering with Dynamic Parameters
+          </h1>
+          <Link href="/messages">
+            <a className="ml-5 cursor-pointer">Messages</a>
+          </Link>
+        </div>
+        <div>
+          <h1 className="font-bold">
+            Pre-rendering with SSR and Client Side Data Fetching and Filtering
+          </h1>
+          <Link href="/events">
+            <a className="ml-5 cursor-pointer">Events</a>
+          </Link>
+        </div>
       </div>
     </Layout>
   );

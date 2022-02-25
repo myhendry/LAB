@@ -15,6 +15,7 @@ interface IProps {
 }
 
 const Toys: NextPage<IProps> = ({ users, samples }) => {
+  //! Server Side Rendering
   return (
     <>
       {/* <NextSeo

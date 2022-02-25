@@ -8,6 +8,7 @@ interface IProps {
 }
 
 const Posts: NextPage<IProps> = ({ users }) => {
+  //! Static Rendering with Dynamic Parameters
   return (
     <Layout>
       <div className="flex flex-col">
