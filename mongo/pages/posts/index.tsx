@@ -28,6 +28,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       users: res.data,
     },
+    //! For Incremental Site Regeneration
+    // revalidate: true
   };
 };
 

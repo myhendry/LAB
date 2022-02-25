@@ -29,6 +29,14 @@ const Home: NextPage<IProps> = () => {
             <a className="ml-5 cursor-pointer">Toys</a>
           </Link>
         </div>
+        <div>
+          <h1 className="font-bold">
+            Server Side Rendering with Dynamic Parameters
+          </h1>
+          <Link href="/tweets">
+            <a className="ml-5 cursor-pointer">Tweets</a>
+          </Link>
+        </div>
       </div>
     </Layout>
   );

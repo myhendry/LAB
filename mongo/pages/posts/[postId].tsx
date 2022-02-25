@@ -6,6 +6,7 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
+import { useRouter } from "next/router";
 
 import { Layout } from "../../components/common";
 
@@ -17,13 +18,53 @@ interface IProps {
 }
 
 const Post: NextPage<IProps> = ({ post }) => {
+  const router = useRouter();
+  /*
+  ! router.isFallback applicable only when 
+  ! using with fallback: true. When fallback: false
+  ! or fallback: 'blocking' then isFallback not applicable
+  */
+  // if (router.isFallback) {
+  //   return <p>Loading</p>;
+  // }
+
   return (
     <Layout>
+      <div onClick={() => router.back()}>{`<< Back`}</div>
       <p>{post.name}</p>
     </Layout>
   );
 };
 
+//! Using fallback TRUE. Also available fallback 'blocking'
+// export const getStaticPaths: GetStaticPaths = async (
+//   context: GetStaticPathsContext
+// ) => {
+//   const paths = [
+//     {
+//       params: {
+//         postId: "1",
+//       },
+//     },
+//     {
+//       params: {
+//         postId: "2",
+//       },
+//     },
+//     {
+//       params: {
+//         postId: "3",
+//       },
+//     },
+//   ];
+
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
+
+//! Using fallback FALSE
 export const getStaticPaths: GetStaticPaths = async (
   context: GetStaticPathsContext
 ) => {
@@ -57,6 +98,8 @@ export const getStaticProps: GetStaticProps = async (
     props: {
       post: res.data,
     },
+    //! For Incremental Site Regeneration
+    // revalidate: true
   };
 };
 
