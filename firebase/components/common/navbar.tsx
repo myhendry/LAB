@@ -1,11 +1,19 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { useAuth } from "../../context/auth-context";
 
 interface IProps {
   title: string;
 }
 
 export const NavBar: NextPage<IProps> = ({ title }) => {
+  const { logOut, user } = useAuth();
+  const router = useRouter();
+
+  console.log(router.pathname, router.query, router.asPath);
+
   return (
     <div className="navbar my-2 mb-2 shadow-lg rounded-box">
       <div className="flex-none">
@@ -33,7 +41,7 @@ export const NavBar: NextPage<IProps> = ({ title }) => {
         </Link>
       </div>
       <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
+        {/* <button className="btn btn-square btn-ghost">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -47,7 +55,13 @@ export const NavBar: NextPage<IProps> = ({ title }) => {
               d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
             ></path>
           </svg>
-        </button>
+        </button> */}
+
+        {router.pathname !== "/" && user && (
+          <button onClick={logOut} className="btn btn-error btn-sm">
+            Log Out
+          </button>
+        )}
       </div>
     </div>
   );
