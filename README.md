@@ -2,7 +2,8 @@ T67
 
 ### TODOS
 
-- [ ] Nextjs with Mongoose
+- [ ] Next-Auth HOC
+- [x] Nextjs with Mongoose
 - [ ] Nextjs with Firebase
 - [ ] Github Actions
 - [ ] Next-Auth Roles
@@ -1448,3 +1449,21 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 # Performance optimizations
 
 For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+
+
+**JSON Web Token (JWT) benefits over a database session token**
+
+The main difference is the session storage size and lookup work required from the server:
+
+On the server side, JWT stores a single key in memory (or in config file) - called secret key. That key has two purposes, it enables creating new encrypted tokens and it also functions like a master key that "opens all locks", in practice it verifies all tokens. As a result the server responds much faster to auth requests, because it doesn't matter if you have two or two million users logged in - the same number of records (one, that server key) will be used to authenticate all client requests.
+
+Traditional authentication that stores user sessions in a database, creates a record in the db for every single user, which results in multiple keys. So if you have two million users logged in, the server will create two million records and with each client request the server needs to locate the relevant session record in the database\*.
+
+JWT leaves it up to the client side to store and handle the entire session/user object. It actually makes much more sense because every client handles their own data only, so it doesn't cause heavy lifting for the client side either.
+
+As for what you wrote in your last paragraph, it's not just db calls that we save here. JWT is actually much more scalable because of its independent and lightweight nature, it doesn't fail as auth requests pile up and it allows the server to handle auth accross devices and services without managing sessions on the server side.
+
+Security wise though, db sessions arguably have the upper hand: they can be more secure because of that latency, and are also less vulnerable to session hijacking after user logout.
+
+\*The db stored sessions method can be optimized with effective caching and by storing only the session id (as opposed to the entire user object) in a fast key/value server such as Redis. That said, I would still choose JWT method over db for most cases.
+

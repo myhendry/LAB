@@ -6,6 +6,8 @@
 
 [How to use React Context with Typescript](https://betterprogramming.pub/how-to-use-react-context-with-typescript-the-easy-way-2ed1010f6e84)
 
+[How to get Current Route in Nextjs](https://www.geeksforgeeks.org/how-to-get-current-route-in-next-js/)
+
 [Daisy UI](https://daisyui.com/components/hero)
 
 [Next-SEO](https://github.com/garmeeh/next-seo)
