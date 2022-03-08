@@ -1,0 +1,7 @@
+node_modules
+secrets.json
+artifacts
+.env
+cache
+deployments
+typechain-types
