@@ -37,6 +37,8 @@ This project is a blockchain-based lottery which allows users to enter by paying
 3. Run `npx hardhat fundWithLink <Lottery address> <LinkToken address> --network localhost`
 4. Run `npx hardhat endLottery <Lottery address> --network localhost`
 
+// The scripts folder is unnecessary as using hardhat-deploy
+
 npx hardhat deploy --network localhost // localhost
 npx hardhat deploy --network hardhat // hardhat
 npx hardhat deploy --network rinkeby // rinkeby

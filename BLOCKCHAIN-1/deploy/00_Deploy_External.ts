@@ -12,7 +12,9 @@ const func: DeployFunction = async ({
   const chainId = await getChainId();
 
   if (chainId == NETWORK.HARDHAT) {
-    log("Local Network Detected, Deploying external contracts");
+    log(
+      "******** LOCAL NETWORK DETECTED ********, Deploying external contracts"
+    );
     await deploy("MockV3Aggregator", {
       from: deployer,
       log: true,
