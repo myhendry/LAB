@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+#![allow(dead_code)]
 use std::{convert::From, num::ParseIntError};
 
 // !
@@ -122,7 +124,62 @@ fn main() {
     // for item in l1.clone() {
     //     println!("{}", item);
     // }
+
+    let h1 = Human{name: "Mm".to_string(), age: 20};
+    // h1.roar();
+
+    let a1 = Animal{nickname: "Aa".to_string(), age: 12};
+    // a1.roar();
+    
+    let c1 = Characters{
+        components: vec![Box::new(h1), Box::new(a1)],
+    };
+    c1.run();
 }
+
+// !Trait Objects -- Start
+struct Characters {
+    components: Vec<Box<dyn Monster>>,
+}
+
+impl Characters {
+    fn run(&self) {
+        for component in self.components.iter() {
+            component.roar();
+        }
+    }
+}
+
+trait Monster {
+    fn roar(&self) {
+        println!("Hello Roar");
+    }
+}
+
+#[derive(Debug)]
+ struct Human {
+     name: String,
+     age: u32,
+}
+
+impl Monster for Human {
+    fn roar(&self) {
+        println!("Roaring {}", self.name);
+    }
+}
+
+#[derive(Debug)]
+ struct Animal {
+     nickname: String,
+     age: u32,
+}
+
+impl Monster for Animal {
+    fn roar(&self) {
+        println!("{}", self.nickname);
+    }
+}
+// !Trait Objects -- End
 
 fn parse_str(input: &str) -> Result<i32, ParseIntError> {
     let parsed_number = input.parse::<i32>()?; // Here is the question mark
@@ -165,6 +222,7 @@ impl<'a> Class<'a> {
     }
 }
 
+// ! Trait From -- Start
 #[derive(Debug)]
 struct Group<'a> {
     students: Vec<&'a mut Student>,
@@ -176,8 +234,11 @@ impl<'a> From<Vec<&'a mut Student>> for Group<'a> {
             students
         }
     }
-}
 
+}
+// ! Trait From -- End
+
+// ! Trait Iterator -- Start
 #[derive(Debug, Clone)]
 struct Library {
     books: Vec<String>
@@ -193,3 +254,4 @@ impl Iterator for Library {
         }
     }
 }
+// ! Trait Iterator -- End

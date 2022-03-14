@@ -70,5 +70,24 @@ describe("Demo Test", () => {
       //console.log(numsArrAfter);
       expect(numsArrAfter.length).to.be.equal(3);
     });
+
+    it("should set new savings and get correct savings", async () => {
+      await demoContract.connect(user2).setSavings(1);
+      const amt = await demoContract.connect(user2).getSavings();
+      expect(amt).to.be.equal(1);
+    });
+
+    it("should set new balance and get correct balance", async () => {
+      await demoContract.setBalance(user2.address, 1);
+      await demoContract.setBalance(user3.address, 3);
+      const val1 = await demoContract.first();
+      expect(val1).to.be.equal(1);
+      const val2 = await demoContract.last();
+      expect(val2).to.be.equal(3);
+      const len1 = await demoContract.getSize();
+      expect(len1).to.be.equal(2);
+      const val3 = await demoContract.get(1);
+      expect(val3).to.be.equal(3);
+    });
   });
 });
