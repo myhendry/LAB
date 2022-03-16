@@ -5,6 +5,10 @@ import "hardhat/console.sol";
 
 // import "@openzeppelin/contracts/access/Ownable.sol";
 
+// [ ] Enum
+// [ ] Looping through Array
+// [ ] Inheritance
+
 contract Demo {
     string public name = "Yess";
     // dynamic array
@@ -17,10 +21,61 @@ contract Demo {
     mapping(address => uint256) public balances;
     mapping(address => bool) public inserted;
     address[] public keys;
+    // Struct
+    struct Car {
+        string model;
+        uint256 age;
+    }
+    Car[] public cars;
+    uint256 public carsCount;
+    // Enum
+    enum Status {
+        Active,
+        Inactive
+    }
+    struct Member {
+        string name;
+        Status status;
+    }
+    Member[] public members;
+    uint256 public membersCount;
 
     constructor() {
         name = "Hello Demo";
         nums.push(9);
+    }
+
+    function addMember(string memory _name) external {
+        Member memory member = Member(_name, Status.Active);
+        members.push(member);
+        membersCount++;
+    }
+
+    // todo not working
+    function setMemberInactive(uint256 index) external {
+        Member storage member = members[index];
+        member.name = "Jeremy";
+        member.status = Status.Inactive;
+    }
+
+    function getCarsCount() external view returns (uint256) {
+        return carsCount;
+    }
+
+    function getCaller() external view returns (address) {
+        return msg.sender;
+    }
+
+    // Structs and Array
+    function addCar(string memory _model, uint256 _age) external {
+        Car memory car = Car(_model, _age);
+        //Car memory car2 = Car({model: _model, age: _age});
+        cars.push(car);
+        carsCount++;
+    }
+
+    function getCar(uint256 index) external view returns (Car memory) {
+        return cars[index];
     }
 
     // Console.log

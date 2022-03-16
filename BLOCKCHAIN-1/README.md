@@ -72,3 +72,5 @@ npx hardhat (Basic, Advanced Template)
 yarn add hardhat-deploy @appliedblockchain/chainlink-plugins-fund-link --dev
 
 ```
+
+Use JS toNumber() only if converting small BigValue number. If converting big BigValue number, better to use toString()

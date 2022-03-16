@@ -89,5 +89,56 @@ describe("Demo Test", () => {
       const val3 = await demoContract.get(1);
       expect(val3).to.be.equal(3);
     });
+
+    it("should add car", async () => {
+      await demoContract.addCar("Toyota", 12);
+
+      let car = await demoContract.getCar(0);
+      expect(car.model).to.be.equal("Toyota");
+
+      let car1 = await demoContract.cars(0);
+      expect(car1.age).to.be.equal(12);
+    });
+
+    it("should get caller", async () => {
+      let address_defaultUser = await demoContract.getCaller();
+      //console.log("defaultUser", address_defaultUser);
+      expect(address_defaultUser).to.be.equal(deployer.address);
+
+      let address_user3 = await demoContract.connect(user3).getCaller();
+      // console.log("address", address);
+      // console.log("deployer", deployer.address);
+      // console.log("user2", user2.address);
+      // console.log("user3", user3.address);
+      expect(address_user3).to.be.equal(user3.address);
+    });
+
+    it("should get car count", async () => {
+      await demoContract.addCar("BMW", 8);
+      let count = await demoContract.carsCount();
+      expect(count.toNumber()).to.be.equal(2);
+    });
+
+    it("should add member", async () => {
+      await demoContract.addMember("Jane");
+      let member = await demoContract.members(0);
+      expect(member.name).to.be.equal("Jane");
+      let count = await demoContract.membersCount();
+      expect(count.toNumber()).to.be.equal(1);
+    });
+
+    // todo Changing Enum Value not Working
+    // it("should change member status", async () => {
+    //   let member = await demoContract.members(0);
+    //   console.log("1", member.status);
+    //   console.log(member.name);
+    //   let tx = await demoContract.connect(user2).setMemberInactive(0);
+    //   await tx.wait();
+    //   console.log("2", member.status);
+    //   console.log(member.name);
+    // });
+
+    //it("should add member", async () => {});
+    //it("should add member", async () => {});
   });
 });
