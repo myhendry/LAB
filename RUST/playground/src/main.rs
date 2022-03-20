@@ -1,6 +1,9 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
-use std::{convert::From, num::ParseIntError};
+use std::{convert::From, num::ParseIntError, cell::Cell};
+
+// todo L106
+
 
 // !
 // ?                // On Result
@@ -134,7 +137,132 @@ fn main() {
     let c1 = Characters{
         components: vec![Box::new(h1), Box::new(a1)],
     };
-    c1.run();
+    // c1.run();
+
+    // use TimeOfDay::*;
+
+    // let fear = 10.0;
+    // let daytime = change_fear(Morning);
+    // daytime(fear);
+
+    // println!("{}", fear);
+
+    // let afternoon_time = change_fear(Afternoon);
+    // afternoon_time(fear);
+
+    // println!("{}", fear);
+
+    // let n1 = 20;
+    // let mut f1 = return_number("double");
+    // f1(n1);
+    // println!("{}", n1);
+
+    // let mut f2 = return_number("triple");
+    // f2(n1);
+    // println!("{}", n1);
+
+    // let num1 = 5;
+
+    // let f1 = || {
+    //     num1 * 100
+    // };
+
+    // let r1 = f1();
+    // println!("{}", r1);
+    // println!("{}", num1);
+
+    // let ms1 = String::from("hey mate");
+    // let r1 =play_string(&ms1);
+    // println!("{}", r1);
+
+        let p1 = Phone{
+            model: "Nokia".to_string(),
+            price: Cell::new(20.),
+            sold: Cell::new(false),
+        };
+        // dbg!(&p1);        
+        // p1.sold.set(true);
+        // dbg!(&p1);
+        // let r1 = p1.sold.get();
+        // println!("{}", r1);
+        p1.add_promotion();
+        p1.toggle_sold();
+        // dbg!(&p1);
+
+}
+
+
+
+#[derive(Debug)]
+struct Phone {
+    model: String,
+    price: Cell<f32>,
+    sold: Cell<bool>
+}
+
+trait Sales {
+    fn add_promotion(&self) -> f32;
+}
+
+impl Sales for Phone {
+    fn add_promotion(&self) -> f32 {
+        let p1 = self.price.get() * 0.8;
+        self.price.set(p1);
+        self.price.get()
+    }
+}
+
+
+impl Phone {
+    fn toggle_sold(&self) -> bool {
+        let r1 = self.sold.get();
+        self.sold.set(!r1);
+        self.sold.get()
+    }
+}
+
+fn play_string(s: &str) -> String {
+    format!("you are {}", s)
+}
+
+enum TimeOfDay {
+    Morning,
+    Afternoon,
+    Night
+}
+
+fn return_number(input: &str) -> impl FnMut(i32) -> i32 {
+    match input {
+        "double" => |mut number| {
+            number *= 2;
+            println!("Your double number is {:?}", number);
+            number
+        },
+        "triple" => |mut number| {
+            number *= 3;
+            println!("Your triple number is {:?}", number);
+            number
+        },
+        _ => |number| {
+            println!("All else number is {:?}", number);
+            number
+        }
+    }
+}
+
+fn change_fear(input: TimeOfDay) -> impl Fn(f64) -> f64 {
+    use TimeOfDay::*;
+
+    match input {
+        Morning => |x| {
+            println!("Morning fear is {}", x*0.5);
+            x*0.5
+        },
+        _ => |x| {
+            println!("All else fear is {}", x/0.5);
+            x/0.5
+        }
+    }
 }
 
 // !Trait Objects -- Start
