@@ -128,15 +128,15 @@ describe("Demo Test", () => {
     });
 
     // todo Changing Enum Value not Working
-    // it("should change member status", async () => {
-    //   let member = await demoContract.members(0);
-    //   console.log("1", member.status);
-    //   console.log(member.name);
-    //   let tx = await demoContract.connect(user2).setMemberInactive(0);
-    //   await tx.wait();
-    //   console.log("2", member.status);
-    //   console.log(member.name);
-    // });
+    it("should change member status", async () => {
+      let member = await demoContract.members(0);
+      console.log("1", member.status);
+      console.log(member.name);
+      let tx = await demoContract.connect(user2).setMemberInactive(0);
+      await tx.wait();
+      console.log("2", member.status);
+      console.log(member.name);
+    });
 
     //it("should add member", async () => {});
     //it("should add member", async () => {});
