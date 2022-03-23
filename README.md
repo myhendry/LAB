@@ -1,11 +1,11 @@
-T67
-
 ### TODOS
+
+- [ ] SWR Infinite Pagination
+- [ ] Tailwind Table Formatting
 
 - [ ] Next-Auth HOC
 - [x] Nextjs with Mongoose
 - [ ] Nextjs with Firebase
-- [ ] Github Actions
 - [ ] Next-Auth Roles
 - [ ] Admin
 - [x] Solidity Deployment to Rinkeby
@@ -17,11 +17,12 @@ T67
 - [x] GetStaticProps & GetStaticPath
 - [x] Nextjs-Redux
 - [x] Redux Typings
+- [x] Formik Form CRUD Comments
 - [ ] Mongoose Models Race Condition
 - [ ] Mongoose - Find in Array
-- [ ] Formik Form CRUD Comments
 - [ ] Like Project
 - [ ] Like Comment
+- [ ] Github Actions
 
 [Vercel Next Examples](https://github.com/vercel/next.js/tree/canary/examples)
 
@@ -1450,7 +1451,6 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 
 For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
 
-
 **JSON Web Token (JWT) benefits over a database session token**
 
 The main difference is the session storage size and lookup work required from the server:
@@ -1466,4 +1466,3 @@ As for what you wrote in your last paragraph, it's not just db calls that we sav
 Security wise though, db sessions arguably have the upper hand: they can be more secure because of that latency, and are also less vulnerable to session hijacking after user logout.
 
 \*The db stored sessions method can be optimized with effective caching and by storing only the session id (as opposed to the entire user object) in a fast key/value server such as Redis. That said, I would still choose JWT method over db for most cases.
-

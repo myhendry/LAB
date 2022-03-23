@@ -45,13 +45,17 @@ contract Demo {
         nums.push(9);
     }
 
+    function setName(string memory _name) external {
+        name = _name;
+    }
+
     function addMember(string memory _name) external {
         Member memory member = Member(_name, Status.Active);
         members.push(member);
         membersCount++;
     }
 
-    // todo not working
+    // Updating Mappings and Structs
     function setMemberInactive(uint256 index) external {
         Member storage member = members[index];
         member.name = "Jeremy";

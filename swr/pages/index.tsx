@@ -19,10 +19,14 @@ const Home: NextPage<IProps> = () => {
       <div className="flex flex-col items-center">
         <ThemeChanger />
       </div>
-      <Link href={"/second"}>
-        <a>Second</a>
-      </Link>
-      <Spinner />
+      <div className="flex flex-row border rounded p-2 mx-5 space-x-5">
+        <Link href={"/second"}>
+          <a>Second</a>
+        </Link>
+        <Link href={"/new"}>
+          <a>New</a>
+        </Link>
+      </div>
     </>
   );
 };

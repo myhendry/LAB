@@ -127,15 +127,21 @@ describe("Demo Test", () => {
       expect(count.toNumber()).to.be.equal(1);
     });
 
-    // todo Changing Enum Value not Working
+    it("should change change name", async () => {
+      await demoContract.setName("yeahhhh");
+      const name = await demoContract.name();
+      expect(name).to.be.equal("yeahhhh");
+    });
+
     it("should change member status", async () => {
-      let member = await demoContract.members(0);
-      console.log("1", member.status);
-      console.log(member.name);
-      let tx = await demoContract.connect(user2).setMemberInactive(0);
-      await tx.wait();
-      console.log("2", member.status);
-      console.log(member.name);
+      let member;
+      member = await demoContract.members(0);
+      expect(member.name).to.be.equal("Jane");
+      expect(member.status).to.be.equal(0);
+      await demoContract.connect(user2).setMemberInactive(0);
+      member = await demoContract.members(0);
+      expect(member.name).to.be.equal("Jeremy");
+      expect(member.status).to.be.equal(1);
     });
 
     //it("should add member", async () => {});

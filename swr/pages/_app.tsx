@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SWRConfig
         value={{
           fetcher: (url) => axios.get(url).then((r) => r.data),
+          dedupingInterval: 100000,
           //* using fetch instead of axios setup
           // fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
         }}
