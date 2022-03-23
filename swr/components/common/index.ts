@@ -5,4 +5,3 @@ export * from "./typo";
 export * from "./layout";
 export * from "./spinner";
 export * from "./theme-changer";
-export * from "./form";

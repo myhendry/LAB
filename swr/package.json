@@ -11,6 +11,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography": "^0.5.1",
+    "axios": "^0.24.0",
     "contentful": "^9.1.7",
     "daisyui": "^2.2.2",
     "dotenv": "^8.6.0",

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 
-import { NavBar, Spinner, ThemeChanger } from "../components/common";
+import { NavBar, ThemeChanger } from "../components/common";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -20,11 +20,11 @@ const Home: NextPage<IProps> = () => {
         <ThemeChanger />
       </div>
       <div className="flex flex-row border rounded p-2 mx-5 space-x-5">
+        <Link href={"/demo/posts"}>
+          <a>Posts</a>
+        </Link>
         <Link href={"/second"}>
           <a>Second</a>
-        </Link>
-        <Link href={"/new"}>
-          <a>New</a>
         </Link>
       </div>
     </>

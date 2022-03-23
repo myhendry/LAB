@@ -2,14 +2,14 @@ import { NextApiRequest } from "next";
 import { Db } from "mongodb";
 
 export interface IPost {
-  id: string;
+  _id?: string;
   title: string;
   description: string;
   comments: IComment[];
 }
 
 export interface IComment {
-  id: string;
+  _id?: string;
   comment: string;
 }
 

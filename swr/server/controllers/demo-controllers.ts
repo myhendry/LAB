@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next";
 
-import { NextApiRequestExtended } from "./../../types/app.d";
+import { IPost, NextApiRequestExtended } from "../../types/app";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 
 export const getHellos = catchAsyncErrors(
@@ -12,9 +12,12 @@ export const getHellos = catchAsyncErrors(
 
 export const addHello = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
+    console.log(req.body);
+    const body: IPost = req.body;
+
     const result = await req.db?.collection("hello").insertOne({
-      title: "yesss",
-      description: "hiiii",
+      title: body.title,
+      description: body.description,
     });
     res.status(200).send(result);
   }

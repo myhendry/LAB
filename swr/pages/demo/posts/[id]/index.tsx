@@ -1,15 +1,17 @@
-import React from "react";
+import { NextPage } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useRouter } from "next/router";
 
-import { Layout } from "./layout";
+import { Layout } from "../../../../components/common";
 
-type Props = {};
 type Inputs = {
   firstName: string;
   age: number;
 };
+
+interface IProps {}
 
 const schema = yup
   .object({
@@ -18,7 +20,7 @@ const schema = yup
   })
   .required();
 
-export const FormTemplate = (props: Props) => {
+const PostId: NextPage<IProps> = () => {
   const {
     register,
     handleSubmit,
@@ -29,34 +31,38 @@ export const FormTemplate = (props: Props) => {
   });
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
+  // https://nextjs.org/docs/routing/dynamic-routes
+  const router = useRouter();
+  console.log("query", router.query);
+
   return (
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col space-y-2 mx-auto">
+        <div className="flex flex-col justify-center space-y-2 mx-auto w-full max-w-md border rounded p-5">
           <label className="label">
-            <span className="label-text">Name</span>
+            <span className="label-text mr-5">Name</span>
             <input
               {...register("firstName")}
               type="text"
-              // placeholder="Name"
-              className="input-primary input-bordered w-full max-w-xs"
+              className="input-primary input-bordered w-full"
             />
             <p>{errors.firstName?.message}</p>
           </label>
           <label className="label">
-            <span className="label-text">Age</span>
+            <span className="label-text mr-5">Age</span>
             <input
               {...register("age")}
               type="number"
-              // placeholder="Age"
-              className="input-primary input-bordered w-full max-w-xs"
+              className="input-primary input-bordered w-full"
             />
             <p>{errors.age?.message}</p>
           </label>
 
-          <input type="submit" />
+          <input type="submit" className="btn btn-primary" />
         </div>
       </form>
     </Layout>
   );
 };
+
+export default PostId;
