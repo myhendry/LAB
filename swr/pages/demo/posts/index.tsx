@@ -4,10 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useSWR, { mutate } from "swr";
 import axios from "axios";
+import Link from "next/link";
 
 import { Layout, Spinner } from "../../../components/common";
 import { IPost } from "../../../types/app";
-import Link from "next/link";
 
 interface IProps {}
 
@@ -30,11 +30,19 @@ const Posts: NextPage<IProps> = () => {
     resolver: yupResolver(schema),
   });
 
-  const { data: posts, error } = useSWR<IPost[]>(`/api/demo`);
+  const { data: posts, error } = useSWR<IPost[]>(`/api/demo/posts`);
+
+  if (error) <p>Loading failed...</p>;
+  if (!posts)
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
 
   const onSubmit: SubmitHandler<IPost> = async (data) => {
     mutate(
-      `/api/demo`,
+      `/api/demo/posts`,
 
       (existingPosts: IPost[]) => [
         ...existingPosts,
@@ -47,11 +55,11 @@ const Posts: NextPage<IProps> = () => {
       false
     );
     reset();
-    await axios.post(`/api/demo`, {
+    await axios.post(`/api/demo/posts`, {
       title: data.title,
       description: data.description,
     });
-    mutate(`/api/demo`);
+    mutate(`/api/demo/posts`);
   };
 
   return (

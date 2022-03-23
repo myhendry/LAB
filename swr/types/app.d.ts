@@ -11,6 +11,7 @@ export interface IPost {
 export interface IComment {
   _id?: string;
   comment: string;
+  postId: string;
 }
 
 export interface NextApiRequestExtended extends NextApiRequest {
