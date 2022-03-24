@@ -2,11 +2,18 @@ import { ObjectId } from "mongodb";
 import { NextApiResponse } from "next";
 
 import { IComment, IPost, NextApiRequestExtended } from "../../types/app";
+import { capitalizeFirstLetter } from "../../utils/capitalize_first_letter";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
+
+// https://github.com/hoangvvo/nextjs-mongodb-app
 
 export const getPosts = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
-    const posts = await req.db?.collection("posts").find().toArray();
+    const posts = await req.db
+      ?.collection("posts")
+      .find()
+      .sort({ createdAt: -1 })
+      .toArray();
     res.status(200).json(posts);
   }
 );
@@ -25,8 +32,10 @@ export const addPost = catchAsyncErrors(
     const body: IPost = req.body;
 
     const result = await req.db?.collection("posts").insertOne({
-      title: body.title,
-      description: body.description,
+      title: capitalizeFirstLetter(body.title),
+      description: capitalizeFirstLetter(body.description),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
     res.status(200).send(result);
   }
@@ -43,8 +52,9 @@ export const updatePost = catchAsyncErrors(
       },
       {
         $set: {
-          title: body.title,
-          description: body.description,
+          title: capitalizeFirstLetter(body.title),
+          description: capitalizeFirstLetter(body.description),
+          updatedAt: new Date(),
         },
       }
     );
@@ -58,14 +68,34 @@ export const deletePost = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
     const postId = req.query.id;
 
-    await req.db?.collection("posts").findOneAndDelete({
+    const deletePostPromise = req.db?.collection("posts").findOneAndDelete({
       _id: new ObjectId(postId as string),
     });
+
+    const deleteCommentsPromise = req.db?.collection("comments").deleteMany({
+      postId,
+    });
+
+    await Promise.all([deletePostPromise, deleteCommentsPromise]);
+
     res.status(200).send({
       deleted: true,
     });
   }
 );
+
+// export const deletePost = catchAsyncErrors(
+//   async (req: NextApiRequestExtended, res: NextApiResponse) => {
+//     const postId = req.query.id;
+
+//     await req.db?.collection("posts").findOneAndDelete({
+//       _id: new ObjectId(postId as string),
+//     });
+//     res.status(200).send({
+//       deleted: true,
+//     });
+//   }
+// );
 
 export const getCommentsByPostId = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
@@ -74,6 +104,7 @@ export const getCommentsByPostId = catchAsyncErrors(
       .find({
         postId: req.query.id,
       })
+      .sort({ createdAt: -1 })
       .toArray();
     res.status(200).json(comments);
   }
@@ -85,8 +116,10 @@ export const addCommentWithPostId = catchAsyncErrors(
     const body: IComment = req.body;
 
     const result = await req.db?.collection("comments").insertOne({
-      comment: body.comment,
+      comment: capitalizeFirstLetter(body.comment),
       postId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
     res.status(200).send(result);
   }

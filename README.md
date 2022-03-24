@@ -1,13 +1,14 @@
 ### TODOS
 
-- [ ] List Cascade Delete
-- [ ] List Sort Data
 - [ ] Modal Delete
 - [ ] SWR Infinite Pagination
 - [ ] Tailwind Table Formatting
+- [ ] Images
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
 - [ ] Next-Auth HOC
+- [x] List Cascade Delete
+- [x] List Sort Data
 - [x] Nextjs with Mongoose
 - [ ] Nextjs with Firebase
 - [ ] Next-Auth Roles

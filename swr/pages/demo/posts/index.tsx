@@ -8,6 +8,7 @@ import Link from "next/link";
 
 import { Layout, Spinner } from "../../../components/common";
 import { IPost } from "../../../types/app";
+import { capitalizeFirstLetter } from "../../../utils/capitalize_first_letter";
 
 interface IProps {}
 
@@ -46,12 +47,12 @@ const Posts: NextPage<IProps> = () => {
       `/api/demo/posts`,
 
       (existingPosts: IPost[]) => [
-        ...existingPosts,
         {
           _id: Math.floor(Math.random() * 10000),
-          title: data.title,
-          description: data.description,
+          title: capitalizeFirstLetter(data.title),
+          description: capitalizeFirstLetter(data.description),
         },
+        ...existingPosts,
       ],
       false
     );

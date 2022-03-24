@@ -11,6 +11,7 @@ import { FiSkipBack } from "react-icons/fi";
 import { Layout, Spinner } from "../../../../components/common";
 import { IComment, IPost } from "../../../../types/app";
 import { PostForm } from "../../../../components/app";
+import { capitalizeFirstLetter } from "../../../../utils/capitalize_first_letter";
 
 interface IProps {}
 
@@ -65,14 +66,17 @@ const PostId: NextPage<IProps> = () => {
 
   const onSubmit: SubmitHandler<IComment> = async (data) => {
     try {
-      mutateComments((prevComments) => [
-        {
-          _id: uuidv4(),
-          comment: data.comment,
-          postId: postId as string,
-        },
-        ...prevComments!,
-      ]);
+      mutateComments(
+        (prevComments) => [
+          {
+            _id: uuidv4(),
+            comment: capitalizeFirstLetter(data.comment),
+            postId: postId as string,
+          },
+          ...prevComments!,
+        ],
+        false
+      );
       reset();
       await axios.post(`/api/demo/posts/${postId}/comments`, {
         comment: data.comment,
