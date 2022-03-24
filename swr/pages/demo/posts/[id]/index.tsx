@@ -4,11 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/router";
 import axios from "axios";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
+import { FiSkipBack } from "react-icons/fi";
 
 import { Layout, Spinner } from "../../../../components/common";
 import { IComment, IPost } from "../../../../types/app";
+import { PostForm } from "../../../../components/app";
 
 interface IProps {}
 
@@ -31,7 +33,7 @@ const PostId: NextPage<IProps> = () => {
 
   // https://nextjs.org/docs/routing/dynamic-routes
   // https://swr.vercel.app/docs/with-nextjs
-  const { query, back } = useRouter();
+  const { query, back, push, replace } = useRouter();
 
   const postId = query.id;
   // console.log("query", router.query);
@@ -41,13 +43,16 @@ const PostId: NextPage<IProps> = () => {
   //   demoId = window.location.pathname.split("/").pop();
   // }
 
-  const { data: post, error: postError } = useSWR<IPost>(
-    `/api/demo/posts/${postId}`
-  );
+  const {
+    data: post,
+    error: postError,
+    mutate: mutatePost,
+  } = useSWR<IPost>(`/api/demo/posts/${postId}`);
+
   const {
     data: comments,
     error: commentsError,
-    mutate,
+    mutate: mutateComments,
   } = useSWR<IComment[]>(`/api/demo/posts/${postId}/comments`);
 
   if (postError || commentsError) <p>Loading failed...</p>;
@@ -60,27 +65,42 @@ const PostId: NextPage<IProps> = () => {
 
   const onSubmit: SubmitHandler<IComment> = async (data) => {
     try {
-      mutate((prevComments) => [
-        ...prevComments!,
+      mutateComments((prevComments) => [
         {
           _id: uuidv4(),
           comment: data.comment,
           postId: postId as string,
         },
+        ...prevComments!,
       ]);
       reset();
       await axios.post(`/api/demo/posts/${postId}/comments`, {
         comment: data.comment,
       });
-      mutate();
+      mutateComments();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const onDelete = async (postId: string) => {
+    await axios.delete(`/api/demo/posts/${postId}`);
+    mutate(`/api/demo/posts`);
+    replace("/demo/posts");
+  };
+
   return (
     <Layout>
-      <div onClick={() => back()}>Back</div>
+      <FiSkipBack className="cursor-pointer ml-14" onClick={() => back()} />
+      <PostForm post={post} mutatePost={mutatePost} />
+      <div className="flex flex-col justify-center space-y-2 mx-auto w-full max-w-md border rounded p-5">
+        <button
+          onClick={() => onDelete(postId as string)}
+          className="btn btn-warning"
+        >
+          Delete Post
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col justify-center space-y-2 mx-auto w-full max-w-md border rounded p-5">
           <label className="label">
@@ -93,7 +113,7 @@ const PostId: NextPage<IProps> = () => {
             <p>{errors.comment?.message}</p>
           </label>
 
-          <input type="submit" className="btn btn-primary" />
+          <button className="btn btn-primary">Create Comment</button>
         </div>
       </form>
       <div className="flex justify-center">

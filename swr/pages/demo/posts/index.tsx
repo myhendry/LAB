@@ -18,6 +18,7 @@ const schema = yup
   })
   .required();
 
+//https://blog.logrocket.com/handling-data-fetching-next-js-useswr/
 const Posts: NextPage<IProps> = () => {
   const {
     register,
@@ -87,21 +88,21 @@ const Posts: NextPage<IProps> = () => {
 
           <input type="submit" className="btn btn-primary" />
         </div>
-
-        <div className="text-center my-5">
-          {!posts && <Spinner />}
-          {posts &&
-            posts.map((p) => (
-              <div key={p._id} className="flex flex-col">
-                <Link href={`/demo/posts/${p._id}?foo=bar&two=neat&three=nice`}>
-                  <a className="cursor-pointer">{p.title}</a>
-                </Link>
-              </div>
-            ))}
-          {posts?.length === 0 && <p>No Post Found</p>}
-          {error && <p>Fail to Load Posts</p>}
-        </div>
       </form>
+
+      <div className="text-center my-5">
+        {!posts && <Spinner />}
+        {posts &&
+          posts.map((p) => (
+            <div key={p._id} className="flex flex-col">
+              <Link href={`/demo/posts/${p._id}?foo=bar&two=neat&three=nice`}>
+                <a className="cursor-pointer">{p.title}</a>
+              </Link>
+            </div>
+          ))}
+        {posts?.length === 0 && <p>No Post Found</p>}
+        {error && <p>Fail to Load Posts</p>}
+      </div>
     </Layout>
   );
 };

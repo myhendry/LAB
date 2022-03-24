@@ -32,6 +32,41 @@ export const addPost = catchAsyncErrors(
   }
 );
 
+export const updatePost = catchAsyncErrors(
+  async (req: NextApiRequestExtended, res: NextApiResponse) => {
+    const postId = req.query.id;
+    const body: IPost = req.body;
+
+    await req.db?.collection("posts").findOneAndUpdate(
+      {
+        _id: new ObjectId(postId as string),
+      },
+      {
+        $set: {
+          title: body.title,
+          description: body.description,
+        },
+      }
+    );
+    res.status(200).send({
+      updated: true,
+    });
+  }
+);
+
+export const deletePost = catchAsyncErrors(
+  async (req: NextApiRequestExtended, res: NextApiResponse) => {
+    const postId = req.query.id;
+
+    await req.db?.collection("posts").findOneAndDelete({
+      _id: new ObjectId(postId as string),
+    });
+    res.status(200).send({
+      deleted: true,
+    });
+  }
+);
+
 export const getCommentsByPostId = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
     const comments = await req.db
