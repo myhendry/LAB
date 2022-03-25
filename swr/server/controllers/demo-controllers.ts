@@ -84,19 +84,6 @@ export const deletePost = catchAsyncErrors(
   }
 );
 
-// export const deletePost = catchAsyncErrors(
-//   async (req: NextApiRequestExtended, res: NextApiResponse) => {
-//     const postId = req.query.id;
-
-//     await req.db?.collection("posts").findOneAndDelete({
-//       _id: new ObjectId(postId as string),
-//     });
-//     res.status(200).send({
-//       deleted: true,
-//     });
-//   }
-// );
-
 export const getCommentsByPostId = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
     const comments = await req.db

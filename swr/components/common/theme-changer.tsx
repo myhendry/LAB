@@ -9,7 +9,6 @@ export const ThemeChanger: NextPage<IProps> = () => {
   const { setTheme } = useTheme();
   const { isDark, setIsDark } = useApp();
 
-  console.log("isDark", isDark);
   return (
     <div className="py-2 flex justify-end">
       <label className="swap swap-rotate">

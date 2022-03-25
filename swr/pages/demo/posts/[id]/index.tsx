@@ -8,10 +8,11 @@ import useSWR, { mutate } from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { FiSkipBack } from "react-icons/fi";
 
-import { Layout, Spinner } from "../../../../components/common";
+import { Layout, Modal, Spinner } from "../../../../components/common";
 import { IComment, IPost } from "../../../../types/app";
 import { PostForm } from "../../../../components/app";
 import { capitalizeFirstLetter } from "../../../../utils/capitalize_first_letter";
+import { useState } from "react";
 
 interface IProps {}
 
@@ -22,6 +23,8 @@ const schema = yup
   .required();
 
 const PostId: NextPage<IProps> = () => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -98,10 +101,7 @@ const PostId: NextPage<IProps> = () => {
       <FiSkipBack className="cursor-pointer ml-14" onClick={() => back()} />
       <PostForm post={post} mutatePost={mutatePost} />
       <div className="flex flex-col justify-center space-y-2 mx-auto w-full max-w-md border rounded p-5">
-        <button
-          onClick={() => onDelete(postId as string)}
-          className="btn btn-warning"
-        >
+        <button onClick={() => setShowModal(true)} className="btn btn-warning">
           Delete Post
         </button>
       </div>
@@ -130,6 +130,13 @@ const PostId: NextPage<IProps> = () => {
           <p key={c._id}>{c.comment}</p>
         ))}
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={() => onDelete(postId as string)}
+      >
+        Confirm Delete?
+      </Modal>
     </Layout>
   );
 };

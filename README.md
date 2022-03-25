@@ -1,12 +1,13 @@
 ### TODOS
 
-- [ ] Modal Delete
-- [ ] SWR Infinite Pagination
 - [ ] Tailwind Table Formatting
+- [ ] SWR Infinite Pagination
 - [ ] Images
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
 - [ ] Next-Auth HOC
+- [x] Modal Delete
+- [x] CreatePortal Modal
 - [x] List Cascade Delete
 - [x] List Sort Data
 - [x] Nextjs with Mongoose
