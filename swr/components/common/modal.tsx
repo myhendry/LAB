@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
+//import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
 
 interface Props {
   show: boolean;
@@ -30,25 +30,22 @@ export const Modal = ({ show, onClose, onConfirm, children }: Props) => {
     onConfirm();
     onClose();
   };
-
   const modalContent = show ? (
-    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-      <div className="bg-gray-700  w-1/2 h-1/2 border rounded-md p-12 flex flex-col justify-center items-center space-y-3">
-        <div className="text-justify text-red-500">{children}</div>
-        <div className="space-x-5">
-          <button
-            onClick={handleCloseClick}
-            className="btn btn-circle btn-outline"
-          >
-            <AiOutlineClose />
-          </button>
-          <button
-            onClick={handleConfirmClick}
-            className="btn btn-circle btn-outline"
-          >
-            <AiOutlineDelete className="text-red-500" />
-          </button>
-        </div>
+    <div className="bg-slate-500 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-30">
+      <div className="bg-primary px-16 py-14 rounded-md text-center m-20">
+        <h1 className="text-xl mb-4 font-bold text-info">{children}</h1>
+        <button
+          onClick={handleCloseClick}
+          className="bg-indigo-500 px-4 py-2 rounded-md text-md text-white"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleConfirmClick}
+          className="bg-red-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
+        >
+          Ok
+        </button>
       </div>
     </div>
   ) : null;

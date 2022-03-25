@@ -20,6 +20,12 @@ const schema = yup
   .required();
 
 //https://blog.logrocket.com/handling-data-fetching-next-js-useswr/
+
+//! Pagination
+// https://www.udemy.com/course/graphql-apollo-server-api-nodejs-mongodb/learn/lecture/16355642#overview
+// https://youtu.be/1KTK6JplLLw
+// https://swr.vercel.app/docs/pagination
+// https://youtu.be/U3a2qp2DF7I
 const Posts: NextPage<IProps> = () => {
   const {
     register,

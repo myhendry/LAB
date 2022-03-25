@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useState } from "react";
+import { Table } from "../components/app";
 
 import { Modal, NavBar, ThemeChanger } from "../components/common";
 
@@ -39,6 +40,9 @@ const Home: NextPage<IProps> = () => {
           >
             Modal
           </button>
+        </div>
+        <div className="mx-auto w-4/5">
+          <Table />
         </div>
       </div>
       <Modal
