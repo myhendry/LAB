@@ -6,6 +6,7 @@ export interface IPost {
   title: string;
   description: string;
   comments: IComment[];
+  clientOnly?: boolean;
 }
 
 export interface IComment {

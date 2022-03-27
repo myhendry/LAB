@@ -1,16 +1,24 @@
 import { NextPage } from "next";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 
 import { Layout, Spinner } from "../../../components/common";
 import { IPost } from "../../../types/app";
 import { capitalizeFirstLetter } from "../../../utils/capitalize_first_letter";
+import { usePagination } from "../../../utils/usePagination";
 
 interface IProps {}
+
+interface IPostsData {
+  postsCount: number;
+  posts: IPost[];
+}
 
 const schema = yup
   .object({
@@ -26,6 +34,11 @@ const schema = yup
 // https://youtu.be/1KTK6JplLLw
 // https://swr.vercel.app/docs/pagination
 // https://youtu.be/U3a2qp2DF7I
+
+//! Text Search & Pagination & Sorting
+// https://youtu.be/1TZObMg4A7s
+// https://adamrichardson.dev/code/prefetch-and-pagination-graphql-nextjs
+
 const Posts: NextPage<IProps> = () => {
   const {
     register,
@@ -38,36 +51,49 @@ const Posts: NextPage<IProps> = () => {
     resolver: yupResolver(schema),
   });
 
-  const { data: posts, error } = useSWR<IPost[]>(`/api/demo/posts`);
+  const [searchText, setSearchText] = useState<string>("ggg");
 
-  if (error) <p>Loading failed...</p>;
-  if (!posts)
-    return (
-      <div className="flex justify-center items-center">
-        <Spinner />
-      </div>
-    );
+  const {
+    paginatedData: paginatedPosts,
+    error,
+    isLoadingMore,
+    isReachedEnd,
+    setPage,
+    page,
+    mutate: mutatePosts,
+  } = usePagination<IPost>(`/api/demo/posts`, searchText);
 
   const onSubmit: SubmitHandler<IPost> = async (data) => {
-    mutate(
-      `/api/demo/posts`,
+    try {
+      // ! Using Optimistic UI when not using Pagination
+      // mutatePost(
+      //   (existingPosts: any) => [
+      //     [
+      //       {
+      //         _id: uuidv4(),
+      //         title: capitalizeFirstLetter(data.title),
+      //         description: capitalizeFirstLetter(data.description),
+      //         clientOnly: true,
+      //       },
+      //     ],
+      //     ...existingPosts,
+      //   ],
+      //   false
+      // );
+      reset();
+      await axios.post(`/api/demo/posts`, {
+        title: data.title,
+        description: data.description,
+      });
+      mutatePosts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      (existingPosts: IPost[]) => [
-        {
-          _id: Math.floor(Math.random() * 10000),
-          title: capitalizeFirstLetter(data.title),
-          description: capitalizeFirstLetter(data.description),
-        },
-        ...existingPosts,
-      ],
-      false
-    );
-    reset();
-    await axios.post(`/api/demo/posts`, {
-      title: data.title,
-      description: data.description,
-    });
-    mutate(`/api/demo/posts`);
+  const onDelete = async (postId: string) => {
+    await axios.delete(`/api/demo/posts/${postId}`);
+    mutatePosts();
   };
 
   return (
@@ -97,18 +123,91 @@ const Posts: NextPage<IProps> = () => {
         </div>
       </form>
 
+      <div className="m-5 space-x-5 flex justify-center">
+        <input
+          type="text"
+          placeholder="Type here"
+          className="input input-bordered w-48 md:w-1/2"
+          // onChange={(e) => {
+          //   setSearchText(e.target.value);
+          // }}
+        />
+      </div>
+
       <div className="text-center my-5">
-        {!posts && <Spinner />}
-        {posts &&
-          posts.map((p) => (
-            <div key={p._id} className="flex flex-col">
-              <Link href={`/demo/posts/${p._id}?foo=bar&two=neat&three=nice`}>
-                <a className="cursor-pointer">{p.title}</a>
-              </Link>
+        {!paginatedPosts && !error && <Spinner />}
+        {paginatedPosts &&
+          paginatedPosts.map((p) => (
+            <div
+              key={p._id}
+              className="flex flex-row justify-center items-center my-3"
+            >
+              <div>
+                <Link href={`/demo/posts/${p._id}?foo=bar&two=neat&three=nice`}>
+                  <a
+                    className={`cursor-pointer mr-10 ${
+                      p.clientOnly && "text-green-500"
+                    }`}
+                  >
+                    {p.title}
+                  </a>
+                </Link>
+              </div>
+              <div>
+                <button
+                  onClick={() => onDelete(p._id as string)}
+                  className="btn btn-circle btn-sm btn-outline"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           ))}
-        {posts?.length === 0 && <p>No Post Found</p>}
+        {/* {paginatedPosts?.length === 0 ? <p>No Post Found</p> : null} */}
         {error && <p>Fail to Load Posts</p>}
+        {isLoadingMore && <Spinner />}
+
+        <button
+          disabled={isReachedEnd}
+          onClick={() => setPage(page + 1)}
+          className="btn btn-info btn-sm my-5 cursor-pointer"
+        >
+          Load More
+        </button>
+
+        {/* <div className="btn-group w-max mx-auto my-5">
+
+          <button
+            disabled={pageIndex <= 1}
+            onClick={() => setPageIndex(pageIndex - 1)}
+            className="btn"
+          >
+            «
+          </button>
+          <button className="btn">Page {pageIndex}</button>
+          <button
+            // disabled={pageIndex > 0}
+            onClick={() => {
+              setPageIndex(pageIndex + 1);
+            }}
+            className="btn"
+          >
+            »
+          </button>
+        </div> */}
       </div>
     </Layout>
   );

@@ -6,15 +6,34 @@ import { capitalizeFirstLetter } from "../../utils/capitalize_first_letter";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors";
 
 // https://github.com/hoangvvo/nextjs-mongodb-app
+// https://www.tutorialspoint.com/mongodb/mongodb_limit_record.htm
 
 export const getPosts = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
-    const posts = await req.db
+    const { db } = req;
+
+    const currentPage = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.limit as string) || 2;
+    const searchText = req.query.searchText;
+
+    // console.log(searchText);
+
+    const skip = pageSize * (currentPage - 1);
+    const limit = pageSize;
+
+    const posts = await db
       ?.collection("posts")
       .find()
+      .skip(skip)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .toArray();
+
     res.status(200).json(posts);
+    // res.status(200).json({
+    //   postsCount: posts?.length,
+    //   posts: posts,
+    // });
   }
 );
 
@@ -86,11 +105,21 @@ export const deletePost = catchAsyncErrors(
 
 export const getCommentsByPostId = catchAsyncErrors(
   async (req: NextApiRequestExtended, res: NextApiResponse) => {
-    const comments = await req.db
+    const { db } = req;
+
+    const currentPage = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.limit as string) || 2;
+
+    const skip = pageSize * (currentPage - 1);
+    const limit = pageSize;
+
+    const comments = await db
       ?.collection("comments")
       .find({
         postId: req.query.id,
       })
+      .skip(skip)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .toArray();
     res.status(200).json(comments);

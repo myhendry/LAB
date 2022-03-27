@@ -1,10 +1,21 @@
 ### TODOS
 
-- [ ] SWR Infinite Pagination
+- [ ] Text Search
+- [ ] Like Project
+- [ ] Group ID search (Find in Array)
+- [ ] Framer Motion
 - [ ] Images
+- [ ] SWR Infinite Pagination - Backend (Cursor-Based)
+- [ ] SWR Infinite Pagination - Frontend (Cursor-Based)
+- [ ] Next-Auth HOC
+- [ ] Nextjs with Firebase
+- [ ] Next-Auth Roles
+- [ ] Admin
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
-- [ ] Next-Auth HOC
+- [x] SWR Infinite Pagination - Backend (Offset-Based: Skip & Limit)
+- [x] SWR Infinite Pagination - Frontend (Offset-Based)
+- [x] Tailwind Width
 - [x] Design Modal
 - [x] Tailwind Table Formatting
 - [x] Modal Delete
@@ -12,9 +23,6 @@
 - [x] List Cascade Delete
 - [x] List Sort Data
 - [x] Nextjs with Mongoose
-- [ ] Nextjs with Firebase
-- [ ] Next-Auth Roles
-- [ ] Admin
 - [x] Solidity Deployment to Rinkeby
 - [x] CRUD Comments
 - [x] Cascade Delete Project & Comments
@@ -26,9 +34,7 @@
 - [x] Redux Typings
 - [x] Formik Form CRUD Comments
 - [ ] Mongoose Models Race Condition
-- [ ] Mongoose - Find in Array
-- [ ] Like Project
-- [ ] Like Comment
+
 - [ ] Github Actions
 
 [Vercel Next Examples](https://github.com/vercel/next.js/tree/canary/examples)

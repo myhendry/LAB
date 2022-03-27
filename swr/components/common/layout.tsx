@@ -7,9 +7,9 @@ type Props = {
 
 export const Layout: React.FC<Props> = ({ children, title = "L A B" }) => {
   return (
-    <>
+    <div>
       <NavBar title={title} />
       {children}
-    </>
+    </div>
   );
 };
