@@ -6,6 +6,7 @@ import { SWRConfig } from "swr";
 import axios from "axios";
 
 import { DefaultSeoValues } from "../next-seo.config";
+import AppProvider from "../context/app-context";
 
 // export function reportWebVitals(metric: any) {
 //   console.log("Metric", metric);
@@ -22,9 +23,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       >
         <DefaultSeo {...DefaultSeoValues} />
-        <ThemeProvider defaultTheme="system">
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <AppProvider>
+          <ThemeProvider defaultTheme="system">
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </AppProvider>
       </SWRConfig>
     </main>
   );

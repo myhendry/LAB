@@ -1,9 +1,18 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { Menu } from "./menu";
+import { ThemeChanger } from "./theme-changer";
 
 interface IProps {
   title: string;
 }
+
+const links = [
+  {
+    title: "Second",
+    url: "/second",
+  },
+];
 
 export const NavBar: NextPage<IProps> = ({ title }) => {
   return (
@@ -32,7 +41,9 @@ export const NavBar: NextPage<IProps> = ({ title }) => {
           </a>
         </Link>
       </div>
-      <div className="flex-none">
+      <Menu links={links} />
+      <ThemeChanger />
+      {/* <div className="flex-none">
         <button className="btn btn-square btn-ghost">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +59,7 @@ export const NavBar: NextPage<IProps> = ({ title }) => {
             ></path>
           </svg>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

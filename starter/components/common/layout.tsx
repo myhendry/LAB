@@ -9,7 +9,7 @@ export const Layout: React.FC<Props> = ({ children, title = "L A B" }) => {
   return (
     <>
       <NavBar title={title} />
-      {children}
+      <div className="p-5">{children}</div>{" "}
     </>
   );
 };
