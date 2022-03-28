@@ -1,8 +1,15 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
-use std::{convert::From, num::ParseIntError, cell::Cell};
+use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex};
 
-// todo L106
+
+mod server;
+use server::*;
+
+mod http;
+use http::{Request, Method};
+
+// todo L38
 
 
 // !
@@ -77,9 +84,6 @@ fn main() {
     //     println!("{:?}", &vvv1.get(x).unwrap_or(&000));
     // }
 
-
-
-    
     // let r1 = c1.students.iter().any(|x| x.age > 29);
     let r1 = c1.students.iter().all(|x| x.age < 30);
     // println!("{}", r1);
@@ -100,10 +104,6 @@ fn main() {
 
     let r3 = parse_str("h");
   
-    
-
-
-
     // let mut s3 = Student::new("Alvin", 25);
     // let mut s4 = Student::new("Chris",  27);
 
@@ -189,9 +189,105 @@ fn main() {
         p1.toggle_sold();
         // dbg!(&p1);
 
+
+        let pen1 = Pen{
+            name: "pilot".to_string(),
+            available: RefCell::new("yes".to_string())
+        };
+
+        *pen1.available.borrow_mut() = "no".to_string();
+        // dbg!(pen1);
+
+        let m1 = Mule{
+            name: Mutex::new("james".to_string()),
+            selected: Mutex::new(false),
+            number: Mutex::new(0),
+        };
+
+        *m1.name.lock().unwrap() = "alvis".to_string();
+        *m1.selected.lock().unwrap() = true;
+        //println!("{:?}", m1);
+
+        let m2 = Mule{
+            name: Mutex::new("eri".to_string()),
+            selected: Mutex::new(true),
+            number: Mutex::new(0),
+        };
+        // let mut2changer1 = m2.name.lock();
+
+        if let Ok(mut nn) = m2.name.try_lock() {
+            *nn = "iora".to_string();
+        };
+
+        for _ in 0..50 {
+            *m2.number.lock().unwrap() += 1;            
+        };
+        // println!("{:?}", m2);
+
+        let rw1 = RW{name: Mutex::new(true), age: Mutex::new(20)};
+        
+        // let mut title = rw1.name.lock().unwrap();
+        //let mut age = rw1.age.lock().unwrap();
+        //println!("{:?}", rw1);
+
+        println!("{:?}", Gender::Male);
+
+        let g1 = Gender::Female;
+
+        match g1 {
+            Gender::Male => {
+                println!("{}", "Male Only");
+            },
+            Gender::Female => {
+                println!("{}", "Female Only");
+            }
+        }    
+        
+        let s1 = String::from("tim");
+        let s2 = &s1;
+        println!("{:?}", s2);
+        let s3 = &s1[3..];
+        println!("{:?}", s3);
+        let s4 = "1234"; // baked into the binary
+
+        let rr1 = Request{
+            path: "name",
+            query_string: Some("test2"),
+            method: Method::GET,
+        };
+        println!("{:?}", rr1);
+        if let Some(x) = rr1.query_string {
+            println!("x is {}", x);
+        }
+
+        let a1 = [1, 2, 3];
+        println!("{:?}", a1);
+        let mut av1 = vec![1, 3, 30];
+        av1.push(1000);
+        println!("{:?}", av1);
+
+        let server = Server::new("127.0.0.1:8000");
+        server.run();
+    }
+
+#[derive(Debug)]
+struct RW {
+    name: Mutex<bool>,
+    age: Mutex<u32>,
 }
 
+#[derive(Debug)]
+struct Mule {
+    name: Mutex<String>,
+    selected: Mutex<bool>,
+    number: Mutex<u32>,
+}
 
+#[derive(Debug)]
+struct Pen {
+    name: String,
+    available: RefCell<String>
+}
 
 #[derive(Debug)]
 struct Phone {

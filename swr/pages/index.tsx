@@ -29,8 +29,8 @@ const Home: NextPage<IProps> = () => {
           <Link href={"/demo/posts"}>
             <a>Posts</a>
           </Link>
-          <Link href={"/second"}>
-            <a>Second</a>
+          <Link href={"/design"}>
+            <a>Design</a>
           </Link>
         </div>
         <div className="flex justify-center items-center p-5">
