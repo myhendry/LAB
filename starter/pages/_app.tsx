@@ -1,20 +1,24 @@
 import "../styles/globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { DefaultSeoValues } from "../next-seo.config";
 import AppProvider from "../context/app-context";
+import { Toaster } from "react-hot-toast";
 
 // export function reportWebVitals(metric: any) {
 //   console.log("Metric", metric);
 // }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <main className="container mx-auto space-y-5">
+    <main>
       <SWRConfig
         value={{
           fetcher: (url) => axios.get(url).then((r) => r.data),
@@ -25,7 +29,24 @@ function MyApp({ Component, pageProps }: AppProps) {
         <DefaultSeo {...DefaultSeoValues} />
         <AppProvider>
           <ThemeProvider defaultTheme="system">
-            <Component {...pageProps} />
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                key={router.route}
+                initial="pageInitial"
+                animate="pageAnimate"
+                variants={{
+                  pageInitial: {
+                    opacity: 0,
+                  },
+                  pageAnimate: {
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Component {...pageProps} />
+                <Toaster position="bottom-center" />
+              </motion.div>
+            </AnimatePresence>
           </ThemeProvider>
         </AppProvider>
       </SWRConfig>

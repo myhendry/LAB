@@ -4,8 +4,8 @@ import { Layout } from "../components/common";
 
 interface IProps {}
 
-const Second: NextPage<IProps> = () => {
-  return <Layout>Second</Layout>;
+const About: NextPage<IProps> = () => {
+  return <Layout>About</Layout>;
 };
 
-export default Second;
+export default About;

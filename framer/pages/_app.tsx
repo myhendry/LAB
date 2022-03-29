@@ -1,10 +1,14 @@
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { ToastContainer, Slide } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 import { DefaultSeoValues } from "../next-seo.config";
 import AppProvider from "../context/app-context";
@@ -39,6 +43,18 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         >
           <ThemeProvider defaultTheme="system">
             <Component {...pageProps} />
+            <ToastContainer
+              position="bottom-center"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              draggable={false}
+              pauseOnHover
+              transition={Slide}
+            />
+            <Toaster position="bottom-center" />
           </ThemeProvider>
         </motion.div>
       </AppProvider>

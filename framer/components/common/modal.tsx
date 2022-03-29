@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 //import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
 
 interface Props {
@@ -30,27 +31,44 @@ export const Modal = ({ show, onClose, onConfirm, children }: Props) => {
     onConfirm();
     onClose();
   };
-  const modalContent = show ? (
-    // <div className="bg-slate-500 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-30">
-    //   <div className="bg-primary px-16 py-14 rounded-md text-center m-20">
-    <div className="">
-      <div>
-        <h1 className="text-xl mb-4 font-bold text-info">{children}</h1>
-        <button
-          onClick={handleCloseClick}
-          className="bg-indigo-500 px-4 py-2 rounded-md text-md text-white"
+
+  const backdrop = {
+    visible: {
+      opacity: 1,
+    },
+    hidden: {
+      opacity: 0,
+    },
+  };
+
+  const modalContent = (
+    <AnimatePresence exitBeforeEnter>
+      {show ? (
+        <motion.div
+          className="bg-slate-500 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-30"
+          variants={backdrop}
+          initial="hidden"
+          animate="visible"
         >
-          Cancel
-        </button>
-        <button
-          onClick={handleConfirmClick}
-          className="bg-red-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
-        >
-          Ok
-        </button>
-      </div>
-    </div>
-  ) : null;
+          <div className="bg-primary px-16 py-14 rounded-md text-center m-20">
+            <h1 className="text-xl mb-4 font-bold text-info">{children}</h1>
+            <button
+              onClick={handleCloseClick}
+              className="bg-indigo-500 px-4 py-2 rounded-md text-md text-white"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleConfirmClick}
+              className="bg-red-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
+            >
+              Ok
+            </button>
+          </div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
 
   return mounted
     ? createPortal(modalContent, (document as any).getElementById("modal"))

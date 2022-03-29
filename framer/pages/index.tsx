@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-
+import { toast as notice } from "react-toastify";
+import toast from "react-hot-toast";
 import { Modal, NavBar, Spinner } from "../components/common";
 
 interface IProps {}
@@ -10,13 +11,39 @@ interface IProps {}
 const Home: NextPage<IProps> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const onClose = () => {
+  const notify1 = () => {
+    notice.error("This is very nice very nice very nice!", {
+      theme: "colored",
+    });
+  };
+
+  const notify2 = () =>
+    toast.custom(
+      <div className="alert alert-info shadow-lg">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="stroke-current flex-shrink-0 w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>New software update available.</span>
+        </div>
+      </div>
+    );
+
+  const onModalClose = () => {
     setShowModal(false);
   };
 
   /*
-  todo
-  - [ ] modal styling using with framer motion
 
   !# references
   Youtube The Net Ninja - Framer Motion (for React)
@@ -72,25 +99,27 @@ const Home: NextPage<IProps> = () => {
       /> */}
       <NavBar title="L A B" />
       <div className="p-5">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {
-              scale: 0.8,
-              opacity: 0,
-            },
-            visible: {
-              scale: 2,
-              opacity: 1,
-              transition: {
-                delay: 0.4,
+        <div>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {
+                scale: 0.5,
+                opacity: 0,
               },
-            },
-          }}
-        >
-          <h1 className="title">Wubba Lubba Dub Dub!</h1>
-        </motion.div>
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: {
+                  delay: 0.4,
+                },
+              },
+            }}
+          >
+            <h1 className="title">Wubba Lubba Dub Dub!</h1>
+          </motion.div>
+        </div>
         <motion.h1 animate={{ marginTop: 200, opacity: 0.2 }}>Hello</motion.h1>
 
         <div id="modal-example">
@@ -103,12 +132,22 @@ const Home: NextPage<IProps> = () => {
 
           <Modal
             show={showModal}
-            onClose={onClose}
+            onClose={onModalClose}
             onConfirm={() => console.log("success")}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A, labore?
             In ex, unde quo placeat assumenda illum earum reprehenderit cumque?
           </Modal>
+        </div>
+        <div id="react-toastify-example">
+          <button onClick={notify1} className="btn btn-primary my-2">
+            Alert 1
+          </button>
+        </div>
+        <div id="react-hot-toast-example">
+          <button onClick={notify2} className="btn btn-primary my-2">
+            Alert 2
+          </button>
         </div>
       </div>
 

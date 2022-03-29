@@ -9,8 +9,12 @@ interface IProps {
 
 const links = [
   {
-    title: "Second",
-    url: "/second",
+    title: "Contact",
+    url: "/contact",
+  },
+  {
+    title: "About",
+    url: "/about",
   },
 ];
 

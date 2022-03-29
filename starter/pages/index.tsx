@@ -1,9 +1,11 @@
+import { motion } from "framer-motion";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
-import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import Skeleton from "react-loading-skeleton";
 
-import { Modal, NavBar, Spinner, ThemeChanger } from "../components/common";
+import { Alert, Modal, NavBar, Spinner } from "../components/common";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -17,13 +19,35 @@ const Home: NextPage<IProps> = () => {
     setShowModal(false);
   };
 
+  const notify = () =>
+    toast.custom(<Alert message="Toast is a Success!" type="warning" />);
+
   return (
     <>
       {/* <NextSeo
 
       /> */}
       <NavBar title="L A B" />
-      <div className="p-5">
+      <div className="p-5 space-y-2">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {
+              scale: 0.8,
+              opacity: 0,
+            },
+            visible: {
+              scale: 1,
+              opacity: 1,
+              transition: {
+                delay: 0.4,
+              },
+            },
+          }}
+        >
+          <h1 className="title">Wubba Lubba Dub Dub!</h1>
+        </motion.div>
         <div id="modal-example">
           <button
             onClick={() => setShowModal(true)}
@@ -40,9 +64,18 @@ const Home: NextPage<IProps> = () => {
             In ex, unde quo placeat assumenda illum earum reprehenderit cumque?
           </Modal>
         </div>
+        <div id="toast-example">
+          <button onClick={notify} className="btn btn-primary">
+            Toast
+          </button>
+        </div>
+        <div id="spinner-example">
+          <Spinner />
+        </div>
+        <div id="skeleton-example">
+          <Skeleton count={3} />
+        </div>
       </div>
-
-      <Spinner />
     </>
   );
 };

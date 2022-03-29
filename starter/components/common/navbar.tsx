@@ -9,14 +9,18 @@ interface IProps {
 
 const links = [
   {
-    title: "Second",
-    url: "/second",
+    title: "Contact",
+    url: "/contact",
+  },
+  {
+    title: "About",
+    url: "/about",
   },
 ];
 
 export const NavBar: NextPage<IProps> = ({ title }) => {
   return (
-    <div className="navbar my-2 mb-2 shadow-lg rounded-box">
+    <div className="navbar my-2 mb-2 shadow-lg">
       <div className="flex-none">
         <button className="btn btn-square btn-ghost">
           <svg

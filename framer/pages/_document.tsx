@@ -23,6 +23,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
           <div id="modal" />
+          <div id="alert" />
         </body>
       </Html>
     );

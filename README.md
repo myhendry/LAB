@@ -1,16 +1,19 @@
 ### TODOS
 
+- [ ] Framer Motion
+- [ ] Supabase
 - [ ] Text Search
 - [ ] Like Project
 - [ ] Group ID search (Find in Array)
-- [ ] Framer Motion
 - [ ] Images
+- [ ] Next-GraphQL
 - [ ] SWR Infinite Pagination - Backend (Cursor-Based)
 - [ ] SWR Infinite Pagination - Frontend (Cursor-Based)
 - [ ] Next-Auth HOC
 - [ ] Nextjs with Firebase
 - [ ] Next-Auth Roles
 - [ ] Admin
+- [ ] React-Three-Fiber
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
 - [x] SWR Infinite Pagination - Backend (Offset-Based: Skip & Limit)
@@ -33,8 +36,8 @@
 - [x] Nextjs-Redux
 - [x] Redux Typings
 - [x] Formik Form CRUD Comments
-- [ ] Mongoose Models Race Condition
 
+- [ ] Docker
 - [ ] Github Actions
 
 [Vercel Next Examples](https://github.com/vercel/next.js/tree/canary/examples)

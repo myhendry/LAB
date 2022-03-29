@@ -5,5 +5,6 @@ export * from "./typo";
 export * from "./layout";
 export * from "./spinner";
 export * from "./modal";
+export * from "./alert";
 export * from "./menu";
 export * from "./theme-changer";
