@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 import { DefaultSeoValues } from "../next-seo.config";
 import AppProvider from "../context/app-context";
@@ -12,24 +13,36 @@ import AppProvider from "../context/app-context";
 //   console.log("Metric", metric);
 // }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
-    <main className="container mx-auto space-y-5">
-      <SWRConfig
-        value={{
-          fetcher: (url) => axios.get(url).then((r) => r.data),
-          //* using fetch instead of axios setup
-          // fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
-        }}
-      >
-        <DefaultSeo {...DefaultSeoValues} />
-        <AppProvider>
+    <SWRConfig
+      value={{
+        fetcher: (url) => axios.get(url).then((r) => r.data),
+        //* using fetch instead of axios setup
+        // fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
+      }}
+    >
+      <DefaultSeo {...DefaultSeoValues} />
+      <AppProvider>
+        <motion.div
+          key={router.route}
+          initial="pageInitial"
+          animate="pageAnimate"
+          variants={{
+            pageInitial: {
+              opacity: 0,
+            },
+            pageAnimate: {
+              opacity: 1,
+            },
+          }}
+        >
           <ThemeProvider defaultTheme="system">
             <Component {...pageProps} />
           </ThemeProvider>
-        </AppProvider>
-      </SWRConfig>
-    </main>
+        </motion.div>
+      </AppProvider>
+    </SWRConfig>
   );
 }
 

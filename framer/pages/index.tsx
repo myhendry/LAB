@@ -1,12 +1,9 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { Modal, NavBar, Spinner } from "../components/common";
-
-// https://daisyui.com/components/hero
-// https://github.com/garmeeh/next-seo
 
 interface IProps {}
 
@@ -18,17 +15,54 @@ const Home: NextPage<IProps> = () => {
   };
 
   /*
-  # initial
+  todo
+  - [ ] modal styling using with framer motion
+
+  !# references
+  Youtube The Net Ninja - Framer Motion (for React)
+  https://youtu.be/Imyi2V7WgGU
+  https://www.freecodecamp.org/news/how-to-add-interactive-animations-and-page-transitions-to-a-next-js-web-app-with-framer-motion/
+
+  !# summary
+  initial, animate, transition, variants
+  - use array to apply keyframes
+
+  !# initial
   - opacity
   - x
   - y
 
-
-  # transition
+  !# transition
   - delay
   - duration
+  - yoyo // 
   - type: 'tween' / 'spring'
   - stiffness (number) // can only be used with 'spring'
+  - mass // can only be used with 'spring' type
+  - damping // can only be used with 'spring' type
+  - when: 'beforeChildren',
+  - staggerChildren (number)
+
+  !# whileHover
+  - scale
+  - textShadow
+  - boxShadow
+  - originX
+  - color
+
+  !# Animate Presence
+  <AnimatePresence>
+            {showTitle && (
+              <motion.h2
+                exit={{
+                  y: -1000,
+                  opacity: 0,
+                }}
+              >
+                Thank you for your Order
+              </motion.h2>
+            )}
+  </AnimatePresence>
   */
 
   return (
@@ -66,6 +100,7 @@ const Home: NextPage<IProps> = () => {
           >
             Modal
           </button>
+
           <Modal
             show={showModal}
             onClose={onClose}

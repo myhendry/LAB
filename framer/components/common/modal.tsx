@@ -31,8 +31,10 @@ export const Modal = ({ show, onClose, onConfirm, children }: Props) => {
     onClose();
   };
   const modalContent = show ? (
-    <div className="bg-slate-500 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-30">
-      <div className="bg-primary px-16 py-14 rounded-md text-center m-20">
+    // <div className="bg-slate-500 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 z-30">
+    //   <div className="bg-primary px-16 py-14 rounded-md text-center m-20">
+    <div className="">
+      <div>
         <h1 className="text-xl mb-4 font-bold text-info">{children}</h1>
         <button
           onClick={handleCloseClick}
