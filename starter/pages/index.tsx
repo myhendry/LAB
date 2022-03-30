@@ -4,8 +4,10 @@ import { NextSeo } from "next-seo";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
+import { FaBeer } from "react-icons/fa";
 
 import { Alert, Modal, NavBar, Spinner } from "../components/common";
+import Image from "next/image";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -48,6 +50,13 @@ const Home: NextPage<IProps> = () => {
         >
           <h1 className="title">Wubba Lubba Dub Dub!</h1>
         </motion.div>
+        <motion.div
+          id="react-icons-example"
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        >
+          <FaBeer size={60} />
+        </motion.div>
         <div id="modal-example">
           <button
             onClick={() => setShowModal(true)}
@@ -74,6 +83,18 @@ const Home: NextPage<IProps> = () => {
         </div>
         <div id="skeleton-example">
           <Skeleton count={3} />
+        </div>
+
+        <div id="image">
+          {/* https://github.com/vercel/next.js/tree/canary/examples/image-component */}
+          {/* https://pixabay.com/ */}
+          {/* https://unsplash.com/ */}
+          <Image
+            src="https://cdn.pixabay.com/photo/2022/03/23/21/27/road-7087957_960_720.jpg"
+            alt="roadless-travelled"
+            height={250}
+            width={200}
+          />
         </div>
       </div>
     </>

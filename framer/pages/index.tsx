@@ -4,12 +4,87 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast as notice } from "react-toastify";
 import toast from "react-hot-toast";
-import { Modal, NavBar, Spinner } from "../components/common";
+import { FaBeer } from "react-icons/fa";
+
+import { Loader, Modal, NavBar, Spinner } from "../components/common";
 
 interface IProps {}
 
+/*
+  !# references
+  Youtube The Net Ninja - Framer Motion (for React)
+  https://youtu.be/Imyi2V7WgGU
+  https://www.freecodecamp.org/news/how-to-add-interactive-animations-and-page-transitions-to-a-next-js-web-app-with-framer-motion/
+
+  !# summary
+  initial, animate, transition, variants
+  - use array to apply keyframes
+
+  !# initial / animate
+  - opacity
+  - x
+  - y
+  - pathLength
+
+  !# transition
+  - delay
+  - duration
+  - yoyo // 
+  - type: 'tween' / 'spring'
+  - stiffness (number) // can only be used with 'spring'
+  - mass // can only be used with 'spring' type
+  - damping // can only be used with 'spring' type
+  - when: 'beforeChildren',
+  - staggerChildren (number)
+  - ease: "easeInOut" |
+
+  !# whileHover
+  - scale
+  - textShadow
+  - boxShadow
+  - originX
+  - color
+
+  !# Animate Presence
+  <AnimatePresence>
+            {showTitle && (
+              <motion.h2
+                exit={{
+                  y: -1000,
+                  opacity: 0,
+                }}
+              >
+                Thank you for your Order
+              </motion.h2>
+            )}
+  </AnimatePresence>
+  */
+
 const Home: NextPage<IProps> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const svgVariants = {
+    hidden: { rotate: -180 },
+    visible: {
+      rotate: 0,
+      transition: { duration: 1 },
+    },
+  };
+
+  const pathVariants = {
+    hidden: {
+      opacity: 0,
+      pathLength: 0,
+    },
+    visible: {
+      opacity: 1,
+      pathLength: 1,
+      transition: {
+        duration: 2,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   const notify1 = () => {
     notice.error("This is very nice very nice very nice!", {
@@ -43,55 +118,6 @@ const Home: NextPage<IProps> = () => {
     setShowModal(false);
   };
 
-  /*
-
-  !# references
-  Youtube The Net Ninja - Framer Motion (for React)
-  https://youtu.be/Imyi2V7WgGU
-  https://www.freecodecamp.org/news/how-to-add-interactive-animations-and-page-transitions-to-a-next-js-web-app-with-framer-motion/
-
-  !# summary
-  initial, animate, transition, variants
-  - use array to apply keyframes
-
-  !# initial
-  - opacity
-  - x
-  - y
-
-  !# transition
-  - delay
-  - duration
-  - yoyo // 
-  - type: 'tween' / 'spring'
-  - stiffness (number) // can only be used with 'spring'
-  - mass // can only be used with 'spring' type
-  - damping // can only be used with 'spring' type
-  - when: 'beforeChildren',
-  - staggerChildren (number)
-
-  !# whileHover
-  - scale
-  - textShadow
-  - boxShadow
-  - originX
-  - color
-
-  !# Animate Presence
-  <AnimatePresence>
-            {showTitle && (
-              <motion.h2
-                exit={{
-                  y: -1000,
-                  opacity: 0,
-                }}
-              >
-                Thank you for your Order
-              </motion.h2>
-            )}
-  </AnimatePresence>
-  */
-
   return (
     <>
       {/* <NextSeo
@@ -119,6 +145,34 @@ const Home: NextPage<IProps> = () => {
           >
             <h1 className="title">Wubba Lubba Dub Dub!</h1>
           </motion.div>
+        </div>
+        <motion.div
+          id="react-icons-example"
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        >
+          <FaBeer size={60} />
+        </motion.div>
+        <div id="svg-framer-example" className="flex-none">
+          <button className="btn btn-square btn-ghost">
+            <motion.svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="inline-block w-6 h-6 stroke-current"
+              variants={svgVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                variants={pathVariants}
+              ></motion.path>
+            </motion.svg>
+          </button>
         </div>
         <motion.h1 animate={{ marginTop: 200, opacity: 0.2 }}>Hello</motion.h1>
 
@@ -152,6 +206,7 @@ const Home: NextPage<IProps> = () => {
       </div>
 
       <Spinner />
+      <Loader />
     </>
   );
 };

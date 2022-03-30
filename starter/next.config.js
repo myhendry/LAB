@@ -4,7 +4,7 @@ require("dotenv-safe").config();
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["images.unsplash.com", "images.ctfassets.net"],
+    domains: ["images.unsplash.com", "images.ctfassets.net", "cdn.pixabay.com"],
   },
 };
 

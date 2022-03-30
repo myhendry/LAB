@@ -1,13 +1,12 @@
 ### TODOS
 
-- [ ] Framer Motion
 - [ ] Supabase
   - [ ] Supabase Auth
   - [ ] Supabase CRUD
 - [ ] Text Search
 - [ ] Like Project
 - [ ] Group ID search (Find in Array)
-- [ ] Images
+- [ ] Upload Images
 - [ ] Next-GraphQL
 - [ ] SWR Infinite Pagination - Backend (Cursor-Based)
 - [ ] SWR Infinite Pagination - Frontend (Cursor-Based)
@@ -18,6 +17,7 @@
 - [ ] React-Three-Fiber
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
+- [x] Framer Motion
 - [x] SWR Infinite Pagination - Backend (Offset-Based: Skip & Limit)
 - [x] SWR Infinite Pagination - Frontend (Offset-Based)
 - [x] Tailwind Width
