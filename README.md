@@ -2,6 +2,8 @@
 
 - [ ] Framer Motion
 - [ ] Supabase
+  - [ ] Supabase Auth
+  - [ ] Supabase CRUD
 - [ ] Text Search
 - [ ] Like Project
 - [ ] Group ID search (Find in Array)
