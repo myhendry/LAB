@@ -5,7 +5,7 @@ import { Stats, OrbitControls } from "@react-three/drei";
 import { Physics } from "@react-three/cannon";
 
 import { Layout } from "../components/common";
-import { Box } from "../components/3d";
+import { BoundingBox } from "../components/3d";
 
 interface IProps {}
 

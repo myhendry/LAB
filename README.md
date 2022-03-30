@@ -1,5 +1,6 @@
 ### TODOS
 
+- [ ] React-Three-Fiber
 - [ ] Supabase
   - [ ] Supabase Auth
   - [ ] Supabase CRUD
@@ -14,7 +15,6 @@
 - [ ] Nextjs with Firebase
 - [ ] Next-Auth Roles
 - [ ] Admin
-- [ ] React-Three-Fiber
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
 - [x] Framer Motion
