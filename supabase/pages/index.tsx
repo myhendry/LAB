@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 
 import { supabase } from "../utils/client";
-import { Alert, Modal, NavBar, Spinner } from "../components/common";
+import { Alert, Modal, Navbar, Spinner } from "../components/common";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -39,7 +39,8 @@ const Home: NextPage<IProps> = () => {
       {/* <NextSeo
 
       /> */}
-      <NavBar title="L A B" />
+      {/* <NavBar title="L A B" /> */}
+      <Navbar />
       <div className="p-5 space-y-2">
         <motion.div
           initial="hidden"

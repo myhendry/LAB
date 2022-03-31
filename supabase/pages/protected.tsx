@@ -4,8 +4,8 @@ import { Layout } from "../components/common";
 
 interface IProps {}
 
-const Contact: NextPage<IProps> = () => {
-  return <Layout>Contact</Layout>;
+const Protected: NextPage<IProps> = () => {
+  return <Layout>Protected</Layout>;
 };
 
-export default Contact;
+export default Protected;

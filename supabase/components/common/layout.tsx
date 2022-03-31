@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar } from "./navbar";
+import { Navbar } from "./navbar";
 
 type Props = {
   title?: string;
@@ -8,7 +8,7 @@ type Props = {
 export const Layout: React.FC<Props> = ({ children, title = "L A B" }) => {
   return (
     <>
-      <NavBar title={title} />
+      <Navbar title={title} />
       <div className="p-5">{children}</div>
     </>
   );
