@@ -8,6 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
+    "@tailwindcss/forms": "^0.5.0",
     "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography": "^0.5.1",
     "contentful": "^9.1.7",
@@ -15,15 +17,18 @@
     "dotenv": "^8.6.0",
     "dotenv-safe": "^8.2.0",
     "framer-motion": "^6.2.8",
+    "moment": "^2.29.1",
     "next": "12.0.10",
     "next-seo": "^5.1.0",
     "next-themes": "^0.0.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.29.0",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-loading-skeleton": "^3.0.3",
-    "swr": "^1.2.2"
+    "swr": "^1.2.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/dotenv-safe": "^8.1.2",

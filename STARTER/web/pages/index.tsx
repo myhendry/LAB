@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import { FaBeer } from "react-icons/fa";
 
-import { Alert, Modal, NavBar, Spinner } from "../components/common";
+import { Alert, Modal, Navbar, Spinner } from "../components/common";
 import Image from "next/image";
 
 // https://daisyui.com/components/hero
@@ -29,7 +29,7 @@ const Home: NextPage<IProps> = () => {
       {/* <NextSeo
 
       /> */}
-      <NavBar title="L A B" />
+      <Navbar title="L A B" />
       <div className="p-5 space-y-2">
         <motion.div
           initial="hidden"
