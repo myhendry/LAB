@@ -1,9 +1,11 @@
 ### TODOS
 
-- [ ] Navbar Responsive Styling
-- [ ] Supabase
-  - [ ] Supabase Auth
-  - [ ] Supabase CRUD
+- Supabase
+  - [x] Supabase-Next Auth
+  - [ ] Supabase-Next CRUD
+  - [ ] Supabase-RN Auth
+  - [ ] Supabase-RN CRUD
+  - [ ] Supabase-Roles
 - [ ] Text Search
 - [ ] Like Project
 - [ ] Group ID search (Find in Array)
@@ -18,6 +20,7 @@
 - [ ] React-Three-Fiber
 
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
+- [x] Navbar Responsive Styling
 - [x] Framer Motion
 - [x] SWR Infinite Pagination - Backend (Offset-Based: Skip & Limit)
 - [x] SWR Infinite Pagination - Frontend (Offset-Based)

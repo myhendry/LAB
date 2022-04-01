@@ -1,15 +1,18 @@
-import { NextPage } from "next";
+import { useEffect, useState } from "react";
+import { NextPage, NextPageContext } from "next";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import { supabase } from "../utils/client";
 import { Layout } from "../components/common";
+import { useAuth } from "../context/auth-context";
+import { useRouter } from "next/router";
 
 interface IProps {}
 
 interface IFormInputs {
   email: string;
-  age: number;
 }
 
 const schema = yup
@@ -19,6 +22,17 @@ const schema = yup
   .required();
 
 const Auth: NextPage<IProps> = () => {
+  const { push } = useRouter();
+  const [submitted, setSubmitted] = useState<boolean>(false);
+  const { loginWithMagicLink, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      push("/protected");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
   const {
     register,
     handleSubmit,
@@ -27,10 +41,31 @@ const Auth: NextPage<IProps> = () => {
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data: IFormInputs) => {
-    console.log(data);
-    reset();
+
+  const onSubmit = async (data: IFormInputs) => {
+    try {
+      const { error } = await loginWithMagicLink(data.email);
+
+      if (error) {
+        console.log(error);
+      }
+
+      setSubmitted(true);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (submitted) {
+    return (
+      <Layout>
+        <div className="flex justify-center">
+          <h1>Please check your email to sign in</h1>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -53,5 +88,15 @@ const Auth: NextPage<IProps> = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps({ req }: NextPageContext) {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+
+  if (user) {
+    return { props: {}, redirect: { destination: "/protected" } };
+  }
+
+  return { props: { user } };
+}
 
 export default Auth;

@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 
 import { supabase } from "../utils/client";
 import { Alert, Modal, Navbar, Spinner } from "../components/common";
+import { useAuth } from "../context/auth-context";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -18,6 +19,8 @@ const Home: NextPage<IProps> = () => {
   const [notes, setNotes] = useState<{ id: number; title: string }[] | null>(
     []
   );
+  const { isAuthenticated } = useAuth();
+  console.log("isAuthenticated", isAuthenticated);
 
   useEffect(() => {
     const getNotes = async () => {

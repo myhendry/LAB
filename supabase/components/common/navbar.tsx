@@ -3,8 +3,11 @@ import React from "react";
 import {
   AiFillAccountBook,
   AiFillAlert,
+  AiFillAliwangwang,
   AiFillAmazonCircle,
+  AiFillBell,
 } from "react-icons/ai";
+import { useAuth } from "../../context/auth-context";
 
 import { ThemeChanger } from "./theme-changer";
 
@@ -18,22 +21,28 @@ const links = [
     url: "/auth",
     icon: <AiFillAccountBook size={50} />,
     tip: "Auth",
+    isAuthShow: "no",
   },
   {
     title: "Protected",
     url: "/protected",
     icon: <AiFillAlert size={50} />,
     tip: "Protected",
+    isAuthShow: "yes",
   },
   {
     title: "About",
     url: "/about",
     icon: <AiFillAmazonCircle size={50} />,
     tip: "About",
+    isAuthShow: "always",
   },
 ];
 
 export const Navbar = ({ title = "L A B" }: Props) => {
+  const { isAuthenticated, signOut } = useAuth();
+  console.log("nav isAuthenticated", isAuthenticated);
+
   return (
     <div className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
@@ -82,6 +91,15 @@ export const Navbar = ({ title = "L A B" }: Props) => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  onClick={signOut}
+                  className="cursor-pointer tooltip tooltip-left"
+                  data-tip="Exit"
+                >
+                  <AiFillAliwangwang size={40} color="red" />
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
