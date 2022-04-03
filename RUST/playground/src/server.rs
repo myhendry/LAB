@@ -30,6 +30,7 @@ impl<'a> Server<'a> {
 						Ok(_) => {
 							println!("Received a request: {}", String::from_utf8_lossy(&buffer));
 							Request::try_from(&buffer[..]);
+							todo!()
 						},
 						Err(e) => println!("Failed to read from connection: {}", e),
 					}

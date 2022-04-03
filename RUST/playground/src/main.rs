@@ -1,15 +1,15 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
-use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex};
+use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::Display};
 
 
 mod server;
 use server::*;
 
 mod http;
-use http::{Request, Method};
+use http::{Request, Method, StatusCode, Response};
 
-// todo L38
+// todo L48
 
 
 // !
@@ -230,24 +230,24 @@ fn main() {
         //let mut age = rw1.age.lock().unwrap();
         //println!("{:?}", rw1);
 
-        println!("{:?}", Gender::Male);
+        // println!("{:?}", Gender::Male);
 
         let g1 = Gender::Female;
 
         match g1 {
             Gender::Male => {
-                println!("{}", "Male Only");
+                // println!("{}", "Male Only");
             },
             Gender::Female => {
-                println!("{}", "Female Only");
+                // println!("{}", "Female Only");
             }
         }    
         
         let s1 = String::from("tim");
         let s2 = &s1;
-        println!("{:?}", s2);
+        // println!("{:?}", s2);
         let s3 = &s1[3..];
-        println!("{:?}", s3);
+        // println!("{:?}", s3);
         let s4 = "1234"; // baked into the binary
 
         let rr1 = Request{
@@ -255,20 +255,156 @@ fn main() {
             query_string: Some("test2"),
             method: Method::GET,
         };
-        println!("{:?}", rr1);
+        // println!("{:?}", rr1);
         if let Some(x) = rr1.query_string {
-            println!("x is {}", x);
+            // println!("x is {}", x);
         }
 
         let a1 = [1, 2, 3];
-        println!("{:?}", a1);
+        // println!("{:?}", a1);
         let mut av1 = vec![1, 3, 30];
         av1.push(1000);
-        println!("{:?}", av1);
+        // println!("{:?}", av1);
 
         let server = Server::new("127.0.0.1:8000");
-        server.run();
+        // server.run();
+
+        let x = op_func("John");
+        
+        if let Some(y) = x {
+            // println!("{}", y);
+        }
+
+        let xx1 = x.unwrap();
+        // println!("{}", xx1); 
+
+        // match x {
+        //     Some(y) => println!("{}", y),
+        //     None => println!("None")
+        // }
+
+        let vvv1 = vec![String::from("Andie"), String::from("James"), String::from("Keith")];
+        // for item in &vvv1 {
+        //     println!("{}", item);
+        // }
+        // println!("{:?}", vvv1);
+        
+        let res1: Vec<_>=vv1.iter().map(|x| x + 10).collect();
+        // println!("{:?}", res1);
+
+        // let res2: Vec<_> = vvv1.iter().enumerate().map(|(x, y)| {
+        //     println!("{}", x);
+        //     println!("{}", y);
+        //     format!("hello {}", *y)
+        // }).collect();
+        // println!("{:?}", res2);
+        
+        // for v in &vvv1 {
+        //     println!("{}", v);
+        // }
+
+        let mut hmm1 = HashMap::new();
+
+        for v in &vvv1 {
+            hmm1.insert(v, 1000);            
+        }
+
+        // println!("{:?}", hmm1[&"Keith".to_string()]);
+        // println!("{:?}", hmm1.get(&"Keith".to_string()));
+        // println!("{:?}", vvv1);
+
+        // if let Some(x) = hmm1.get(&"Keith".to_string()) {
+        //     println!("{}", x);
+        // }
+        
+        // let mut letters = HashMap::new();
+
+        // for ch in "this is a long story".chars() {
+        //     let counter = letters.entry(ch).or_insert(0);
+        //     *counter += 1;
+        //     println!("{} {}", ch, counter);
+        // }
+
+        // let sw1 = "a=1&b=2&c&d=&e===&d=7&d=abc";
+        // for sub_str in sw1.split('&') {
+        //     println!("{}", sub_str);
+        // }
+
+        // let sc1 = StatusCode::NotFound;
+        // //println!("{}", sc1.reason_phrase());
+        // //println!("{}", sc1);
+
+        // let rs1 = Response::new(sc1, Some("Ka".to_string()));
+
+        // let mut aa1 = Alien::new("Alvin", 26, vec![Skill::Read, Skill::Talk]);
+        // println!("{:?}", aa1);
+
+        // aa1.add_new_skills(Skill::Sing);
+        // println!("{:?}", aa1);
+
+        // let ra1 = aa1.skills.get(1);
+        // if let Some(r) = ra1 {
+        //     println!("{}", r);
+        //     println!("{}", r.reason_phrase());
+        // };
+
+        
     }
+
+#[derive(Debug, Clone, Copy)]
+pub enum Skill {
+    Read = 100,
+    Talk = 200,
+    Sing = 300,
+}
+
+impl Skill {
+    fn reason_phrase(&self) -> &str {
+        match self {
+            Self::Read => "read",
+            Self::Talk => "talk",
+            Self::Sing => "sing",
+        }
+    }
+}
+
+impl Display for Skill {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", *self as u16)
+    }
+}
+
+#[derive(Debug)]
+struct Alien<'a> {
+    name: &'a str,
+    age: u32,
+    skills: Vec<Skill>,
+}
+
+impl<'a> Alien<'a> {
+    pub fn new(name: &'a str, age: u32, skills: Vec<Skill>) -> Self {
+        Self {
+            name, 
+            age,
+            skills,
+        }
+    }
+}
+
+impl<'a> Alien<'a> {
+    pub fn add_new_skills(&mut self, skill: Skill) {
+        self.skills.push(skill)
+    }
+}
+
+
+fn op_func(name: &str) -> Option<&str> {
+    match name {
+        "John" => Some("J"),
+        "Keith" => Some("K"),
+        _ => None,
+    }
+}
 
 #[derive(Debug)]
 struct RW {
