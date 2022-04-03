@@ -70,13 +70,13 @@ impl ParseError {
 	}
 }
 
-// impl Error for ParseError {}
+impl Error for ParseError {}
 
-// impl Display for ParseError {
-// 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-// 	    write!(f, "{}", self.message())
-// 	}
-// }
+impl Display for ParseError {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+	    write!(f, "{}", self.message())
+	}
+}
 
 // impl Debug for ParseError {
 // 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

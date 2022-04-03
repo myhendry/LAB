@@ -267,7 +267,7 @@ fn main() {
         // println!("{:?}", av1);
 
         let server = Server::new("127.0.0.1:8000");
-        // server.run();
+        server.run();
 
         let x = op_func("John");
         
@@ -331,8 +331,8 @@ fn main() {
         // }
 
         // let sc1 = StatusCode::NotFound;
-        // //println!("{}", sc1.reason_phrase());
-        // //println!("{}", sc1);
+        // // //println!("{}", sc1.reason_phrase());
+        // // //println!("{}", sc1);
 
         // let rs1 = Response::new(sc1, Some("Ka".to_string()));
 
@@ -348,7 +348,18 @@ fn main() {
         //     println!("{}", r.reason_phrase());
         // };
 
-        
+        // for item in &aa1.skills {
+        //     println!("{:?}", item);
+        // }
+
+        // println!("{:?}", aa1);
+
+        // let vr1: Vec<_> = aa1.skills.iter().map(|x| {
+        //     x
+        // }).collect();
+        // println!("{:?}", vr1);
+
+        // aa1.skills.iter().for_each(|x| println!("{:?}", x)); 
     }
 
 #[derive(Debug, Clone, Copy)]

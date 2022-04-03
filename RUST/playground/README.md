@@ -44,6 +44,12 @@ a.iter().map(|x| ...); // iter, into_iter()
 a.iter_mut().for_each(|x| ...) // iter_mut()
 let aa = a.iter() ... aa.next();
 
+## Traits
+
+stream: &mut dyn Write // dynamic dispatch: There will be runtime costs so slower as it needs to resolve the concrete type at RUN TIME
+
+stream: &mut impl Write // static dispatch: its faster as concrete type is resolved at COMPILE TIME
+
 ## Threads
 
 ### Cells & RefCells
@@ -56,7 +62,22 @@ let aa = a.iter() ... aa.next();
 
 mod, use, use crate::, use super::
 
+## Libraries
+
+std::net
+std::io
+std::fmt
+std::convert
+std::str
+std::collections
+std::error
+std::num
+std::cell
+std::sync
+
 ## Miscellaneous
+
+as_ref(); // &Option<T> becomes Option<&T>
 
 todo!();
 unimplemented!();
