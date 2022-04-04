@@ -267,7 +267,7 @@ fn main() {
         // println!("{:?}", av1);
 
         let server = Server::new("127.0.0.1:8000");
-        server.run();
+        // server.run();
 
         let x = op_func("John");
         
@@ -336,8 +336,7 @@ fn main() {
 
         // let rs1 = Response::new(sc1, Some("Ka".to_string()));
 
-        // let mut aa1 = Alien::new("Alvin", 26, vec![Skill::Read, Skill::Talk]);
-        // println!("{:?}", aa1);
+        let mut aa1 = Alien::new("Alvin", 26, vec![Skill::Read, Skill::Talk]);
 
         // aa1.add_new_skills(Skill::Sing);
         // println!("{:?}", aa1);
@@ -360,7 +359,39 @@ fn main() {
         // println!("{:?}", vr1);
 
         // aa1.skills.iter().for_each(|x| println!("{:?}", x)); 
+
+        // let ae1=    aa1.eat();
+        // if let Some(x) = ae1 {
+        //     println!("{}", x);
+        // }
+        // analyze_eat(&aa1);
+        // analyze_eat(&aa1);
+        // println!("{:?}", aa1);
+        // todo
+        let ccc1 = |x: i32| {
+            x + 1000
+        };
+        // println!("{}", ccc1(50));
+
+        
     }
+
+fn analyze_eat(creature: &impl Creature) {
+    let res = creature.eat();
+    match res {
+        Some(s) => {
+            println!("{}", "I am full")
+
+        },
+        None => {
+            println!("{}", "I am hungry")
+        }
+    }
+}
+
+trait Creature {
+    fn eat(&self) -> Option<&str>;
+}
 
 #[derive(Debug, Clone, Copy)]
 pub enum Skill {
@@ -390,6 +421,17 @@ struct Alien<'a> {
     name: &'a str,
     age: u32,
     skills: Vec<Skill>,
+}
+
+impl<'a> Creature for Alien<'a> {
+    fn eat(&self) -> Option<&str> {
+        match self.name {
+            "Jerry" => Some("Jerry Yeah"),
+            "John" => Some("John Yeah"),
+            "Alvin" => Some("Alvin Yeah"),
+            _ => None,
+        }
+    }
 }
 
 impl<'a> Alien<'a> {

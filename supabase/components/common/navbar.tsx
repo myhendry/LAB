@@ -15,27 +15,32 @@ type Props = {
   title?: string;
 };
 
+enum PageType {
+  Authenticated,
+  Open,
+}
+
 const links = [
-  {
-    title: "Auth",
-    url: "/auth",
-    icon: <AiFillAccountBook size={50} />,
-    tip: "Auth",
-    isAuthShow: "no",
-  },
   {
     title: "Protected",
     url: "/protected",
     icon: <AiFillAlert size={50} />,
     tip: "Protected",
-    isAuthShow: "yes",
+    isAuthPage: true,
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: <AiFillAmazonCircle size={50} />,
+    tip: "Profile",
+    isAuthPage: true,
   },
   {
     title: "About",
     url: "/about",
     icon: <AiFillAmazonCircle size={50} />,
     tip: "About",
-    isAuthShow: "always",
+    isAuthPage: false,
   },
 ];
 
@@ -52,15 +57,30 @@ export const Navbar = ({ title = "L A B" }: Props) => {
           </a>
         </Link>
       </div>
+
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0">
-          {links.map((l) => (
-            <li key={l.title} className="hidden md:block">
-              <Link href={l.url}>
-                <a className="cursor-pointer">{l.title}</a>
+          {links
+            // .filter((l) => l.isAuthPage === isAuthenticated)
+            .map((l) => (
+              <li key={l.title} className="hidden md:block">
+                <Link href={l.url}>
+                  <a className="cursor-pointer">{l.title}</a>
+                </Link>
+              </li>
+            ))}
+
+          {isAuthenticated ? (
+            <li className="hidden md:block">
+              <a onClick={signOut}>Exit</a>
+            </li>
+          ) : (
+            <li className="hidden md:block">
+              <Link href="/auth">
+                <a className="cursor-pointer">Auth</a>
               </Link>
             </li>
-          ))}
+          )}
           <li tabIndex={0} className="md:hidden">
             <a>
               <svg
@@ -91,15 +111,28 @@ export const Navbar = ({ title = "L A B" }: Props) => {
                   </Link>
                 </li>
               ))}
-              <li>
-                <a
-                  onClick={signOut}
-                  className="cursor-pointer tooltip tooltip-left"
-                  data-tip="Exit"
-                >
-                  <AiFillAliwangwang size={40} color="red" />
-                </a>
-              </li>
+              {isAuthenticated ? (
+                <li>
+                  <a
+                    onClick={signOut}
+                    className="cursor-pointer tooltip tooltip-left"
+                    data-tip="Exit"
+                  >
+                    <AiFillAliwangwang size={40} color="red" />
+                  </a>
+                </li>
+              ) : (
+                <li>
+                  <Link href="/auth">
+                    <a
+                      className="cursor-pointer tooltip tooltip-left"
+                      data-tip="Auth"
+                    >
+                      <AiFillAccountBook size={40} color="green" />
+                    </a>
+                  </Link>
+                </li>
+              )}
             </ul>
           </li>
         </ul>

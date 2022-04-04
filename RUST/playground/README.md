@@ -46,9 +46,60 @@ let aa = a.iter() ... aa.next();
 
 ## Traits
 
+```
 stream: &mut dyn Write // dynamic dispatch: There will be runtime costs so slower as it needs to resolve the concrete type at RUN TIME
 
 stream: &mut impl Write // static dispatch: its faster as concrete type is resolved at COMPILE TIME
+
+// Using Generics instead of impl Traits
+function prints_it<T: Display + Into<String>>(input: T ) {
+println!("You can print it {}", input);
+}
+
+// Using impl Traits instead of Generics
+function prints_it(input: impl Display + Into<String>) {
+println!("You can print it {}", input);
+}
+
+// () -> impl Trait; return a Closure
+FnOnce - uses what is passed in and drops it (destroys it)
+FnMut - it can modify it
+Fn - can take by reference (generally choose this)
+function returns_a_closure(input: &str) -> impl FnMut(i32) -> i32 {
+        match input {
+                "double" => |mut number| {
+                        number *= 2;
+                        println!("Double number is: {}", number);
+                        number
+                },
+                "triple" => |mut number| {
+                        number *= 3;
+                        println!("Triple number is: {}", number);
+                        number
+                },
+                _ => |number| {
+                        println!("Sorry, I only understand double or triple {}", number);
+                        number
+                }
+        }
+
+}
+
+```
+
+## Closures
+
+```
+fn change<F>(&mut self, f: F)
+where F: Fn(&mut Self) {
+        f(self);
+};
+
+fn city_data<F>(&mut self, mut f: F)
+where F: FnMut(&mut Vec<u32>, &mut Vec<u32>) {
+        f(&mut self.years, &mut self.populations);
+}
+```
 
 ## Threads
 

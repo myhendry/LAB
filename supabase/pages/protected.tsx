@@ -17,14 +17,15 @@ interface User {
 }
 
 const Protected: NextPage<IProps> = ({ user }) => {
-  const { signOut } = useAuth();
+  // const { signOut } = useAuth();
 
   return (
     <Layout>
       <h1>Protected</h1>
-      <button onClick={signOut} className="btn btn-primary">
+      {/* <button onClick={signOut} className="btn btn-primary">
         Log Out
-      </button>
+      </button> */}
+      <p>{user.email}</p>
     </Layout>
   );
 };
