@@ -24,10 +24,20 @@ const Home: NextPage<IProps> = () => {
 
   useEffect(() => {
     const getNotes = async () => {
-      const { data } = await supabase.from("notes").select();
+      const { data } = await supabase.from("notes").select("*");
       setNotes(data);
     };
     getNotes();
+
+    const getNote = async () => {
+      const { data: lesson } = await supabase
+        .from("notes")
+        .select("*")
+        .eq("id", 1)
+        .single();
+      console.log("lesson", lesson);
+    };
+    getNote();
   }, []);
 
   const onClose = () => {
