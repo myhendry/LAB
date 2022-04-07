@@ -1,4 +1,6 @@
-NEXT: L10
+NEXT: L13
+
+https://www.npmjs.com/package/stripe
 
 https://egghead.io/lessons/supabase-create-a-table-in-supabase
 
