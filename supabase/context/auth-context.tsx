@@ -1,4 +1,4 @@
-import { ApiError, SupabaseClient } from "@supabase/supabase-js";
+import { ApiError, SupabaseClient, User } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import React, {
   FC,
@@ -9,10 +9,12 @@ import React, {
   useContext,
   useEffect,
 } from "react";
+import { supabase } from "../utils/client";
 
 export interface IAuthContext {
   // setUser: Dispatch<SetStateAction<any>>;
   isAuthenticated: boolean;
+  user: User | null;
   loginWithMagicLink: (email: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<{ error: ApiError | null } | undefined>;
 }
@@ -24,20 +26,41 @@ interface IProps {
 }
 
 const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
-  // const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(supabase.auth.user());
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { push } = useRouter();
 
   useEffect(() => {
+    const getUserProfile = async () => {
+      const sessionUser = supabase.auth.user();
+
+      if (sessionUser) {
+        const { data: profile } = await supabase
+          .from("profile")
+          .select("*")
+          .eq("id", sessionUser.id)
+          .single();
+
+        setUser({
+          ...sessionUser,
+          ...profile,
+        });
+      }
+    };
+
+    getUserProfile();
+
     const { data: authListener } = auth.onAuthStateChange(
       async (event, session) => {
         handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
           setIsAuthenticated(true);
+          getUserProfile();
           push("/protected");
         }
         if (event === "SIGNED_OUT") {
           setIsAuthenticated(false);
+          setUser(null);
         }
       }
     );
@@ -86,6 +109,7 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
       value={{
         isAuthenticated,
         loginWithMagicLink,
+        user,
         signOut,
       }}
     >

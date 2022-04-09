@@ -13,7 +13,6 @@ const Profile = (props: Props) => {
   useEffect(() => {
     (async () => {
       const userProfile = await supabase.auth.user();
-
       if (!userProfile) {
         router.push("/auth");
       } else {

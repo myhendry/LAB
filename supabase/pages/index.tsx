@@ -8,6 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import { supabase } from "../utils/client";
 import { Alert, Modal, Navbar, Spinner } from "../components/common";
 import { useAuth } from "../context/auth-context";
+import Link from "next/link";
 
 // https://daisyui.com/components/hero
 // https://github.com/garmeeh/next-seo
@@ -19,25 +20,46 @@ const Home: NextPage<IProps> = () => {
   const [notes, setNotes] = useState<{ id: number; title: string }[] | null>(
     []
   );
+  const [lessons, setLessons] = useState<
+    { id: number; title: string }[] | null
+  >([]);
+  const [videos, setVideos] = useState<
+    | {
+        id: number;
+        title: string;
+      }[]
+    | null
+  >([]);
   const { isAuthenticated } = useAuth();
   console.log("isAuthenticated", isAuthenticated);
 
+  const { user } = useAuth();
+  console.log("U", user);
+
   useEffect(() => {
-    const getNotes = async () => {
+    (async () => {
       const { data } = await supabase.from("notes").select("*");
       setNotes(data);
-    };
-    getNotes();
+    })();
 
-    const getNote = async () => {
-      const { data: lesson } = await supabase
-        .from("notes")
-        .select("*")
-        .eq("id", 1)
-        .single();
-      console.log("lesson", lesson);
-    };
-    getNote();
+    // (async () => {
+    //   const { data: lesson } = await supabase
+    //     .from("notes")
+    //     .select("*")
+    //     .eq("id", 1)
+    //     .single();
+    //   console.log("lesson", lesson);
+    // })();
+
+    (async () => {
+      const { data } = await supabase.from("lessons").select("*");
+      setLessons(data);
+    })();
+
+    (async () => {
+      const { data } = await supabase.from("videos").select("*");
+      setVideos(data);
+    })();
   }, []);
 
   const onClose = () => {
@@ -74,6 +96,24 @@ const Home: NextPage<IProps> = () => {
         >
           <h1 className="title">Wubba Lubba Dub Dub!</h1>
         </motion.div>
+        <div id="lessons">
+          {lessons &&
+            lessons.map((v) => (
+              <Link href={`/lesson/${v.id}`} key={v.id}>
+                <a className="cursor-pointer">
+                  <p>{v.title}</p>
+                </a>
+              </Link>
+            ))}
+        </div>
+        <div id="videos">
+          {videos &&
+            videos.map((v) => (
+              <div key={v.id}>
+                <p>{v.title}</p>
+              </div>
+            ))}
+        </div>
         <div id="supabase-get">
           {notes &&
             notes.map((n) => (

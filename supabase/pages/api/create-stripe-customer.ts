@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     })
     .eq("id", req.body.record.id);
 
-  // Profile ->
+  // Get Stripe Customer using Supabase's Function Hooks and Stripe WebHook
   res.send({ message: `stripe customer created: ${customer.id}` });
 };
 

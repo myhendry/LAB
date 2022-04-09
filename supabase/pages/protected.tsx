@@ -32,7 +32,7 @@ const Protected: NextPage<IProps> = ({ user }) => {
 
 export async function getServerSideProps({ req }: NextPageContext) {
   const { user } = await supabase.auth.api.getUserByCookie(req);
-
+  console.log("server user", user);
   if (!user) {
     return { props: {}, redirect: { destination: "/auth" } };
   }
