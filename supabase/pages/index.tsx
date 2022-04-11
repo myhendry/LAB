@@ -17,50 +17,15 @@ interface IProps {}
 
 const Home: NextPage<IProps> = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [notes, setNotes] = useState<{ id: number; title: string }[] | null>(
-    []
-  );
-  const [lessons, setLessons] = useState<
-    { id: number; title: string }[] | null
-  >([]);
-  const [videos, setVideos] = useState<
-    | {
-        id: number;
-        title: string;
-      }[]
-    | null
-  >([]);
-  const { isAuthenticated } = useAuth();
-  console.log("isAuthenticated", isAuthenticated);
 
-  const { user } = useAuth();
-  console.log("U", user);
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await supabase.from("notes").select("*");
-      setNotes(data);
-    })();
-
-    // (async () => {
-    //   const { data: lesson } = await supabase
-    //     .from("notes")
-    //     .select("*")
-    //     .eq("id", 1)
-    //     .single();
-    //   console.log("lesson", lesson);
-    // })();
-
-    (async () => {
-      const { data } = await supabase.from("lessons").select("*");
-      setLessons(data);
-    })();
-
-    (async () => {
-      const { data } = await supabase.from("videos").select("*");
-      setVideos(data);
-    })();
-  }, []);
+  // (async () => {
+  //   const { data: lesson } = await supabase
+  //     .from("notes")
+  //     .select("*")
+  //     .eq("id", 1)
+  //     .single();
+  //   console.log("lesson", lesson);
+  // })();
 
   const onClose = () => {
     setShowModal(false);
@@ -96,32 +61,7 @@ const Home: NextPage<IProps> = () => {
         >
           <h1 className="title">Wubba Lubba Dub Dub!</h1>
         </motion.div>
-        <div id="lessons">
-          {lessons &&
-            lessons.map((v) => (
-              <Link href={`/lesson/${v.id}`} key={v.id}>
-                <a className="cursor-pointer">
-                  <p>{v.title}</p>
-                </a>
-              </Link>
-            ))}
-        </div>
-        <div id="videos">
-          {videos &&
-            videos.map((v) => (
-              <div key={v.id}>
-                <p>{v.title}</p>
-              </div>
-            ))}
-        </div>
-        <div id="supabase-get">
-          {notes &&
-            notes.map((n) => (
-              <div key={n.id}>
-                <p>{n.title}</p>
-              </div>
-            ))}
-        </div>
+
         <div id="modal-example">
           <button
             onClick={() => setShowModal(true)}
