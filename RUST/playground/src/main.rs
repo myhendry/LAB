@@ -1,6 +1,6 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
-use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::Display};
+use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::{Display, Debug}};
 
 
 mod server;
@@ -373,8 +373,63 @@ fn main() {
         };
         // println!("{}", ccc1(50));
 
-        
+
+        let mut sdd1 = Dinosaur{health: 100};
+        let smm1 = Magician{ health: 98};
+        let shh1 = Hero{health: 80};
+
+        // attack_with_bow(&shh1, &mut sdd1, 8);
+        // attack_with_sword(&smm1, &mut sdd1 , 3);
+    
+        let zz1 = Vec::from("how are you");
+        let zz2 = Vec::from("fasdjflajdf".to_string());
+        println!("{:?}", zz1);
+        println!("{:?}", zz2);
     }
+
+trait FightClose {}
+trait FightFromDistance {}
+
+struct Dinosaur {
+    health: i32,
+}
+
+#[derive(Debug)]
+struct Magician {
+    health: i32,
+}
+
+impl Display for Magician {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "health is {}", self.health)
+    }
+}
+
+#[derive(Debug)]
+struct Hero {
+    health: i32,
+}
+
+impl FightClose for Magician {}
+impl FightFromDistance for Hero {}
+
+fn attack_with_bow<T: FightFromDistance + Debug>(character: &T, opponent: &mut Dinosaur, distance: i32) {
+    if distance < 10 {
+        opponent.health -= 10;
+        println!(
+            "You attack with your bow. Your opponent now has {} health left.  You are now at: {:?}",
+            opponent.health, character
+        );
+    }
+}
+
+fn attack_with_sword<T: FightClose + Debug + Display>(character: &T, opponent: &mut Dinosaur, distance: i32) {
+    opponent.health -= 5;
+    println!(
+        "You attack with your sword. Your opponent now has {} health left. You are now at: {}",
+        opponent.health, character
+    );
+}
 
 fn analyze_eat(creature: &impl Creature) {
     let res = creature.eat();

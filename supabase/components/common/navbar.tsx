@@ -7,6 +7,7 @@ import {
   AiFillAmazonCircle,
   AiFillBank,
   AiFillBell,
+  AiFillBook,
   AiFillGold,
 } from "react-icons/ai";
 import { useAuth } from "../../context/auth-context";
@@ -35,6 +36,13 @@ const links = [
     url: "/lessons",
     icon: <AiFillBank size={50} />,
     tip: "Lessons",
+    isAuthPage: true,
+  },
+  {
+    title: "Plans",
+    url: "/plans",
+    icon: <AiFillBook size={50} />,
+    tip: "Plans",
     isAuthPage: true,
   },
   {

@@ -1,3 +1,19 @@
+## Structs
+
+```
+// unit struct
+struct FileDirectory;
+
+//  struct
+struct Color(u8, u8, u8);
+
+// named struct
+struct Person {
+        name: String,
+        age: u32,
+}
+```
+
 ## Options
 
 Some(x), None
