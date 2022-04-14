@@ -11,12 +11,16 @@ import React, {
 } from "react";
 import { supabase } from "../utils/client";
 
+interface AuthUser extends User {
+  is_subscribed: boolean;
+}
 export interface IAuthContext {
   // setUser: Dispatch<SetStateAction<any>>;
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
   loginWithMagicLink: (email: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<{ error: ApiError | null } | undefined>;
+  isLoading: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext>(null!);
@@ -26,7 +30,10 @@ interface IProps {
 }
 
 const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
-  const [user, setUser] = useState<User | null>(supabase.auth.user());
+  const [user, setUser] = useState<AuthUser | null>(
+    supabase.auth.user() as AuthUser
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { push } = useRouter();
 
@@ -45,6 +52,8 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
           ...sessionUser,
           ...profile,
         });
+
+        setIsLoading(false);
       }
     };
 
@@ -111,6 +120,7 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
         loginWithMagicLink,
         user,
         signOut,
+        isLoading,
       }}
     >
       {children}

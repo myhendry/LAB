@@ -2,6 +2,7 @@ import { GetStaticProps, NextPage } from "next";
 import Stripe from "stripe";
 
 import { Layout } from "../../components/common";
+import { useAuth } from "../../context/auth-context";
 
 interface IProps {
   plans: {
@@ -14,6 +15,12 @@ interface IProps {
 }
 
 const Plans: NextPage<IProps> = ({ plans }) => {
+  const { user, isLoading } = useAuth();
+
+  const showCreateAccountButton = !user;
+  const showSubscribeButton = !!user && !user.is_subscribed;
+  const showManageSubscriptionButton = !!user && user.is_subscribed;
+
   const renderPlans = () => {
     return plans.map((p) => (
       <div className="border rounded shadow p-6 m-2" key={p.id}>
@@ -21,6 +28,19 @@ const Plans: NextPage<IProps> = ({ plans }) => {
         <p>
           {p.price / 100} / {p.interval}
         </p>
+        {!isLoading && (
+          <div>
+            {showSubscribeButton && (
+              <button className="btn btn-primary">Subscribe</button>
+            )}
+            {showCreateAccountButton && (
+              <button className="btn btn-primary">Create Account</button>
+            )}
+            {showManageSubscriptionButton && (
+              <button className="btn btn-primary">Manage Subscription</button>
+            )}
+          </div>
+        )}
       </div>
     ));
   };
