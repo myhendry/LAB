@@ -10,13 +10,13 @@ import React, {
   useEffect,
 } from "react";
 import { supabase } from "../utils/client";
+import axios from "axios";
 
 interface AuthUser extends User {
   is_subscribed: boolean;
 }
 export interface IAuthContext {
   // setUser: Dispatch<SetStateAction<any>>;
-  isAuthenticated: boolean;
   user: AuthUser | null;
   loginWithMagicLink: (email: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<{ error: ApiError | null } | undefined>;
@@ -34,7 +34,6 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
     supabase.auth.user() as AuthUser
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { push } = useRouter();
 
   useEffect(() => {
@@ -59,44 +58,23 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
 
     getUserProfile();
 
-    const { data: authListener } = auth.onAuthStateChange(
-      async (event, session) => {
-        handleAuthChange(event, session);
-        if (event === "SIGNED_IN") {
-          setIsAuthenticated(true);
-          getUserProfile();
-          push("/protected");
-        }
-        if (event === "SIGNED_OUT") {
-          setIsAuthenticated(false);
-          setUser(null);
-        }
-      }
-    );
-    checkUser();
-    return () => authListener?.unsubscribe();
+    auth.onAuthStateChange(() => {
+      getUserProfile();
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const checkUser = async () => {
-    const user = await auth.user();
-    if (user) {
-      setIsAuthenticated(true);
-    }
-  };
-
-  const handleAuthChange = async (event: string, session: any) => {
+  useEffect(() => {
     try {
-      await fetch("/api/auth", {
-        method: "POST",
-        headers: new Headers({ "Content-Type": "application/json" }),
-        credentials: "same-origin",
-        body: JSON.stringify({ event, session }),
+      axios.post(`/api/set-supabase-cookie`, {
+        event: user ? "SIGNED_IN" : "SIGNED_OUT",
+        session: supabase.auth.session(),
       });
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [user]);
 
   const loginWithMagicLink = async (email: string) => {
     const data = await auth.signIn({ email });
@@ -106,6 +84,7 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
   const signOut = async () => {
     try {
       const data = await auth.signOut();
+      setUser(null);
       push("/auth");
       return data;
     } catch (error) {
@@ -116,7 +95,6 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
         loginWithMagicLink,
         user,
         signOut,

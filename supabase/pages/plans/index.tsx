@@ -1,5 +1,6 @@
 import { GetStaticProps, NextPage } from "next";
 import Stripe from "stripe";
+import axios from "axios";
 
 import { Layout } from "../../components/common";
 import { useAuth } from "../../context/auth-context";
@@ -16,6 +17,11 @@ interface IProps {
 
 const Plans: NextPage<IProps> = ({ plans }) => {
   const { user, isLoading } = useAuth();
+
+  const processSubscription = (planId: string) => async () => {
+    const { data } = await axios.get(`/api/subscription/${planId}`);
+    console.log(data);
+  };
 
   const showCreateAccountButton = !user;
   const showSubscribeButton = !!user && !user.is_subscribed;
@@ -37,7 +43,12 @@ const Plans: NextPage<IProps> = ({ plans }) => {
               <button className="btn btn-primary">Create Account</button>
             )}
             {showManageSubscriptionButton && (
-              <button className="btn btn-primary">Manage Subscription</button>
+              <button
+                onClick={processSubscription(p.id)}
+                className="btn btn-primary"
+              >
+                Manage Subscription
+              </button>
             )}
           </div>
         )}

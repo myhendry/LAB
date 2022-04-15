@@ -1,5 +1,6 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
+#![allow(unused_imports)]
 use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::{Display, Debug}};
 
 
@@ -336,7 +337,7 @@ fn main() {
 
         // let rs1 = Response::new(sc1, Some("Ka".to_string()));
 
-        let mut aa1 = Alien::new("Alvin", 26, vec![Skill::Read, Skill::Talk]);
+        let aa1 = Alien::new("Alvin", 26, vec![Skill::Read, Skill::Talk]);
 
         // aa1.add_new_skills(Skill::Sing);
         // println!("{:?}", aa1);
@@ -374,7 +375,7 @@ fn main() {
         // println!("{}", ccc1(50));
 
 
-        let mut sdd1 = Dinosaur{health: 100};
+        let sdd1 = Dinosaur{health: 100};
         let smm1 = Magician{ health: 98};
         let shh1 = Hero{health: 80};
 
@@ -383,9 +384,81 @@ fn main() {
     
         let zz1 = Vec::from("how are you");
         let zz2 = Vec::from("fasdjflajdf".to_string());
-        println!("{:?}", zz1);
-        println!("{:?}", zz2);
+        // println!("{:?}", zz1);
+        // println!("{:?}", zz2);
+
+        let v2 = vec![10, 20, 22, 21, 31, 30, 50];
+        let oev = OddEvenVec::from(v2);
+        // println!("{:?}", oev);
+
+        let yishun = City{ name: "ys".to_string(), population: 100_000};
+        let ang_mo_kio = City{ name: "amk".to_string(), population: 200_000};
+        let country = Country::from(vec![&yishun, &ang_mo_kio]);
+        // println!("{:?}", country.cities[1].name    );
+        // if let Some(x) = country.cities.get(0) {
+        //     println!("{:?}", x.population);
+        // }
+        // println!("{:?}", yishun);
+
+        let ns1 = name_slice("mary had a little lamb");
+        // println!("{:?}", ns1);
+        // if let Some(x) = ns1 {
+        //     println!("{:?}", x);
+        // }
     }
+
+fn name_slice(name: &str) -> Option<&str> {
+    let res:Vec<&str> = name.split(' ').collect();
+    let a = res.get(1);
+
+    match res.get(1) {
+        Some(x) => {
+            Some(*x)
+        },
+        None => {
+            None
+        }
+    }
+     
+}
+
+#[derive(Debug)]
+struct City {
+    name: String,
+    population: u32,
+}
+
+#[derive(Debug)]
+struct Country<'a> {
+    cities: Vec<&'a City>
+}
+
+impl<'a> From<Vec<&'a City>> for Country<'a> {
+    fn from(cities: Vec<&'a City>) -> Self {
+        Self {
+            cities
+        }       
+    }
+}
+
+#[derive(Debug)]
+ struct OddEvenVec(Vec<Vec<i32>>);
+
+type MyType = Vec<i32>;
+
+impl From<MyType> for OddEvenVec {
+    fn from(v: Vec<i32>) -> Self {
+        let mut odd_even_vec: Vec<Vec<i32>> = vec![vec![], vec![]];
+        for item in v {
+            if item % 2 == 0 {
+                odd_even_vec[0].push(item);
+            } else {
+                odd_even_vec[1].push(item);
+            }
+        }
+        Self(odd_even_vec)
+    }
+}
 
 trait FightClose {}
 trait FightFromDistance {}

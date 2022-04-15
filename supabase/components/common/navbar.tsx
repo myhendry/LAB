@@ -62,8 +62,8 @@ const links = [
 ];
 
 export const Navbar = ({ title = "L A B" }: Props) => {
-  const { isAuthenticated, signOut } = useAuth();
-  console.log("nav isAuthenticated", isAuthenticated);
+  const { user, signOut } = useAuth();
+  console.log("nav isAuthenticated", !!user);
 
   return (
     <div className="navbar bg-base-100 shadow-lg">
@@ -87,7 +87,7 @@ export const Navbar = ({ title = "L A B" }: Props) => {
               </li>
             ))}
 
-          {isAuthenticated ? (
+          {!!user ? (
             <li className="hidden md:block">
               <a onClick={signOut}>Exit</a>
             </li>
@@ -128,7 +128,7 @@ export const Navbar = ({ title = "L A B" }: Props) => {
                   </Link>
                 </li>
               ))}
-              {isAuthenticated ? (
+              {!!user ? (
                 <li>
                   <a
                     onClick={signOut}

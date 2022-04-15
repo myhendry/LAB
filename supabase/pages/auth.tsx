@@ -24,14 +24,14 @@ const schema = yup
 const Auth: NextPage<IProps> = () => {
   const { push } = useRouter();
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { loginWithMagicLink, isAuthenticated } = useAuth();
+  const { loginWithMagicLink, user } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!!user) {
       push("/protected");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [user]);
 
   const {
     register,
