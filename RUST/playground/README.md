@@ -1,3 +1,7 @@
+## Strings & &str
+
+![Strings and &str](./src/strings.png)
+
 ## Structs
 
 ```
@@ -53,7 +57,13 @@ BTreeMaps // BTreeMap<i32, i32> Very Similar to HashMaps except in order
 
 ## Iterators
 
+iter() // to consult
+iter_mut() // to modify
+into_iter() // to consume
+
 loop {};
+while {};
+(1..=10).collect();
 for c in a_string.chars();
 for c in a.iter().enumerate();
 a.iter().map(|x| ...); // iter, into_iter()

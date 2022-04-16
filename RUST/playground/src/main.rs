@@ -405,6 +405,47 @@ fn main() {
         // if let Some(x) = ns1 {
         //     println!("{:?}", x);
         // }
+
+        let vov1 = vec![1,2,3, 5, 10];
+        let vov2: Vec<i32> = vov1.into_iter().map(|x| x + 100).collect();
+        // println!("{:?}", vov2);
+
+        let vov3 = (1..=10).collect::<Vec<i32>>();
+        // println!("{:?}", vov3);
+        let vov4 = vec![2,3,4,5,11,12];
+        let vov5: Vec<i32> = vov4.iter().map(|x| x + 10).collect();
+        // println!("{:?}", vov5);
+        // println!("{:?}", vov4);
+        let vov6 = vec!["abc".to_string(), "cde".to_string(), "efg".to_string()];
+        let vov7: Vec<_> = vov6.iter().map(|x| format!("hello {}", x)).collect();
+        // println!("{:?}", vov6);
+        // println!("{:?}", vov7);
+        // println!("{:?}", vov6);
+
+        let si1 = String::from("apple");
+        let si2 = "banana".to_string();
+        let si3 = "cucumber".to_owned();
+        let si4 = "donkey";
+        let si5 = &si3[..];
+        let si7 = concat!("fin", "land");
+        let si6 = &String::from("elephant"); 
+        let si8 = si1 + &si2; // si1 moved
+        let si9 = format!("{} {}", si3, "soccer");
+        let si10 = si2 + "hey";
+        let si11 = ["first", "second"].concat();
+        let mut si12 = "jerry".to_string();
+        si12.push_str("foo");
+        si12.replace_range(.., "baz");
+        let s13 = "internet";
+        let s14 = &s13[0..4];
+        for c in s13.chars() {
+            // println!("{}", c);
+        }
+        let s15 = "soccerworld".to_string();
+        let s16 = s15.chars().nth(2);
+        // println!("{:?}", s16);
+        
+
     }
 
 fn name_slice(name: &str) -> Option<&str> {
