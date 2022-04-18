@@ -26,7 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .eq("id", user.id)
     .single();
 
-  console.log(user);
   res.send({
     ...user,
     stripe_customer,

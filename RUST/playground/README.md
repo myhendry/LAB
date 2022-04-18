@@ -88,9 +88,9 @@ println!("You can print it {}", input);
 }
 
 // () -> impl Trait; return a Closure
-FnOnce - uses what is passed in and drops it (destroys it)
-FnMut - it can modify it
-Fn - can take by reference (generally choose this)
+FnOnce - uses what is passed in by value and drops it (destroys it) self
+FnMut - it can modify it &mut self
+Fn - can take by reference (generally choose this) &self
 function returns_a_closure(input: &str) -> impl FnMut(i32) -> i32 {
         match input {
                 "double" => |mut number| {
@@ -125,6 +125,14 @@ fn city_data<F>(&mut self, mut f: F)
 where F: FnMut(&mut Vec<u32>, &mut Vec<u32>) {
         f(&mut self.years, &mut self.populations);
 }
+
+.ok()
+.ok().or(err); // convert Option to Result;
+.ok_or_else(||);
+
+.unwrap();
+.unwrap_or(8989);
+.unwrap_or_else(||);
 ```
 
 ## Threads

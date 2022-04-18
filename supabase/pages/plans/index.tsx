@@ -23,6 +23,8 @@ const Plans: NextPage<IProps> = ({ plans }) => {
     console.log(data);
   };
 
+  console.log("uu", !user);
+
   const showCreateAccountButton = !user;
   const showSubscribeButton = !!user && !user.is_subscribed;
   const showManageSubscriptionButton = !!user && user.is_subscribed;
@@ -39,8 +41,10 @@ const Plans: NextPage<IProps> = ({ plans }) => {
             {showSubscribeButton && (
               <button className="btn btn-primary">Subscribe</button>
             )}
+            {/* todo create Account not showing */}
             {showCreateAccountButton && (
-              <button className="btn btn-primary">Create Account</button>
+              // <button className="btn btn-primary">Create Account</button>
+              <div>Hi</div>
             )}
             {showManageSubscriptionButton && (
               <button

@@ -1,7 +1,7 @@
 #![allow(unused_variables)]
 #![allow(dead_code)]
 #![allow(unused_imports)]
-use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::{Display, Debug}};
+use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::{Display, Debug}, vec};
 
 
 mod server;
@@ -444,9 +444,34 @@ fn main() {
         let s15 = "soccerworld".to_string();
         let s16 = s15.chars().nth(2);
         // println!("{:?}", s16);
-        
+       
+        let mut ver1 = vec![1, 3, 5, 7, 10];
+        let ver2: Vec<_> = ver1.iter().map(|x| *x + 10).filter(|x| *x > 15).collect();
+        // println!("{:?}", ver2);
+        // println!("{:?}", ver1);
+        ver1.retain(|x| *x > 7);
+        //println!("{:?}", ver1);
+
+        let r1 = return_option(1);
+        //println!("{:?}", r1.ok_or("Error"));
+
+        let rr2 = greeting("johnny");
+        // println!("{}", rr2);
 
     }
+
+fn greeting(word: &str) -> String {
+    format!("hello {}", word)
+
+}
+
+fn return_option(index: u32) -> Option<i32> {
+    let list_of_numbers = vec![1,10,200,300,500,1000];
+    match list_of_numbers.get(index as usize) {
+        Some(x) => Some(*x),
+        None => None,
+    }
+}
 
 fn name_slice(name: &str) -> Option<&str> {
     let res:Vec<&str> = name.split(' ').collect();

@@ -13,8 +13,6 @@ const Lesson: NextPage<IProps> = () => {
     { id: number; title: string }[] | null
   >([]);
 
-  const { isAuthenticated, user } = useAuth();
-
   useEffect(() => {
     (async () => {
       const { data } = await supabase.from("lessons").select("*");
