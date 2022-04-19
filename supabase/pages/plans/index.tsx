@@ -1,6 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import Stripe from "stripe";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 import { Layout } from "../../components/common";
 import { useAuth } from "../../context/auth-context";
@@ -19,11 +20,16 @@ const Plans: NextPage<IProps> = ({ plans }) => {
   const { user, isLoading } = useAuth();
 
   const processSubscription = (planId: string) => async () => {
-    const { data } = await axios.get(`/api/subscription/${planId}`);
-    console.log(data);
+    try {
+      const { data } = await axios.get(`/api/subscription/${planId}`);
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_KEY as string
+      );
+      await stripe?.redirectToCheckout({ sessionId: data.id });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  console.log("uu", !user);
 
   const showCreateAccountButton = !user;
   const showSubscribeButton = !!user && !user.is_subscribed;

@@ -1,6 +1,7 @@
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
 import cookie from "cookie";
+import Stripe from "stripe";
 
 import { supabase } from "../../../utils/client";
 
@@ -26,9 +27,31 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .eq("id", user.id)
     .single();
 
+  // Instantiate Stripe
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2020-08-27",
+  });
+
+  const { planId } = req.query;
+
+  const session = await stripe.checkout.sessions.create({
+    customer: stripe_customer,
+    mode: "subscription",
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price: planId as string,
+        quantity: 1,
+      },
+    ],
+    success_url: "http://localhost:3000/payment/success",
+    cancel_url: "http://localhost:3000/payment/cancelled",
+  });
+
   res.send({
-    ...user,
-    stripe_customer,
+    id: session.id,
+    // ...user,
+    // stripe_customer,
   });
 };
 
