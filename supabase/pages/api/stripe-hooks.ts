@@ -1,7 +1,9 @@
+import { supabase } from "./../../utils/client";
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
 import Stripe from "stripe";
 import { buffer } from "micro";
+import { getServiceSupabase } from "../../utils/client";
 
 export const config = { api: { bodyParser: false } };
 
@@ -21,6 +23,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error) {
     console.log(error);
     return res.status(400).send(`Webhook error: ${(error as any).message}`);
+  }
+
+  const supabase = getServiceSupabase();
+
+  switch (event.type) {
+    case "customer.subscription.created":
+      await supabase
+        .from("profile")
+        .update({
+          is_subscribed: true,
+          interval: (event.data.object as any).items.data[0].plan.interval,
+        })
+        .eq("stripe_customer", (event.data.object as any).customer);
   }
 
   console.log("event", event);

@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import Stripe from "stripe";
 
-import { supabase } from "../../utils/client";
+import { getServiceSupabase } from "../../utils/client";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.query.API_ROUTE_SECRET !== process.env.API_ROUTE_SECRET) {
@@ -23,6 +23,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const customer = await stripe.customers.create({
     email: req.body.record.email,
   });
+
+  const supabase = getServiceSupabase();
 
   // Upsert into Supabase's Profile Table
   await supabase
