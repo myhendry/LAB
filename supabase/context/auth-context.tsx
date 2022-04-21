@@ -9,8 +9,9 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { supabase } from "../utils/client";
 import axios from "axios";
+
+import { supabase } from "../utils/client";
 
 interface AuthUser extends User {
   is_subscribed: boolean;
@@ -30,7 +31,7 @@ interface IProps {
   supabaseClient: SupabaseClient;
 }
 
-const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
+const AuthProvider: FC<IProps> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(
     supabase.auth.user() as AuthUser
   );
@@ -59,7 +60,7 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
 
     getUserProfile();
 
-    auth.onAuthStateChange(() => {
+    supabase.auth.onAuthStateChange(() => {
       getUserProfile();
     });
 
@@ -78,13 +79,13 @@ const AuthProvider: FC<IProps> = ({ children, supabaseClient: { auth } }) => {
   }, [user]);
 
   const loginWithMagicLink = async (email: string) => {
-    const data = await auth.signIn({ email });
+    const data = await supabase.auth.signIn({ email });
     return data;
   };
 
   const signOut = async () => {
     try {
-      const data = await auth.signOut();
+      const data = await supabase.auth.signOut();
       setUser(null);
       push("/auth");
       return data;

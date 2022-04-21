@@ -7,12 +7,11 @@ import {
   AiFillAmazonCircle,
   AiFillAudio,
   AiFillBank,
-  AiFillBell,
   AiFillBook,
   AiFillGold,
 } from "react-icons/ai";
-import { useAuth } from "../../context/auth-context";
 
+import { useAuth } from "../../context/auth-context";
 import { ThemeChanger } from "./theme-changer";
 
 type Props = {
@@ -30,42 +29,42 @@ const links = [
     url: "/protected",
     icon: <AiFillAlert size={50} />,
     tip: "Protected",
-    isAuthPage: true,
+    // isAuthPage: true,
   },
   {
     title: "Lessons",
     url: "/lessons",
     icon: <AiFillBank size={50} />,
     tip: "Lessons",
-    isAuthPage: true,
+    // isAuthPage: true,
   },
   {
     title: "Plans",
     url: "/plans",
     icon: <AiFillBook size={50} />,
     tip: "Plans",
-    isAuthPage: true,
+    // isAuthPage: true,
   },
   {
     title: "Dashboard",
     url: "/dashboard",
     icon: <AiFillAudio size={50} />,
     tip: "Dashboard",
-    isAuthPage: true,
+    // isAuthPage: true,
   },
   {
     title: "Profile",
     url: "/profile",
     icon: <AiFillAmazonCircle size={50} />,
     tip: "Profile",
-    isAuthPage: true,
+    // isAuthPage: true,
   },
   {
     title: "About",
     url: "/about",
     icon: <AiFillGold size={50} />,
     tip: "About",
-    isAuthPage: false,
+    // isAuthPage: false,
   },
 ];
 
@@ -85,15 +84,13 @@ export const Navbar = ({ title = "L A B" }: Props) => {
 
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0">
-          {links
-            // .filter((l) => l.isAuthPage === isAuthenticated)
-            .map((l) => (
-              <li key={l.title} className="hidden md:block">
-                <Link href={l.url}>
-                  <a className="cursor-pointer">{l.title}</a>
-                </Link>
-              </li>
-            ))}
+          {links.map((l) => (
+            <li key={l.title} className="hidden md:block">
+              <Link href={l.url}>
+                <a className="cursor-pointer">{l.title}</a>
+              </Link>
+            </li>
+          ))}
 
           {!!user ? (
             <li className="hidden md:block">

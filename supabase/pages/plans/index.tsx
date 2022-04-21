@@ -5,6 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { Layout } from "../../components/common";
 import { useAuth } from "../../context/auth-context";
+import Link from "next/link";
 
 interface IProps {
   plans: {
@@ -45,7 +46,12 @@ const Plans: NextPage<IProps> = ({ plans }) => {
         {!isLoading && (
           <div>
             {showSubscribeButton && (
-              <button className="btn btn-primary">Subscribe</button>
+              <button
+                onClick={processSubscription(p.id)}
+                className="btn btn-primary"
+              >
+                Subscribe
+              </button>
             )}
             {/* todo create Account not showing */}
             {showCreateAccountButton && (
@@ -53,12 +59,9 @@ const Plans: NextPage<IProps> = ({ plans }) => {
               <div>Hi</div>
             )}
             {showManageSubscriptionButton && (
-              <button
-                onClick={processSubscription(p.id)}
-                className="btn btn-primary"
-              >
-                Manage Subscription
-              </button>
+              <Link href="/dashboard">
+                <a>Manage Subscription</a>
+              </Link>
             )}
           </div>
         )}
