@@ -5,6 +5,7 @@ import {
   AiFillAlert,
   AiFillAliwangwang,
   AiFillAmazonCircle,
+  AiFillAudio,
   AiFillBank,
   AiFillBell,
   AiFillBook,
@@ -43,6 +44,13 @@ const links = [
     url: "/plans",
     icon: <AiFillBook size={50} />,
     tip: "Plans",
+    isAuthPage: true,
+  },
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: <AiFillAudio size={50} />,
+    tip: "Dashboard",
     isAuthPage: true,
   },
   {

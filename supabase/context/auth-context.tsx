@@ -14,6 +14,7 @@ import axios from "axios";
 
 interface AuthUser extends User {
   is_subscribed: boolean;
+  interval: string;
 }
 export interface IAuthContext {
   // setUser: Dispatch<SetStateAction<any>>;
