@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -41,6 +41,24 @@ const Lesson: NextPage<IProps> = () => {
       </div>
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
+
+  if (!user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/auth",
+      },
+      props: {},
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default Lesson;

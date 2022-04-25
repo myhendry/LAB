@@ -134,15 +134,22 @@ export const Navbar = ({ title = "L A B" }: Props) => {
                 </li>
               ))}
               {!!user ? (
-                <li>
-                  <a
-                    onClick={signOut}
-                    className="cursor-pointer tooltip tooltip-left"
-                    data-tip="Exit"
-                  >
-                    <AiFillAliwangwang size={40} color="red" />
-                  </a>
-                </li>
+                <>
+                  <li>
+                    <a
+                      onClick={signOut}
+                      className="cursor-pointer tooltip tooltip-left"
+                      data-tip="Exit"
+                    >
+                      <AiFillAliwangwang size={40} color="red" />
+                    </a>
+                  </li>
+                  <li>
+                    <Link href="dashboard">
+                      <a>Dashboard</a>
+                    </Link>
+                  </li>
+                </>
               ) : (
                 <li>
                   <Link href="/auth">

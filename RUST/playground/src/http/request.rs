@@ -1,12 +1,26 @@
 use std::{convert::TryFrom, str::{from_utf8, Utf8Error}, error::Error, fmt::{Display, Debug}};
 
-use super::{Method, MethodError};
+use super::{Method, MethodError, QueryString};
 
 #[derive(Debug)]
 pub struct Request<'a> {
-	pub path: &'a str,
-	pub query_string: Option<&'a str>,
-	pub method: Method,
+	 path: &'a str,
+	 query_string: Option<QueryString<'a>>,
+	 method: Method,
+}
+
+impl<'a> Request<'a> {
+	pub fn path(&self) -> &str {
+		&self.path
+	}
+
+	pub fn method(&self) -> &Method {
+		&self.method
+	}
+
+	pub fn query_string(&self) -> Option<&QueryString> {
+		self.query_string.as_ref()
+	}
 }
 
 impl<'a> TryFrom<&'a [u8]> for Request<'a> {
@@ -34,11 +48,13 @@ impl<'a> TryFrom<&'a [u8]> for Request<'a> {
 			path = &path[..i];
 		}
 
-		Ok(Self {
-				path, 
-				query_string, 
-				method
-		})
+		todo!()
+
+		// Ok(Self {
+		// 		path, 
+		// 		query_string, 
+		// 		method
+		// })
 	}
 }
 

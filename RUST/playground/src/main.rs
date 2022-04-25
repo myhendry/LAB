@@ -10,7 +10,7 @@ use server::*;
 mod http;
 use http::{Request, Method, StatusCode, Response};
 
-// todo L48
+// todo L28
 
 
 // !
@@ -251,15 +251,15 @@ fn main() {
         // println!("{:?}", s3);
         let s4 = "1234"; // baked into the binary
 
-        let rr1 = Request{
-            path: "name",
-            query_string: Some("test2"),
-            method: Method::GET,
-        };
-        // println!("{:?}", rr1);
-        if let Some(x) = rr1.query_string {
-            // println!("x is {}", x);
-        }
+        // let rr1 = Request{
+        //     path: "name",
+        //     query_string: Some("test2"),
+        //     method: Method::GET,
+        // };
+        // // println!("{:?}", rr1);
+        // if let Some(x) = rr1.query_string {
+        //     // println!("x is {}", x);
+        // }
 
         let a1 = [1, 2, 3];
         // println!("{:?}", a1);
@@ -457,8 +457,39 @@ fn main() {
 
         let rr2 = greeting("johnny");
         // println!("{}", rr2);
+        
+        let my_mutex = Mutex::new(5);
+        *my_mutex.lock().unwrap() = 7;
+        // println!("{:?}", my_mutex);
+        *my_mutex.lock().unwrap() = 10;
+        // println!("{:?}", my_mutex);
 
+        let my_ball1 = Ball {
+            name: Mutex::new("Hello Day"),
+            author: Mutex::new("John Terry"),
+            number_sold: Mutex::new(10),
+        };
+
+        *my_ball1.name.lock().unwrap() = "Ya hoo";
+        // println!("{:?}", my_ball1);
+
+        // test(&"hello"); 
+        
+        let str2 = String::from("fasdfadlkjlkjkajsfa");
+        let strs1 = &str2[5..];
+        // println!("{}", strs1);
     }
+
+pub fn test(name: &str) {
+    println!("{}", name);
+}
+
+#[derive(Debug)]
+struct Ball<'a> {
+    name: Mutex<&'a str>,
+    author: Mutex<&'a str>,
+    number_sold: Mutex<u32>,
+}
 
 fn greeting(word: &str) -> String {
     format!("hello {}", word)

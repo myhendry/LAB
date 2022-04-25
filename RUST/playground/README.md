@@ -1,3 +1,31 @@
+## Concurrency
+
+// Mutex
+
+```
+        let my_mutex = Mutex::new(5);
+        *my_mutex.lock().unwrap() = 7;
+        println!("{:?}", my_mutex);
+        *my_mutex.lock().unwrap() = 10;
+        println!("{:?}", my_mutex);
+
+        let my_ball1 = Ball {
+            name: Mutex::new("Hello Day"),
+            author: Mutex::new("John Terry"),
+            number_sold: Mutex::new(10),
+        };
+
+        *my_ball1.name.lock().unwrap() = "Ya hoo";
+        println!("{:?}", my_ball1);
+
+        #[derive(Debug)]
+        struct Ball<'a> {
+                name: Mutex<&'a str>,
+                author: Mutex<&'a str>,
+                number_sold: Mutex<u32>,
+        }
+```
+
 ## Strings & &str
 
 ![Strings and &str](./src/strings.png)
