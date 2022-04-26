@@ -1,12 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
-
 import { Layout } from "../components/common";
 import { supabase } from "../utils/client";
 
 interface IProps {}
 
-const Protected: NextPage<IProps> = () => {
-  return <Layout>Protected</Layout>;
+const Profile: NextPage<IProps> = () => {
+  return <Layout>Profile</Layout>;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -21,4 +20,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return { props: { user } };
 };
 
-export default Protected;
+export default Profile;

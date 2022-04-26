@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { DefaultSeoValues } from "../next-seo.config";
 import AppProvider from "../context/app-context";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "../context/auth-context";
 
 // export function reportWebVitals(metric: any) {
 //   console.log("Metric", metric);
@@ -27,28 +28,31 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         }}
       >
         <DefaultSeo {...DefaultSeoValues} />
-        <AppProvider>
-          <ThemeProvider defaultTheme="system">
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                key={router.route}
-                initial="pageInitial"
-                animate="pageAnimate"
-                variants={{
-                  pageInitial: {
-                    opacity: 0,
-                  },
-                  pageAnimate: {
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Component {...pageProps} />
-                <Toaster position="bottom-center" />
-              </motion.div>
-            </AnimatePresence>
-          </ThemeProvider>
-        </AppProvider>
+
+        <AuthProvider>
+          <AppProvider>
+            <ThemeProvider defaultTheme="system">
+              <AnimatePresence exitBeforeEnter>
+                <motion.div
+                  key={router.route}
+                  initial="pageInitial"
+                  animate="pageAnimate"
+                  variants={{
+                    pageInitial: {
+                      opacity: 0,
+                    },
+                    pageAnimate: {
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Component {...pageProps} />
+                  <Toaster position="bottom-center" />
+                </motion.div>
+              </AnimatePresence>
+            </ThemeProvider>
+          </AppProvider>
+        </AuthProvider>
       </SWRConfig>
     </main>
   );

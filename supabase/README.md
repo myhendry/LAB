@@ -1,5 +1,7 @@
 NEXT: L22
 
+https://github.com/dijonmusters/build-a-saas-with-next-js-supabase-and-stripe
+
 //! ngrok url
 
 https://www.npmjs.com/package/stripe

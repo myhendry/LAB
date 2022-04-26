@@ -3,21 +3,24 @@ import React from "react";
 import {
   AiFillAccountBook,
   AiFillAlert,
+  AiFillAliwangwang,
   AiFillAmazonCircle,
+  AiFillApple,
 } from "react-icons/ai";
 
+import { useAuth } from "../../context/auth-context";
 import { ThemeChanger } from "./theme-changer";
 
 type Props = {
   title?: string;
 };
 
-const links = [
+const authenticatedLinks = [
   {
-    title: "Auth",
-    url: "/auth",
-    icon: <AiFillAccountBook size={50} />,
-    tip: "Auth",
+    title: "Profile",
+    url: "/profile",
+    icon: <AiFillApple size={50} />,
+    tip: "Profile",
   },
   {
     title: "Protected",
@@ -33,7 +36,18 @@ const links = [
   },
 ];
 
+const unAuthenticatedLinks = [
+  {
+    title: "About",
+    url: "/about",
+    icon: <AiFillAmazonCircle size={50} />,
+    tip: "About",
+  },
+];
+
 export const Navbar = ({ title = "L A B" }: Props) => {
+  const { isAuthenticated, isLoading, logOut } = useAuth();
+
   return (
     <div className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
@@ -45,13 +59,35 @@ export const Navbar = ({ title = "L A B" }: Props) => {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0">
-          {links.map((l) => (
-            <li key={l.title} className="hidden md:block">
-              <Link href={l.url}>
-                <a className="cursor-pointer">{l.title}</a>
+          {!isLoading && isAuthenticated
+            ? authenticatedLinks.map((l) => (
+                <li key={l.title} className="hidden md:block">
+                  <Link href={l.url}>
+                    <a className="cursor-pointer">{l.title}</a>
+                  </Link>
+                </li>
+              ))
+            : unAuthenticatedLinks.map((l) => (
+                <li key={l.title} className="hidden md:block">
+                  <Link href={l.url}>
+                    <a className="cursor-pointer">{l.title}</a>
+                  </Link>
+                </li>
+              ))}
+
+          {!isLoading && isAuthenticated ? (
+            <li className="hidden md:block">
+              <a onClick={logOut}>Exit</a>
+            </li>
+          ) : (
+            <li className="hidden md:block">
+              <Link href="/auth">
+                <a className="cursor-pointer">Auth</a>
               </Link>
             </li>
-          ))}
+          )}
+
+          {/* End of Desktop Links */}
           <li tabIndex={0} className="md:hidden">
             <a>
               <svg
@@ -70,18 +106,53 @@ export const Navbar = ({ title = "L A B" }: Props) => {
             </a>
 
             <ul className="bg-base-100">
-              {links.map((l) => (
-                <li key={l.title}>
-                  <Link href={l.url}>
+              {isAuthenticated
+                ? authenticatedLinks.map((l) => (
+                    <li key={l.title}>
+                      <Link href={l.url}>
+                        <a
+                          className="cursor-pointer tooltip tooltip-left"
+                          data-tip={l.tip}
+                        >
+                          {l.icon}
+                        </a>
+                      </Link>
+                    </li>
+                  ))
+                : unAuthenticatedLinks.map((l) => (
+                    <li key={l.title}>
+                      <Link href={l.url}>
+                        <a
+                          className="cursor-pointer tooltip tooltip-left"
+                          data-tip={l.tip}
+                        >
+                          {l.icon}
+                        </a>
+                      </Link>
+                    </li>
+                  ))}
+              {isAuthenticated ? (
+                <li>
+                  <a
+                    onClick={logOut}
+                    className="cursor-pointer tooltip tooltip-left"
+                    data-tip="Exit"
+                  >
+                    <AiFillAliwangwang size={40} color="red" />
+                  </a>
+                </li>
+              ) : (
+                <li>
+                  <Link href="/auth">
                     <a
                       className="cursor-pointer tooltip tooltip-left"
-                      data-tip={l.tip}
+                      data-tip="Auth"
                     >
-                      {l.icon}
+                      <AiFillAccountBook size={40} color="green" />
                     </a>
                   </Link>
                 </li>
-              ))}
+              )}
             </ul>
           </li>
         </ul>
