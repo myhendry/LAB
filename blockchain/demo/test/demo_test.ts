@@ -53,23 +53,23 @@ describe("Demo Test", () => {
       expect(afterChangeNum).to.be.equal("1000");
     });
 
-    it("should remove item in nums", async () => {
-      const numsArr = await demoContract.getArr();
-      expect(numsArr.length).to.be.equal(4);
-      demoContract.remove(1);
-      const numsArrAfter = await demoContract.getArr();
-      expect(numsArrAfter.length).to.be.equal(3);
-    });
+    // it("should remove item in nums", async () => {
+    //   const numsArr = await demoContract.getArr();
+    //   expect(numsArr.length).to.be.equal(4);
+    //   demoContract.remove(1);
+    //   const numsArrAfter = await demoContract.getArr();
+    //   expect(numsArrAfter.length).to.be.equal(3);
+    // });
 
-    it("should delete value in nums", async () => {
-      const numsArr = await demoContract.getArr();
-      expect(numsArr.length).to.be.equal(3);
-      //console.log(numsArr);
-      demoContract.removeValue(1);
-      const numsArrAfter = await demoContract.getArr();
-      //console.log(numsArrAfter);
-      expect(numsArrAfter.length).to.be.equal(3);
-    });
+    // it("should delete value in nums", async () => {
+    //   const numsArr = await demoContract.getArr();
+    //   expect(numsArr.length).to.be.equal(3);
+    //   //console.log(numsArr);
+    //   demoContract.removeValue(1);
+    //   const numsArrAfter = await demoContract.getArr();
+    //   //console.log(numsArrAfter);
+    //   expect(numsArrAfter.length).to.be.equal(3);
+    // });
 
     it("should set new savings and get correct savings", async () => {
       await demoContract.connect(user2).setSavings(1);
