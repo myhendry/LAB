@@ -1,8 +1,37 @@
+//! Remove Duplicated Strings
+// const solve11 = (strArray: string[]) => {
+//   let newArr = [];
+//   let obj = {};
+
+//   for (let str of strArray) {
+//     obj[str] ? obj[str]++ : (obj[str] = 1);
+
+//     if (obj[str] < 2) {
+//       newArr.push(str);
+//     }
+//   }
+
+//   return newArr;
+// };
+
+//console.log(solve11(["a", "b", "b", "a", "c", "d"]));
+//console.log(solve11(["a", "b", "b", "Hello!", "c", "goodbye", "Hello!"]));
+
 //! Find the First Duplicate
-const solve = (intArray) => {
-  return;
-};
-console.log(solve([6, 2, 5, 1, 0, 12, 2]));
+// const solve = (intArray: number[]) => {
+//   let obj = {};
+
+//   for (let x of intArray) {
+//     obj[x] ? obj[x]++ : (obj[x] = 1);
+
+//     if (obj[x] == 2) {
+//       return x;
+//     }
+//   }
+// };
+//console.log(solve([6, 2, 5, 1, 0, 12, 2]));
+//console.log(solve([-6, 1, 5, -6, 0, -2, 3]));
+//console.log(solve([3, 1, 5, 1, 0, -2, 3, 5]));
 
 //! Reverse Characters in a String
 // const solve = (strArray: string) => {
