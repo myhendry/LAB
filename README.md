@@ -91,6 +91,10 @@
 ### VIM
 
 ```
+## VIM SELECT LINE TO LINE
+10GV12G
+10GV2j
+
 SHIFT + OPTION + <- OR ->
 
 ciw // cut word
