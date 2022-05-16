@@ -1068,6 +1068,8 @@ npm i -D <package>
 npm uninstall <package>
 npm outdate // update packages
 
+https://linuxhint.com/checkout-specific-commit-git/
+
 git add .
 git commit -m 'i am a message'
 git push
