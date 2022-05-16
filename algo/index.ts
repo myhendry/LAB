@@ -1,3 +1,23 @@
+//! Find the Missing Number
+// todo
+
+const solve = (intArray: number[]) => {
+  intArray.sort((a, b) => a - b);
+  const start = intArray[0];
+  const end = intArray[intArray.length - 1];
+
+  for (let i = start; i <= end; i++) {
+    for (let j = 0; j <= intArray.length; j++) {
+      console.log("j", j);
+    }
+  }
+
+  return;
+};
+
+//console.log(solve([5, 0, 2, 1, 3]));
+console.log(solve([-5, 0, -2, -1, -3]));
+
 //! Remove Duplicated Strings
 // const solve11 = (strArray: string[]) => {
 //   let newArr = [];
