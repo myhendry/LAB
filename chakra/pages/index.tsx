@@ -1,8 +1,7 @@
-// import styles from "../styles/Home.module.css";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { CryptoForm } from "../modules/home";
+import { Form, Misc } from "../modules/design";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +12,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <CryptoForm />
+      <Form />
+      <Misc />
     </div>
   );
 };
