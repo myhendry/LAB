@@ -17,7 +17,6 @@ import {
   deleteDoc,
   runTransaction,
 } from "firebase/firestore";
-// https://youtu.be/faMZxhMfMBM
 
 const app = !getApps().length
   ? initializeApp({

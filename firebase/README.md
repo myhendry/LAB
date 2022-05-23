@@ -1,4 +1,6 @@
-## Chakra UI Dark Mode
+## Next-Auth Email and OAuth Authentication Tutorials
+
+https://youtu.be/faMZxhMfMBM
 
 ## Dark Mode in Chakra UI
 
