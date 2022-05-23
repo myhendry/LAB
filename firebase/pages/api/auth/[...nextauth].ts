@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import {
@@ -18,7 +19,7 @@ import {
 } from "firebase/firestore";
 // https://youtu.be/faMZxhMfMBM
 
-!getApps().length
+const app = !getApps().length
   ? initializeApp({
       apiKey: "AIzaSyDNvCOKseMJQRkW2jpw9EMJ_U8TlXj9VKA",
       authDomain: "jobs-903f5.firebaseapp.com",
@@ -30,13 +31,17 @@ import {
     })
   : getApp();
 
-const db = getFirestore();
+const db = getFirestore(app);
 
 export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
   adapter: FirebaseAdapter({
@@ -53,4 +58,7 @@ export default NextAuth({
     deleteDoc,
     runTransaction,
   }),
+  secret: "fasfasldkjlkadjgoiajronivadinviadhf",
 });
+
+export { app, db };
