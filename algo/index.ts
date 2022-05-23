@@ -1,22 +1,45 @@
-//! Find the Missing Number
-// todo
-
-const solve = (intArray: number[]) => {
-  intArray.sort((a, b) => a - b);
-  const start = intArray[0];
-  const end = intArray[intArray.length - 1];
-
-  for (let i = start; i <= end; i++) {
-    for (let j = 0; j <= intArray.length; j++) {
-      console.log("j", j);
-    }
-  }
-
+//! Find the Largest Sum
+const solve = (intArray: number[], number: number) => {
   return;
 };
+console.log(solve([1, 2, 3, 4, 5], 3));
 
-//console.log(solve([5, 0, 2, 1, 3]));
-console.log(solve([-5, 0, -2, -1, -3]));
+//! 2D Array of Integers With Square Root Dimensions
+
+//   const arr = Array.from(Array(Math.sqrt(k)), () => new Array(Math.sqrt(k)));
+//   let count = 1;
+
+//   for (let i = 0; i < arr.length; i++) {
+//     var inner = arr[i];
+
+//     for (let j = 0; j < inner.length; j++) {
+//       arr[i][j] = count;
+//       count++;
+//     }
+//   }
+
+//   return arr;
+// };
+// console.log(solve(9));
+
+//! Find the Missing Number
+// const solve = (intArray: number[]) => {
+//   intArray.sort((a, b) => a - b);
+//   const start = intArray[0];
+
+//   const res = intArray.reduce((acc, num, idx) => {
+//     if (acc != num) {
+//       return acc;
+//     }
+//     acc++;
+//     return acc;
+//   }, start);
+
+//   return res;
+// };
+
+// console.log(solve([5, 0, 2, 1, 3]));
+//console.log(solve([-5, 0, -2, -1, -3]));
 
 //! Remove Duplicated Strings
 // const solve11 = (strArray: string[]) => {

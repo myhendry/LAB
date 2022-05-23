@@ -1,0 +1,40 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.1.7",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.8.8",
+    "@next-auth/firebase-adapter": "^0.1.2-pr.183-76202b42.8",
+    "ethers": "^5.6.5",
+    "firebase": "^9.8.1",
+    "framer-motion": "^6.3.3",
+    "moment": "^2.29.3",
+    "next": "12.1.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.31.1",
+    "web3modal": "^1.9.7",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.32",
+    "@types/react": "18.0.9",
+    "@types/react-dom": "18.0.3",
+    "autoprefixer": "^10.4.7",
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24",
+    "typescript": "4.6.4"
+  }
+}
