@@ -46,6 +46,7 @@ const schema = yup
 
 const Dashboard = (props: Props) => {
   // https://github.com/RonHouben/nextjs-todo-app/blob/c55af99329f5206d31eec8f87405873e111895c6/lib/firebaseClient.ts
+  // https://travis.media/how-to-use-firebase-with-react/#20211130-addDoc
   const { data: session } = useSession();
 
   const [notes, setNotes] = useState<Note[]>();
@@ -93,7 +94,6 @@ const Dashboard = (props: Props) => {
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
     setIsLoading(true);
-    console.log(values);
     addNote(values.text);
     reset();
     setIsLoading(false);
@@ -131,7 +131,7 @@ const Dashboard = (props: Props) => {
             rightIcon={<ArrowForwardIcon />}
             colorScheme="teal"
             variant="outline"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
           >
             Add Note
           </Button>
@@ -145,6 +145,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // https://next-auth.js.org/tutorials/securing-pages-and-api-routes
   const session = await getSession(context);
 
+  console.log("server session", session);
   if (!session) {
     return { props: {}, redirect: { destination: "/auth" } };
   }

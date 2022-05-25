@@ -9,10 +9,8 @@ export const ColorSchemeToggle = (props: Props) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <div>
-      <IconButton mt={4} aria-label="Toggle Mode" onClick={toggleColorMode}>
-        {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-      </IconButton>
-    </div>
+    <IconButton aria-label="Toggle Mode" onClick={toggleColorMode}>
+      {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+    </IconButton>
   );
 };
