@@ -2,9 +2,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import { FirebaseAdapter } from "@next-auth/firebase-adapter";
-import { initializeApp, getApp, getApps } from "firebase/app";
 import {
-  getFirestore,
   collection,
   query,
   getDocs,
@@ -18,19 +16,7 @@ import {
   runTransaction,
 } from "firebase/firestore";
 
-const app = !getApps().length
-  ? initializeApp({
-      apiKey: "AIzaSyDNvCOKseMJQRkW2jpw9EMJ_U8TlXj9VKA",
-      authDomain: "jobs-903f5.firebaseapp.com",
-      databaseURL: "https://jobs-903f5.firebaseio.com",
-      projectId: "jobs-903f5",
-      storageBucket: "jobs-903f5.appspot.com",
-      messagingSenderId: "703674070669",
-      appId: "1:703674070669:web:e339189289f3aa677514c4",
-    })
-  : getApp();
-
-const db = getFirestore(app);
+import { db } from "../../../config/firebase";
 
 export default NextAuth({
   providers: [
@@ -57,7 +43,11 @@ export default NextAuth({
     deleteDoc,
     runTransaction,
   }),
+  callbacks: {
+    async session({ session, token, user }) {
+      session.id = user.id;
+      return session;
+    },
+  },
   secret: "fasfasldkjlkadjgoiajronivadinviadhf",
 });
-
-export { app, db };

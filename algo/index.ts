@@ -1,8 +1,27 @@
 //! Find the Largest Sum
+//todo
 const solve = (intArray: number[], number: number) => {
-  return;
+  // for (let i = 0; i < intArray.length; i++) {
+  //   const x = intArray.splice(i, number);
+  //   console.log(x);
+  //   i++;
+  // }
+  // let bal = [1, 2, 3, 4, 5];
+  // while (bal.length > number) {
+  //   bal.pop();
+
+  // }
+
+  const res = intArray.reduce((acc, num, idx) => {
+    if (idx !== 0) {
+      let arr = [];
+      arr = intArray.slice(idx, number);
+      console.log(arr);
+    }
+    return 0;
+  }, 0);
 };
-console.log(solve([1, 2, 3, 4, 5], 3));
+console.log(solve([1, 2, 11, 4, 5, 8, 6], 3));
 
 //! 2D Array of Integers With Square Root Dimensions
 
