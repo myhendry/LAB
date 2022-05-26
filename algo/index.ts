@@ -1,25 +1,26 @@
+//! Right Side Equal to the Left
+// const solve = (intArray: number[]) => {
+//   return;
+// };
+
+// console.log(solve([5, 4, 3, 9]));
+// console.log(solve([5, 5, -1, 3, 9]));
+
 //! Find the Largest Sum
+// https://www.geeksforgeeks.org/javascript-program-for-largest-sum-contiguous-subarray/
 //todo
 const solve = (intArray: number[], number: number) => {
-  // for (let i = 0; i < intArray.length; i++) {
-  //   const x = intArray.splice(i, number);
-  //   console.log(x);
-  //   i++;
-  // }
-  // let bal = [1, 2, 3, 4, 5];
-  // while (bal.length > number) {
-  //   bal.pop();
+  let max_so_far = 0;
+  let max_ending_here = 0;
 
-  // }
-
-  const res = intArray.reduce((acc, num, idx) => {
-    if (idx !== 0) {
-      let arr = [];
-      arr = intArray.slice(idx, number);
-      console.log(arr);
+  for (let i = 0; i < intArray.length; i++) {
+    for (let point = 0; point < number; point++) {
+      console.log(intArray[point]);
+      max_so_far += intArray[point];
     }
-    return 0;
-  }, 0);
+  }
+
+  console.log("max_so_far", max_so_far);
 };
 console.log(solve([1, 2, 11, 4, 5, 8, 6], 3));
 

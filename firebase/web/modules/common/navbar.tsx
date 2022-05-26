@@ -1,19 +1,21 @@
+import React, { useState } from "react";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
+  Heading,
   IconButton,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-import React, { useState } from "react";
 import { ColorSchemeToggle } from "./color_scheme_toggle";
 
 type Props = {};
 
-const links = [
+const unauthenticatedlinks = [
   {
     name: "Main",
     uri: "/",
@@ -22,15 +24,28 @@ const links = [
     name: "Login",
     uri: "/auth",
   },
+];
+
+const authenticatedLinks = [
+  {
+    name: "Main",
+    uri: "/",
+  },
   { name: "Dashboard", uri: "/dashboard" },
 ];
 
 const Navbar = (props: Props) => {
   const [display, setDisplay] = useState<string>("none");
   const color = useColorModeValue("white", "gray.800");
+  const { data: session } = useSession();
+
+  const links = !!session ? authenticatedLinks : unauthenticatedlinks;
 
   return (
     <Flex>
+      <Heading position={"fixed"} left={"1rem"} mt={"1rem"}>
+        Hello
+      </Heading>
       <Flex
         pos={"fixed"}
         top={"1rem"}
