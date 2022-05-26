@@ -19,6 +19,7 @@ import {
   Center,
   Text,
   Spinner,
+  HStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -27,9 +28,10 @@ import * as yup from "yup";
 import nookies from "nookies";
 import { getAuth } from "firebase-admin/auth";
 
-import { db } from "../config/firebase";
-import { useAuth } from "../context/auth-context";
-import { firebaseAdmin } from "../config/firebase-admin";
+import { db } from "../../config/firebase";
+import { useAuth } from "../../context/auth-context";
+import { firebaseAdmin } from "../../config/firebase-admin";
+import Navbar from "../../modules/common/navbar";
 
 type Props = {
   uid: string;
@@ -113,9 +115,7 @@ const Dashboard = ({ uid }: Props) => {
 
   return (
     <Box>
-      <Link href={`/auth`}>
-        <a>Auth</a>
-      </Link>
+      <Navbar />
       {isLoading && <Spinner />}
       <Text>{uid}</Text>
       {notes?.map((note) => (

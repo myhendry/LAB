@@ -8,9 +8,6 @@ import {
   Input,
   Button,
   Box,
-  Center,
-  Text,
-  Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -88,15 +85,6 @@ export const AuthForm = (props: Props) => {
             disabled={isSubmitting || isLoading}
           >
             Submit
-          </Button>
-          <Button
-            mt={4}
-            rightIcon={<ArrowForwardIcon />}
-            colorScheme="teal"
-            variant="outline"
-            onClick={logout}
-          >
-            Exit
           </Button>
         </VStack>
       </form>

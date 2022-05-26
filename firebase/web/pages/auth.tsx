@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React from "react";
+import { Box } from "@chakra-ui/react";
 
 import { AuthForm } from "../modules/common";
 
@@ -10,13 +10,9 @@ const Auth = (props: Props) => {
   // https://travis.media/how-to-use-firebase-with-react/#20211130-authentication
   // https://colinhacks.com/essays/nextjs-firebase-authentication
   return (
-    <>
-      <Link href="/dashboard">
-        <a>Dashboard</a>
-      </Link>
-
+    <Box>
       <AuthForm />
-    </>
+    </Box>
   );
 };
 

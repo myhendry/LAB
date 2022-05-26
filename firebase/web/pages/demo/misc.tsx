@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import { Form } from "../modules/design";
+import { Form } from "../../modules/design";
 
 type Props = {};
 

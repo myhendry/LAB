@@ -37,7 +37,7 @@ const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      push(`/dashboard`);
+      push(`/demo/dashboard`);
     } catch (error) {
       console.log(error);
     }
