@@ -1,28 +1,29 @@
 //! Right Side Equal to the Left
-// const solve = (intArray: number[]) => {
-//   return;
-// };
+//todo
+const solve = (intArray: number[]) => {
+  for (let i = 0; i < intArray.length; i++) {
+    console.log(intArray[i]);
+  }
+};
 
-// console.log(solve([5, 4, 3, 9]));
+console.log(solve([5, 4, 3, 9]));
 // console.log(solve([5, 5, -1, 3, 9]));
 
 //! Find the Largest Sum
 // https://www.geeksforgeeks.org/javascript-program-for-largest-sum-contiguous-subarray/
-//todo
-const solve = (intArray: number[], number: number) => {
-  let max_so_far = 0;
-  let max_ending_here = 0;
+// const solve = (intArray: number[], number: number) => {
+//   let max_so_far = 0;
 
-  for (let i = 0; i < intArray.length; i++) {
-    for (let point = 0; point < number; point++) {
-      console.log(intArray[point]);
-      max_so_far += intArray[point];
-    }
-  }
+//   for (let i = 0; i < intArray.length; i++) {
+//     let sum = intArray[i] + intArray[i + 1] + intArray[i + 2];
 
-  console.log("max_so_far", max_so_far);
-};
-console.log(solve([1, 2, 11, 4, 5, 8, 6], 3));
+//     if (sum > max_so_far) {
+//       max_so_far = sum;
+//     }
+//   }
+//   return max_so_far;
+// };
+// console.log(solve([1, 2, 11, 4, 5, 8, 6], 3));
 
 //! 2D Array of Integers With Square Root Dimensions
 

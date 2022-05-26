@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
+import { useSession, getSession } from "next-auth/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   addDoc,
@@ -24,7 +25,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { db } from "../config/firebase";
-import { useApp } from "../context/app-context";
 
 type Props = {};
 
@@ -47,16 +47,15 @@ const schema = yup
 const Dashboard = (props: Props) => {
   // https://github.com/RonHouben/nextjs-todo-app/blob/c55af99329f5206d31eec8f87405873e111895c6/lib/firebaseClient.ts
   // https://travis.media/how-to-use-firebase-with-react/#20211130-addDoc
+  const { data: session } = useSession();
 
   const [notes, setNotes] = useState<Note[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { isApp } = useApp();
-  console.log("isApp", isApp);
-
   const addNote = async (text: string) => {
     await addDoc(collection(db, "notes"), {
       text,
+      author: session?.id,
     });
     await getNotes();
   };
@@ -143,6 +142,15 @@ const Dashboard = (props: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // https://next-auth.js.org/tutorials/securing-pages-and-api-routes
+  const session = await getSession(context);
+
+  console.log("server session", session);
+  if (!session) {
+    return { props: {}, redirect: { destination: "/auth" } };
+  }
+  //   const { user } = session;
+
   return {
     props: {},
   };
