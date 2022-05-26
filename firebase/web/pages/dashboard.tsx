@@ -20,13 +20,20 @@ import {
   Text,
   Spinner,
 } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import nookies from "nookies";
+import { getAuth } from "firebase-admin/auth";
 
 import { db } from "../config/firebase";
-import { useApp } from "../context/app-context";
+import { useAuth } from "../context/auth-context";
+import { firebaseAdmin } from "../config/firebase-admin";
 
-type Props = {};
+type Props = {
+  uid: string;
+};
 
 interface Note {
   id: string;
@@ -44,15 +51,21 @@ const schema = yup
   })
   .required();
 
-const Dashboard = (props: Props) => {
+const Dashboard = ({ uid }: Props) => {
   // https://github.com/RonHouben/nextjs-todo-app/blob/c55af99329f5206d31eec8f87405873e111895c6/lib/firebaseClient.ts
   // https://travis.media/how-to-use-firebase-with-react/#20211130-addDoc
+  // https://colinhacks.com/essays/nextjs-firebase-authentication
 
   const [notes, setNotes] = useState<Note[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { push } = useRouter();
 
-  const { isApp } = useApp();
-  console.log("isApp", isApp);
+  const { isLoading, user } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      push("/auth");
+    }
+  }, [isLoading, user]);
 
   const addNote = async (text: string) => {
     await addDoc(collection(db, "notes"), {
@@ -94,16 +107,17 @@ const Dashboard = (props: Props) => {
   });
 
   const onSubmit: SubmitHandler<Inputs> = (values) => {
-    setIsLoading(true);
     addNote(values.text);
     reset();
-    setIsLoading(false);
   };
 
   return (
     <Box>
-      <p>Dashboard</p>
-
+      <Link href={`/auth`}>
+        <a>Auth</a>
+      </Link>
+      {isLoading && <Spinner />}
+      <Text>{uid}</Text>
       {notes?.map((note) => (
         <Center key={note.id} onClick={deleteNote(note.id)} cursor="pointer">
           <Text>
@@ -111,7 +125,7 @@ const Dashboard = (props: Props) => {
           </Text>
         </Center>
       ))}
-      {isLoading && <Spinner />}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.text}>
           {/* <FormLabel htmlFor="text">First text</FormLabel> */}
@@ -132,7 +146,7 @@ const Dashboard = (props: Props) => {
             rightIcon={<ArrowForwardIcon />}
             colorScheme="teal"
             variant="outline"
-            disabled={isSubmitting || isLoading}
+            disabled={isSubmitting}
           >
             Add Note
           </Button>
@@ -143,9 +157,21 @@ const Dashboard = (props: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {},
-  };
+  try {
+    const cookies = nookies.get(context);
+    const token = await getAuth(firebaseAdmin.getApp()).verifyIdToken(
+      cookies.token
+    );
+    const { uid, email } = token;
+
+    return {
+      props: {
+        uid,
+      },
+    };
+  } catch (error) {
+    return { props: {} as never, redirect: { destination: "/auth" } };
+  }
 };
 
 export default Dashboard;
