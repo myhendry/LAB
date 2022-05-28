@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   FormErrorMessage,
@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Navbar from "../../modules/common/navbar";
 
 type Props = {};
 
@@ -23,7 +24,7 @@ const schema = yup
   })
   .required();
 
-const Ml = (props: Props) => {
+const TextSentiment = (props: Props) => {
   // https://joelmasters.medium.com/build-an-online-sentiment-analysis-tool-with-ml5-js-and-react-in-10-minutes-83ce0758ee73
   // https://github.com/myhendry/react-ml5/blob/master/src/ml5/image/Ml5ImagePage.jsx
   let ml5: any;
@@ -31,6 +32,8 @@ const Ml = (props: Props) => {
   useEffect(() => {
     ml5 = require("ml5");
   }, []);
+
+  const [sentiment, setSentiment] = useState<string>("");
 
   const {
     handleSubmit,
@@ -50,7 +53,7 @@ const Ml = (props: Props) => {
     const sentiment = ml5.sentiment("movieReviews", () => {
       const { score } = sentiment.predict(text);
       const res = sentimentToValue(score);
-      console.log(res);
+      setSentiment(res);
     });
   };
 
@@ -66,7 +69,9 @@ const Ml = (props: Props) => {
 
   return (
     <Box>
-      <Text>ML</Text>
+      <Navbar />
+      <Text>Text Sentiment</Text>
+      <Text>{sentiment}</Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={!!errors.name}>
           <Input
@@ -92,4 +97,4 @@ const Ml = (props: Props) => {
   );
 };
 
-export default Ml;
+export default TextSentiment;

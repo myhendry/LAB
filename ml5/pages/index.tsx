@@ -32,7 +32,8 @@ const Home: NextPage = () => {
         <Text color={colorMode === "light" ? "black" : "yellow"}>
           Live in the Present Moment
         </Text>
-        <Link href={"/demo/ml"}>Go to ML5</Link>
+        <Link href={"/demo/text-sentiment"}>Text Sentiment</Link>
+        <Link href={"/demo/image-classification"}>Image Classification</Link>
       </VStack>
     </Box>
   );
