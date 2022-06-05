@@ -1,4 +1,4 @@
-use std::{fmt::{ self, Debug, Formatter }, num::NonZeroU8};
+use std::{fmt::{ self, Debug, Formatter }};
 use super::*;
 
 pub struct Block {
@@ -13,11 +13,12 @@ pub struct Block {
 
 impl Debug for Block {
     fn fmt (&self, f: &mut Formatter) -> fmt::Result {
-        write!(f, "Block[{}]: {} at: {} with: {}",
+        write!(f, "Block index [{}]: with hash {} at timestamp: {} with payload: {} and nonce: {}",
             &self.index,
             &hex::encode(&self.hash),
             &self.timestamp,
             &self.payload,
+            &self.nonce,
         )
     }
 }
@@ -36,6 +37,7 @@ impl Block {
     }
 
     pub fn mine(&mut self) {
+        // https://www.techtarget.com/searchnetworking/definition/big-endian-and-little-endian#:~:text=Big%2Dendian%20is%20an%20order,the%20sequence)%20is%20stored%20first.
         for nonce_attempt in 0..(u64::max_value()) {
             self.nonce = nonce_attempt;
             let hash = self.hash();

@@ -1,12 +1,119 @@
-//! Right Side Equal to the Left
+//! Find the Character That Doesn't Belong
 //todo
-const solve = (intArray: number[]) => {
-  for (let i = 0; i < intArray.length; i++) {
-    console.log(intArray[i]);
+// const solve = (strOne: string, strTwo: string) => {
+//   const strOneLen = strOne.length;
+//   const strTwoLen = strTwo.length;
+
+//   let objOne: {
+//     [key: string]: number;
+//   } = {};
+
+//   let objTwo: {
+//     [key: string]: number;
+//   } = {};
+
+//   for (let key of strOne.split("")) {
+//     if (!objOne[key]) {
+//       objOne[key] = 1;
+//     } else {
+//       objOne[key]++;
+//     }
+//   }
+
+//   for (let key of strTwo.split("")) {
+//     if (!objTwo[key]) {
+//       objTwo[key] = 1;
+//     } else {
+//       objTwo[key]++;
+//     }
+//   }
+
+//   const obj = strOne.length >= strTwo.length ? objOne : objTwo;
+
+//   for (let key in obj) {
+//     console.log(key);
+//   }
+
+//   return;
+// };
+
+// console.log(solve("flooding", "floodring"));
+
+//! Find Closest Point in Array
+const solve = (intArray: number[][], p: number[]) => {
+  const pSum = p[0] + p[1];
+
+  const newArr = intArray.map((x) => {
+    return x[0] + x[1];
+  });
+
+  let closest = 0;
+  let diff = 0;
+
+  for (let i = 0; i < newArr.length; i++) {
+    if (diff < Math.abs(newArr[i] - pSum)) {
+      closest = i;
+    }
   }
+
+  console.log(closest);
 };
 
-console.log(solve([5, 4, 3, 9]));
+// console.log(
+//   solve(
+//     [
+//       [0, 0],
+//       [1, 1],
+//       [10, 10],
+//     ],
+//     [11, 11]
+//   )
+// );
+console.log(
+  solve(
+    [
+      [0, 0],
+      [1, 1],
+      [10, 10],
+    ],
+    [2, 3]
+  )
+);
+
+//! Quantity of Numbers Between
+// const solve = (n: number) => {
+//   let num = 0;
+//   for (let i = 0; i <= n; i++) {
+//     if (!(i + "").includes("4")) {
+//       num++;
+//     }
+//   }
+//   return num;
+// };
+
+// console.log(solve(25));
+
+//! Right Side Equal to the Left
+// const solve = (intArray: number[]) => {
+//   for (let i = 0; i < intArray.length; i++) {
+//     const leftSum = intArray.slice(0, i).reduce((acc, val) => {
+//       acc += val;
+//       return acc;
+//     }, 0);
+//     const rightSum = intArray.slice(i + 1).reduce((acc, val) => {
+//       acc += val;
+//       return acc;
+//     }, 0);
+
+//     if (leftSum == rightSum) {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
+
+// console.log(solve([5, 1, 3, 9]));
+// console.log(solve([5, 4, 3, 9]));
 // console.log(solve([5, 5, -1, 3, 9]));
 
 //! Find the Largest Sum

@@ -25,6 +25,7 @@ const schema = yup
   .required();
 
 const TextSentiment = (props: Props) => {
+  // https://learn.ml5js.org/#/reference/image-classifier
   // https://joelmasters.medium.com/build-an-online-sentiment-analysis-tool-with-ml5-js-and-react-in-10-minutes-83ce0758ee73
   // https://github.com/myhendry/react-ml5/blob/master/src/ml5/image/Ml5ImagePage.jsx
   let ml5: any;

@@ -1,25 +1,25 @@
 ### TODOS
 
+- [ ] Text Search
+- [ ] Like Project
+- [ ] Group ID search (Find in Array) Net-Ninja Mongo DB Youtube
+- [ ] Upload Images
+- [ ] SWR Infinite Pagination - Backend (Cursor-Based)
+- [ ] SWR Infinite Pagination - Frontend (Cursor-Based)
+- [ ] Next-Auth HOC
+- [ ] Next-Auth Roles
+- [ ] Admin
+- [ ] React-Three-Fiber
+
+- [x] Nextjs with Firebase
 - Supabase
   - [x] Supabase-Next Auth
   - [ ] Supabase-Next CRUD
   - [ ] Supabase-RN Auth
   - [ ] Supabase-RN CRUD
   - [ ] Supabase-Roles
-- [ ] Text Search
-- [ ] Like Project
-- [ ] Group ID search (Find in Array) Net-Ninja Mongo DB Youtube
-- [ ] Upload Images
-- [ ] Next-GraphQL
-- [ ] SWR Infinite Pagination - Backend (Cursor-Based)
-- [ ] SWR Infinite Pagination - Frontend (Cursor-Based)
-- [ ] Next-Auth HOC
-- [ ] Nextjs with Firebase
-- [ ] Next-Auth Roles
-- [ ] Admin
-- [ ] React-Three-Fiber
-
 - [ ] [Rust WASM](https://medium.com/@a7ul/using-rust-modules-for-javascript-web-development-part-i-e6dec27df7b2)
+- [x] Next-GraphQL
 - [x] Navbar Responsive Styling
 - [x] Framer Motion
 - [x] SWR Infinite Pagination - Backend (Offset-Based: Skip & Limit)

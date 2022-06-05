@@ -34,6 +34,7 @@ const Home: NextPage = () => {
         </Text>
         <Link href={"/demo/text-sentiment"}>Text Sentiment</Link>
         <Link href={"/demo/image-classification"}>Image Classification</Link>
+        <Link href={"/demo/video-classification"}>Video Classification</Link>
       </VStack>
     </Box>
   );

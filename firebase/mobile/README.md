@@ -1,3 +1,5 @@
+// https://davidl.fr/blog/google-vision-with-react-native
+
 - [ ] Swipes
 - [ ] Firestore Typescript
 - [ ] Stripe

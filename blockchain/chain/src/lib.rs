@@ -12,6 +12,14 @@ pub fn now () -> u128 {
     duration.as_secs() as u128 * 1000 + duration.subsec_millis() as u128
 }
 
+/*
+https://users.rust-lang.org/t/code-explanation/25697/2
+It splits a 32-bit integer into four bytes.
+0x2 is 2 in hex and 0x3 is 3 in hex and 0x1 is 1 in hex so on so forth
+Given a 32-bit integer u, it shifts the bits right by 0 bits, then 8 bits, 
+then 16 bits, then 24 bits. It then takes each of those and casts to an
+8-bit integer, truncating as needed
+*/
 pub fn u32_bytes (u: &u32) -> [u8; 4] {
     [
         (u >> 8 * 0x0) as u8,
@@ -19,6 +27,13 @@ pub fn u32_bytes (u: &u32) -> [u8; 4] {
         (u >> 8 * 0x2) as u8,
         (u >> 8 * 0x3) as u8,
     ]
+}
+// same as u32_bytes above
+pub fn u32_bytes_le(u: u32) -> [u8; 4] {
+    [(u >>  0) as u8,
+     (u >>  8) as u8,
+     (u >> 16) as u8,
+     (u >> 24) as u8]
 }
 
 pub fn u64_bytes (u: &u64) -> [u8; 8] {
