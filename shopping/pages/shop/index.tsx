@@ -1,11 +1,11 @@
 import React from "react";
 import { NextPage } from "next";
 import { Box, Text, Grid, GridItem, VStack } from "@chakra-ui/react";
+import Image from "next/image";
+import Link from "next/link";
 
 import { Navbar } from "../../components/common";
 import data from "../../utils/data";
-import Image from "next/image";
-import Link from "next/link";
 
 interface IProps {}
 
@@ -24,7 +24,7 @@ const Shopping: NextPage<IProps> = () => {
             bg="lightcyan"
             cursor={"pointer"}
           >
-            <Link href={`/shopping/${p.slug}`}>
+            <Link href={`/shop/${p.slug}`}>
               <a>
                 <VStack>
                   <Image

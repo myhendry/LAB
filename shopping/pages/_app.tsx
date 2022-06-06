@@ -7,6 +7,7 @@ import { ChakraProvider, Container } from "@chakra-ui/react";
 
 import theme from "../styles/theme";
 import { DefaultSeoValues } from "../next-seo.config";
+import { StoreProvider } from "../utils/store";
 
 // export function reportWebVitals(metric: any) {
 //   console.log("Metric", metric);
@@ -23,11 +24,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           // fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
         }}
       >
-        <ChakraProvider theme={theme}>
-          <Container>
-            <Component {...pageProps} />
-          </Container>
-        </ChakraProvider>
+        <StoreProvider>
+          <ChakraProvider theme={theme}>
+            <Container>
+              <Component {...pageProps} />
+            </Container>
+          </ChakraProvider>
+        </StoreProvider>
       </SWRConfig>
     </>
   );

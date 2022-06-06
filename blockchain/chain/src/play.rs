@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use std::collections::HashMap;
+
 pub fn test() -> String  {
 	let mut a1 = Ammo::new("Chris".to_string(), 20);
 	a1.sing();
@@ -13,11 +15,12 @@ pub struct Circle {
 	pub index: u32,
 	pub hash: Vec<u8>,
 	pub data: String,
+	pub contacts: HashMap<u8, u8>,
 }
 
 impl Circle {
-	pub fn new(index: u32, hash: Vec<u8>, data: &str) -> Self {
-		Circle { index, hash, data: data.to_string() }
+	pub fn new(index: u32, hash: Vec<u8>, data: &str, contacts: HashMap<u8, u8>) -> Self {
+		Circle { index, hash, data: data.to_string(), contacts}
 	}
 
 	pub fn mutate(&mut self) {

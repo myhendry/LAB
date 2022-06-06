@@ -1,5 +1,7 @@
 mod play;
 
+use std::collections::HashMap;
+
 // use play::*;
 // use blockchainlib::{Block, Hashable};
 use play::*;
@@ -25,7 +27,7 @@ fn main () {
     */
 
     // * Play 
-    let mut c1 = Circle::new(10, vec![1, 2, 3], "yeah");
+    let mut c1 = Circle::new(10, vec![1, 2, 3], "yeah", HashMap::from([(1,2), (3,4)]));
     println!("{:?}", c1);
     
     c1.mutate();
@@ -34,7 +36,7 @@ fn main () {
     c1.change("fun");
     println!("{:?}", c1);
 
-    let mut c2 = Circle::new(20, vec![10, 20, 30], "circle 2");
+    let mut c2 = Circle::new(20, vec![10, 20, 30], "circle 2", HashMap::from([(1,2), (3,4)]));
     println!("{:?}", c2);
 
     c2.change("now now");
@@ -45,5 +47,14 @@ fn main () {
     let r1 = c1.manage();
     println!("{:?}", r1);
 
+    let v1 = c2.contacts.get(&3).unwrap();
+    println!("{}", v1);
+
+    c2.contacts.insert(5, 9);
+    println!("{:?}", c2);
+
+    for (k, v) in c2.contacts.iter() {
+        println!("{}", k);
+    }
 
 }
