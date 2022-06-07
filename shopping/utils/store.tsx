@@ -1,5 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
+import { IProduct } from "../types/app";
+
 /*
 https://dev.to/elisealcala/react-context-with-usereducer-and-typescript-4obm
 https://youtu.be/9KzQ9xFSAEU
@@ -10,15 +12,13 @@ const initialState: INITIALSTATE = {
   cart: { cartItems: [] },
 };
 
-type ProductType = { name: string; slug: string; quantity: number };
-
 interface INITIALSTATE {
   cart: {
-    cartItems: ProductType[];
+    cartItems: IProduct[];
   };
 }
 
-type ACTIONTYPES = { type: "CART_ADD_ITEM"; payload: ProductType };
+type ACTIONTYPES = { type: "CART_ADD_ITEM"; payload: IProduct };
 
 export const Store = createContext<{
   state: INITIALSTATE;

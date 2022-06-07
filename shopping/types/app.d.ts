@@ -1,3 +1,17 @@
+export interface IProduct {
+  name?: string;
+  slug?: string;
+  quantity?: number;
+  category?: string;
+  image?: string;
+  price?: number;
+  brand?: string;
+  rating?: number;
+  numReviews?: number;
+  countInStock?: number;
+  description?: string;
+}
+
 export interface IListing {
   sys: {
     id: string;

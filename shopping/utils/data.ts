@@ -1,4 +1,8 @@
-const data = {
+import { IProduct } from "../types/app";
+
+const data: {
+  products: IProduct[];
+} = {
   products: [
     {
       name: "Free Shirt",
