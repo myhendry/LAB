@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, ReactNode, useReducer } from "react";
 
 import { IProduct } from "../types/app";
 
@@ -47,7 +47,7 @@ const reducer = (state: INITIALSTATE = initialState, action: ACTIONTYPES) => {
   }
 };
 
-export const StoreProvider = ({ children }: { children: any }) => {
+export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (

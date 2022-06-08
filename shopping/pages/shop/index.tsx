@@ -9,6 +9,10 @@ import data from "../../utils/data";
 
 interface IProps {}
 
+/*
+ * Next Amazona: Build ECommerce Website Like Amazon
+ * Next: L8
+ */
 const Shopping: NextPage<IProps> = () => {
   return (
     <Box h={"100vh"}>

@@ -1,3 +1,11 @@
+//! Find the Median of an Array
+const solve = (intArray: number[]) => {
+  return;
+};
+
+console.log(solve([1, 5, 4, 3, 2]));
+console.log(solve([-5, -12, 3, -3, 95]));
+
 //! Find the Character That Doesn't Belong
 //todo
 // const solve = (strOne: string, strTwo: string) => {
@@ -40,24 +48,27 @@
 // console.log(solve("flooding", "floodring"));
 
 //! Find Closest Point in Array
-const solve = (intArray: number[][], p: number[]) => {
-  const pSum = p[0] + p[1];
+// const solve = (intArray: number[][], p: number[]) => {
+//   const pSum = p[0] + p[1];
 
-  const newArr = intArray.map((x) => {
-    return x[0] + x[1];
-  });
+//   const newArr = intArray.map((x) => {
+//     return x[0] + x[1];
+//   });
 
-  let closest = 0;
-  let diff = 0;
+//   let closest = 0;
+//   let diff = 0;
 
-  for (let i = 0; i < newArr.length; i++) {
-    if (diff < Math.abs(newArr[i] - pSum)) {
-      closest = i;
-    }
-  }
+//   for (let i = 0; i < newArr.length; i++) {
+//     let pointDiff = Math.abs(newArr[i] - pSum);
 
-  console.log(closest);
-};
+//     if (diff > pointDiff) {
+//       closest = i;
+//     }
+//     diff = pointDiff;
+//   }
+
+//   return intArray[closest];
+// };
 
 // console.log(
 //   solve(
@@ -69,16 +80,16 @@ const solve = (intArray: number[][], p: number[]) => {
 //     [11, 11]
 //   )
 // );
-console.log(
-  solve(
-    [
-      [0, 0],
-      [1, 1],
-      [10, 10],
-    ],
-    [2, 3]
-  )
-);
+// console.log(
+//   solve(
+//     [
+//       [0, 0],
+//       [1, 1],
+//       [10, 10],
+//     ],
+//     [2, 3]
+//   )
+// );
 
 //! Quantity of Numbers Between
 // const solve = (n: number) => {

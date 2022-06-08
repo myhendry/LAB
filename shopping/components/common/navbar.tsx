@@ -108,7 +108,7 @@ export const Navbar = ({ title = "Cool" }: Props) => {
         w="100vw"
         h="100vh"
         bgColor={color}
-        zIndex={20}
+        zIndex={90}
         pos="fixed"
         top="0"
         left="0"

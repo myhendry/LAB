@@ -6,6 +6,7 @@ import { Badge, Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 import { Navbar } from "../../components/common";
 import data from "../../utils/data";
 import { Store } from "../../utils/store";
+import Link from "next/link";
 
 type Props = {};
 
@@ -17,7 +18,8 @@ const ProductDetails: NextPage<Props> = ({}: Props) => {
   const product = data.products.find((p) => p.slug === slug);
 
   const { state, dispatch } = useContext(Store);
-  console.log(state);
+  console.log("STATE", state);
+
   const { cart } = state;
 
   const addToCartHandler = () => {
@@ -48,6 +50,9 @@ const ProductDetails: NextPage<Props> = ({}: Props) => {
             </Badge>
           )}
         </Center>
+        <Link href="/shop/cart">
+          <a>Cart</a>
+        </Link>
       </VStack>
     </Box>
   );
