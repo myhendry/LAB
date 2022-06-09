@@ -1,10 +1,19 @@
-//! Find the Median of an Array
-const solve = (intArray: number[]) => {
+//! Find the Next Time Formed by String
+const solve = (time: string) => {
   return;
 };
 
-console.log(solve([1, 5, 4, 3, 2]));
-console.log(solve([-5, -12, 3, -3, 95]));
+console.log(solve("15:13"));
+
+//! Find the Median of an Array
+// const solve = (intArray: number[]) => {
+//   const mid = Math.floor(intArray.length / 2);
+//   const res = intArray.sort((a, b) => a - b);
+//   return res.length % 2 !== 0 ? res[mid] : (res[mid - 1] + res[mid]) / 2;
+// };
+
+// console.log(solve([1, 5, 4, 3, 2]));
+// console.log(solve([-5, -12, 3, -3, 95]));
 
 //! Find the Character That Doesn't Belong
 //todo
