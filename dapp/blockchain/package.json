@@ -1,0 +1,46 @@
+{
+  "name": "blockchain",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "author": "H",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "npx hardhat clean",
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "coverage": "npm run build && npx hardhat coverage --temp artifacts --network coverage"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-etherscan": "^2.1.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@typechain/ethers-v5": "^7.0.0",
+    "@typechain/hardhat": "^2.0.0",
+    "@types/chai": "^4.2.18",
+    "@types/chai-as-promised": "^7.1.1",
+    "@types/dotenv-safe": "^8.1.2",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.14.9",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "dotenv": "^9.0.2",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.1.4",
+    "hardhat": "^2.2.1",
+    "solidity-coverage": "^0.7.16",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^9.1.1",
+    "typechain": "^5.0.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@appliedblockchain/chainlink-plugins-fund-link": "^0.0.3",
+    "@chainlink/contracts": "^0.4.1",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@uniswap/v2-core": "^1.0.1",
+    "chain-utils": "^0.1.1",
+    "dotenv-safe": "^8.2.0"
+  }
+}
