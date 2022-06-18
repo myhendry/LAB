@@ -1,14 +1,36 @@
-import { ethers } from "hardhat";
+import { ethers, run, network } from "hardhat";
 
 async function main() {
   // https://github.com/myhendry/LAB/blob/main/blockchain/demo/scripts/deploy.ts
 
   // https://ethereum.stackexchange.com/questions/122157/hardhat-stuck-testing-in-mainnet-by-default
   //* NETWORK
-  const network = await ethers.provider.getNetwork();
+  const networkObj = await ethers.provider.getNetwork();
   console.log(
-    `You are Deploying on Network Name ${network.name}. The NetworkId is ${network.chainId} \n`
+    `You are Deploying on Network Name ${networkObj.name}. The NetworkId is ${networkObj.chainId} \n`
   );
+
+  /*
+  ! Verifying contracts on Etherscan
+  To update token information on Etherscan, the token contract address for the token must be verified. This is to ensure that the contract code is exactly what is being deployed onto the blockchain and also allows the public to audit and read the contract. Etherscan ensures that all token contract must be verified before they can be updated with information submitted by the contract owner.
+  */
+
+  const verify = async (contractAddress: string, args: any) => {
+    console.log("Verifying Contract...");
+    try {
+      await run("verify:verify", {
+        address: contractAddress,
+        constructorArguments: args,
+      });
+    } catch (error: unknown) {
+      const { message } = error as Error;
+      if (message.toLowerCase().includes("already verified")) {
+        console.log("Already Verified!");
+      } else {
+        console.log(error);
+      }
+    }
+  };
 
   //* ACCOUNTS
   const [deployer, payer1] = await ethers.getSigners();
@@ -16,7 +38,7 @@ async function main() {
     `Deployer account address is ${deployer.address} and Payer1 account address is ${payer1.address} \n`
   );
 
-  //* CONTRACTS
+  //! Deploying Smart Contracts
   let counterAddress;
   let demoAddress;
   let callDemoAddress;
@@ -25,7 +47,6 @@ async function main() {
   let v2Address;
   let converterAddress;
 
-  //* CUSTOM CONTRACTS
   const counterFactory = await ethers.getContractFactory("Counter");
   // If we had constructor arguments, they would be passed into deploy()
   let counterContract = await counterFactory.deploy();
@@ -72,6 +93,12 @@ async function main() {
   // // let nftMarketplaceContract = await nftMarketplaceFactory.deploy();
   // // await nftMarketplaceContract.deployed();
   // // console.log("NFTMarketplace Mined!");
+
+  //  ! Verifying contracts on Etherscan
+  if (network.config.chainId === 4 && process.env.ETHERSCAN_API_KEY) {
+    await counterContract.deployTransaction.wait(6);
+    await verify(counterContract.address, []);
+  }
 
   console.log(`The contract addresses are as follow: \n
   counterContractAddress: ${counterAddress}, \n

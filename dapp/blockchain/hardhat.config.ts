@@ -1,13 +1,13 @@
 import dotenv from "dotenv-safe";
 dotenv.config();
-import { HardhatUserConfig } from "hardhat/types";
-
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
-import { task, types } from "hardhat/config";
 import "solidity-coverage";
 import "@appliedblockchain/chainlink-plugins-fund-link";
+import { HardhatUserConfig } from "hardhat/types";
+import { task, types } from "hardhat/config";
+
 interface Etherscan {
   etherscan: { apiKey: string | undefined };
 }
@@ -58,6 +58,7 @@ const config: HardhatUserEtherscanConfig = {
       forking: {
         url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       },
+      chainId: 31337,
     },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
