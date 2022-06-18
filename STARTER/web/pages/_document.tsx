@@ -1,3 +1,6 @@
+// pages/_document.tsx
+
+import { ColorModeScript } from "@chakra-ui/react";
 import Document, {
   Html,
   Head,
@@ -6,8 +9,7 @@ import Document, {
   DocumentContext,
 } from "next/document";
 
-import dotenv from "dotenv-safe";
-dotenv.config();
+import theme from "../styles/theme";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -17,9 +19,11 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head />
         <body>
+          {/* 👇 Here's the script */}
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
           <div id="modal" />

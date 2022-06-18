@@ -1,5 +1,7 @@
 ## TODO
 
+npx hardhat help
+
 npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/<key>
 
 npm run test -- --network localhost

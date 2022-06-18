@@ -53,13 +53,6 @@ task("hello", "Prints a Greeting")
 
 const config: HardhatUserEtherscanConfig = {
   defaultNetwork: "hardhat",
-  solidity: {
-    compilers: [
-      { version: "0.7.6" },
-      { version: "0.8.0" },
-      { version: "0.8.1" },
-    ],
-  },
   networks: {
     hardhat: {
       forking: {
@@ -69,14 +62,23 @@ const config: HardhatUserEtherscanConfig = {
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [ACCOUNT_PRIVATE_KEY1, ACCOUNT_PRIVATE_KEY2],
+      chainId: 4,
     },
     kovan: {
       url: `https://kovan.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [ACCOUNT_PRIVATE_KEY1, ACCOUNT_PRIVATE_KEY2],
+      chainId: 42,
     },
     coverage: {
       url: "http://127.0.0.1:8555", // Coverage launches its own ganache-cli client
     },
+  },
+  solidity: {
+    compilers: [
+      { version: "0.7.6" },
+      { version: "0.8.0" },
+      { version: "0.8.1" },
+    ],
   },
   etherscan: {
     // Your API key for Etherscan

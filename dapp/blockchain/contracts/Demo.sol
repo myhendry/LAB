@@ -28,6 +28,7 @@ contract Demo {
     //* Modifiers
     modifier onlyOwner() {
         require(msg.sender == owner, "Only Owner can call this function");
+
         _;
     }
 

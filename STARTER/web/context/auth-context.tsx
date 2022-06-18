@@ -1,102 +1,88 @@
-import { ApiError, AuthChangeEvent, Session } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
-import React, {
-  FC,
+import {
   createContext,
-  Dispatch,
-  SetStateAction,
-  useState,
+  FC,
+  ReactNode,
   useContext,
   useEffect,
+  useState,
 } from "react";
+import {
+  onIdTokenChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+} from "@firebase/auth";
+import nookies from "nookies";
 
-import { SupabaseAuthResponse } from "../types/app";
-import { supabase } from "../utils/client";
-
-export interface IAuthContext {
+import { auth } from "../config/firebase";
+import { useRouter } from "next/router";
+export interface AuthContext {
   isLoading: boolean;
-  isAuthenticated: boolean;
-  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
-  loginWithMagicLink: (email: string) => Promise<SupabaseAuthResponse>;
-  logOut: () => Promise<{ error: ApiError | null } | undefined>;
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<IAuthContext>(null!);
+export const AuthContext = createContext<AuthContext>(null!);
 
-const AuthProvider: FC = ({ children }) => {
-  const router = useRouter();
+interface IAuthProviderProps {
+  children: ReactNode;
+}
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+const AuthProvider: FC<IAuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { push } = useRouter();
 
-  useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        handleAuthChange(event, session!);
-
-        if (event === "SIGNED_IN") {
-          setIsAuthenticated(true);
-          router.push("/profile");
-        }
-        if (event === "SIGNED_OUT") {
-          setIsAuthenticated(false);
-        }
-      }
-    );
-
-    checkUser();
-
-    return () => authListener?.unsubscribe();
-  }, []);
-
-  const handleAuthChange = async (event: AuthChangeEvent, session: Session) => {
-    await fetch(`/api/set-auth-cookie`, {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
-      credentials: "same-origin",
-      body: JSON.stringify({ event, session }),
-    });
-  };
-
-  const checkUser = async () => {
-    const user = await supabase.auth.user();
-    if (user) {
-      setIsAuthenticated(true);
-    }
-    setIsLoading(false);
-  };
-
-  const loginWithMagicLink = (email: string) => {
-    return supabase.auth.signIn({ email });
-  };
-
-  const logOut = async () => {
+  const login = async (email: string, password: string) => {
     try {
-      const data = await supabase.auth.signOut();
-      router.push("/auth");
-      return data;
+      await signInWithEmailAndPassword(auth, email, password);
+      push(`/demo/dashboard`);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      push("/auth");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onIdTokenChanged(auth, async (user) => {
+      if (!user) {
+        setUser(null);
+        nookies.set(undefined, "token", "", { path: "/" });
+        setIsLoading(false);
+      } else {
+        const token = await user.getIdToken();
+        setUser(user);
+        nookies.set(undefined, "token", token, { path: "/" });
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <AuthContext.Provider
-      value={{
-        loginWithMagicLink,
-        logOut,
-        isLoading,
-        isAuthenticated,
-        setIsAuthenticated,
-      }}
-    >
+    <AuthContext.Provider value={{ isLoading, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error(`useAuth must be used within a AuthContextProvider`);
+  }
+  return context;
 };
 
 export default AuthProvider;

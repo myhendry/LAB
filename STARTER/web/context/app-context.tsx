@@ -1,36 +1,30 @@
-import React, {
-  FC,
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useState,
-  useContext,
-} from "react";
+import { createContext, FC, ReactNode, useContext } from "react";
 
-export interface IAppContext {
-  isDark: boolean;
-  setIsDark: Dispatch<SetStateAction<boolean>>;
+export interface AppContext {
+  isApp: boolean;
 }
 
-export const AppContext = createContext<IAppContext>(null!);
+export const AppContext = createContext<AppContext>(null!);
 
-const AppProvider: FC = ({ children }) => {
-  const [isDark, setIsDark] = useState<boolean>(false);
+interface IAppProviderProps {
+  children: ReactNode;
+}
 
+const AppProvider: FC<IAppProviderProps> = ({ children }) => {
   return (
-    <AppContext.Provider
-      value={{
-        isDark,
-        setIsDark,
-      }}
-    >
+    <AppContext.Provider value={{ isApp: true }}>
       {children}
     </AppContext.Provider>
   );
 };
 
 export const useApp = () => {
-  return useContext(AppContext);
+  const context = useContext(AppContext);
+
+  if (context === undefined) {
+    throw new Error(`useApp must be used within a AppContextProvider`);
+  }
+  return context;
 };
 
 export default AppProvider;
