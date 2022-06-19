@@ -3,6 +3,8 @@
 #![allow(unused_imports)]
 use std::{convert::From, num::ParseIntError, cell::{Cell, RefCell}, sync::Mutex, collections::HashMap, fmt::{Display, Debug}, vec};
 
+mod two;
+use two::*;
 
 mod server;
 use server::*;
@@ -68,7 +70,7 @@ use http::{Request, Method, StatusCode, Response};
 // .inspect(|x| println!("{}", x));
 
 fn main() {
-
+    run_two();
     
     let s1 = Student::new("John", 22);
     let s2 = Student::new("Darren", 26);
