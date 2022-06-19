@@ -2,6 +2,8 @@
 
 npx hardhat help
 
+npx hardhat <task> / npx hardhat <task> --network rinkeby
+
 npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/<key>
 
 npm run test -- --network localhost
@@ -9,6 +11,10 @@ npm run test -- --network localhost
 <!-- npx hardhat run --network hardhat scripts/deploy.ts -->
 
 npx hardhat run --network localhost scripts/deploy.ts
+
+npx hardhat console --network rinkeby
+
+npx hardhat coverage
 
 ## NOTES
 

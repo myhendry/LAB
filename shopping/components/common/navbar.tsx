@@ -48,7 +48,7 @@ export const Navbar = ({ title = "Cool" }: Props) => {
   const links = unauthenticatedlinks;
 
   return (
-    <Box pb="20">
+    <Box pb="20" zIndex={100}>
       <Link href="/">
         <a>
           <Heading position={"fixed"} left={"1rem"} mt={"1rem"}>

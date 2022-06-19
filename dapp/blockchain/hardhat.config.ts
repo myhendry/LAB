@@ -5,14 +5,12 @@ import "@typechain/hardhat";
 import "@nomiclabs/hardhat-etherscan";
 import "solidity-coverage";
 import "@appliedblockchain/chainlink-plugins-fund-link";
+import "hardhat-gas-reporter";
 import { HardhatUserConfig } from "hardhat/types";
-import { task, types } from "hardhat/config";
 
-interface Etherscan {
-  etherscan: { apiKey: string | undefined };
-}
+import "./tasks";
 
-type HardhatUserEtherscanConfig = HardhatUserConfig & Etherscan;
+type HardhatUserEtherscanConfig = HardhatUserConfig;
 
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
@@ -21,39 +19,15 @@ const ACCOUNT_PRIVATE_KEY1 =
   "0xc87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"; // well known private key
 const ACCOUNT_PRIVATE_KEY2 = process.env.ACCOUNT_PRIVATE_KEY2!;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
-
-//* task
-task("accounts", "Prints the list of accounts", async (args, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(await account.address);
-  }
-});
-
-//* task, addParam, setAction
-task("balance", "Get Account Balance")
-  .addParam("account", "The account's address")
-  .setAction(async (args, hre) => {
-    const balanceInWei = (
-      await hre.ethers.provider.getBalance(args.account)
-    ).toString();
-    const balanceInEther = hre.ethers.utils.formatEther(balanceInWei);
-    console.log("balanceInEther", balanceInEther);
-  });
-
-//* task, addParam, addOptionalParam, runSuper, typings
-task("hello", "Prints a Greeting")
-  .addParam("account", "The account's balance", "", types.string)
-  .addOptionalParam("name", "The account's name")
-  .setAction(async (args, hre, runSuper) => {
-    console.log("runSuper", runSuper.isDefined);
-    console.log("args", args);
-  });
+const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
 const config: HardhatUserEtherscanConfig = {
   defaultNetwork: "hardhat",
   networks: {
+    localhost: {
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+    },
     hardhat: {
       forking: {
         url: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
@@ -85,6 +59,14 @@ const config: HardhatUserEtherscanConfig = {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
     apiKey: ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    enabled: false,
+    outputFile: "gas-report.txt",
+    noColors: true,
+    currency: "USD",
+    coinmarketcap: COINMARKETCAP_API_KEY,
+    token: "MATIC",
   },
   mocha: {
     timeout: 200000,

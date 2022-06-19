@@ -80,7 +80,7 @@ describe("Demo", () => {
       const res = await v3Factory.getLatestRoundData();
 
       const ethUsd = await v3Factory.getConversionRate(1);
-      expect(ethUsd.toNumber()).to.be.greaterThan(1000);
+      expect(ethUsd.toNumber()).to.be.greaterThan(900);
     });
 
     it("successfully fund with USD", async () => {

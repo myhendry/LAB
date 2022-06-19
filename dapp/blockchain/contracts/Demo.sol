@@ -44,6 +44,7 @@ contract Demo {
             msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
             "You need more Eth"
         );
+        return 6;
     }
 
     function testConversion() external view returns (uint256) {

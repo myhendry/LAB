@@ -4,7 +4,7 @@ import { Box, Text, Grid, GridItem, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Navbar } from "../../components/common";
+import { Header } from "../../components/common";
 import data from "../../utils/data";
 
 interface IProps {}
@@ -16,7 +16,8 @@ interface IProps {}
 const Shopping: NextPage<IProps> = () => {
   return (
     <Box h={"100vh"}>
-      <Navbar />
+      {/* <Navbar /> */}
+      <Header />
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         {data.products.map((p) => (
           <GridItem

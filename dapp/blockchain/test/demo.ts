@@ -1,6 +1,6 @@
 import { sum } from "chain-utils";
 import { ethers } from "hardhat";
-import chai from "chai";
+import chai, { assert } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { BigNumber } from "ethers";
@@ -71,6 +71,7 @@ describe("Demo", () => {
       await demo.setName("hello world");
       let name = await demo.getName();
       expect(name).to.eq("hello world");
+      assert.equal(name, "hello world");
     });
   });
 
@@ -197,7 +198,7 @@ describe("Demo", () => {
 
     it("successfully test conversion", async () => {
       const amount = await demo.testConversion();
-      expect(amount).to.be.gte(BigNumber.from("10000000000"));
+      expect(amount).to.be.gte(BigNumber.from("9000000000"));
     });
   });
 });

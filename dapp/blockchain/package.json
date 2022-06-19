@@ -29,6 +29,7 @@
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.1.4",
     "hardhat": "^2.2.1",
+    "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.16",
     "ts-generator": "^0.1.1",
     "ts-node": "^9.1.1",
