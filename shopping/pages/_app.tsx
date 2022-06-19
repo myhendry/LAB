@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
 import { SWRConfig } from "swr";
 import axios from "axios";
-import { ChakraProvider, Container } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import theme from "../styles/theme";
 import { DefaultSeoValues } from "../next-seo.config";
@@ -26,9 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <StoreProvider>
           <ChakraProvider theme={theme}>
-            <Container>
-              <Component {...pageProps} />
-            </Container>
+            <Component {...pageProps} />
           </ChakraProvider>
         </StoreProvider>
       </SWRConfig>

@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-import { ColorSchemeToggle } from "./color_scheme_toggle";
+import { ColorSchemeToggle } from "./header/color_scheme_toggle";
 // import { useAuth } from "../../context/auth-context";
 
 type Props = {

@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import React from "react";
-import { Box, Text, VStack } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Container, Heading, Text } from "@chakra-ui/react";
 
-import { Navbar } from "../components/common";
+import { Header } from "../components/common";
 
 interface IProps {}
 
@@ -17,20 +16,21 @@ const Home: NextPage<IProps> = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar title="Shopping" />
+      <Header />
+
       <Box h={"100vh"}>
-        <VStack>
-          <Link href={`/shop`}>
-            <a>
-              <Text>Shop Now</Text>
-            </a>
-          </Link>
-          <Link href={`/demo`}>
-            <a>
-              <Text>Demo</Text>
-            </a>
-          </Link>
-        </VStack>
+        <Container maxWidth={"container.xl"}>
+          <Box display={"flex"} alignItems={"center"} px="20" flexDir={"row"}>
+            <Box>
+              <Heading>Welcome</Heading>
+              <Box mt={6} mx={3} fontWeight={"medium"}>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+              </Box>
+            </Box>
+          </Box>
+        </Container>
       </Box>
     </>
   );

@@ -1,37 +1,31 @@
 import React, { useContext } from "react";
 import {
   Box,
-  Grid,
-  GridItem,
-  Text,
-  VStack,
   Table,
-  Thead,
   Tbody,
-  Tfoot,
   Tr,
-  Th,
   Td,
   TableCaption,
   TableContainer,
+  Container,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Navbar } from "../../components/common";
+import { Header } from "../../components/common";
 import { Store } from "../../utils/store";
 
 type Props = {};
 
-const Cart = (props: Props) => {
+const Cart = ({}: Props) => {
   const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
   console.log("ci", cartItems);
   return (
-    <Box h={"100vh"}>
-      <Navbar />
+    <Container h={"100vh"} maxW={"container.xl"}>
+      <Header />
       {cartItems.length === 0 ? (
         <Box>
           Cart is Empty.{" "}
@@ -65,7 +59,7 @@ const Cart = (props: Props) => {
           </TableContainer>
         </Box>
       )}
-    </Box>
+    </Container>
   );
 };
 

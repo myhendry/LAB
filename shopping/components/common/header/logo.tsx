@@ -1,16 +1,26 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
+import Link from "next/link";
 
 type Props = {
   [key: string]: any;
 };
 
 const Logo = (props: Props) => {
+  const color = useColorModeValue("gray.800", "white");
+
   return (
     <Box {...props}>
-      <Text fontSize={"lg"} fontWeight={"bold"}>
-        Logo
-      </Text>
+      <Link href={"/"} passHref>
+        <Text
+          fontSize={"2xl"}
+          fontWeight={"bold"}
+          color={color}
+          cursor="pointer"
+        >
+          Logo
+        </Text>
+      </Link>
     </Box>
   );
 };

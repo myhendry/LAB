@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Badge, Box, Button, Center, Text, VStack } from "@chakra-ui/react";
 
-import { Navbar } from "../../components/common";
+import { Header } from "../../components/common";
 import data from "../../utils/data";
 import { Store } from "../../utils/store";
 import Link from "next/link";
@@ -35,7 +35,7 @@ const ProductDetails: NextPage<Props> = ({}: Props) => {
 
   return (
     <Box h={"100vh"}>
-      <Navbar />
+      <Header />
       <VStack>
         <Text>{product?.name}</Text>
         {product ? (

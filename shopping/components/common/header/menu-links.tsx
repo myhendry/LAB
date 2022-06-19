@@ -20,7 +20,7 @@ const MenuLinks = ({ isOpen }: Props) => {
         direction={["column", "row", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
-        <MenuItem to="/">Home</MenuItem>
+        <MenuItem to="/shop">Shop</MenuItem>
         <MenuItem to="/demo">Demo</MenuItem>
       </Stack>
     </Box>

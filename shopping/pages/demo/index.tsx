@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 import { Header } from "../../components/common";
 
@@ -9,8 +9,17 @@ const Demo = ({}: Props) => {
   return (
     <>
       <Header />
+
       <Box h={"100vh"}>
-        <Text>Hello</Text>
+        <Container maxWidth={"container.xl"}>
+          <Box display={"flex"} alignItems={"center"} px="20" flexDir={"row"}>
+            <Box>
+              <Text>Hello</Text>
+              <Text>Hello</Text>
+              <Text>Hello</Text>
+            </Box>
+          </Box>
+        </Container>
       </Box>
     </>
   );

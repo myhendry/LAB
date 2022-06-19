@@ -1,6 +1,7 @@
 import React from "react";
-import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { HStack, useColorModeValue } from "@chakra-ui/react";
+import { ColorSchemeToggle } from "./color_scheme_toggle";
 
 type Props = {
   toggle: () => void;
@@ -8,10 +9,17 @@ type Props = {
 };
 
 const MenuToggle = ({ toggle, isOpen }: Props) => {
+  const color = useColorModeValue("gray.800", "white");
+
   return (
-    <Box display={{ base: "block", md: "none" }} onClick={toggle}>
-      {isOpen ? <CloseIcon /> : <MinusIcon />}
-    </Box>
+    <HStack
+      display={{ base: "block", md: "none" }}
+      onClick={toggle}
+      cursor="pointer"
+    >
+      <ColorSchemeToggle />
+      {isOpen ? <CloseIcon color={color} /> : <HamburgerIcon color={color} />}
+    </HStack>
   );
 };
 
