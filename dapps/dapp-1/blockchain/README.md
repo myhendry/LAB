@@ -1,5 +1,6 @@
 ## TODO
 
+```
 npx hardhat help
 
 npx hardhat <task> / npx hardhat <task> --network rinkeby
@@ -15,6 +16,15 @@ npx hardhat run --network localhost scripts/deploy.ts
 npx hardhat console --network rinkeby
 
 npx hardhat coverage
+
+'npx solhint contracts/*.sol'
+
+npx hardhat compile
+
+npx hardhat deploy --tags mocks
+
+npx hardhat deploy
+```
 
 ## NOTES
 
