@@ -10,16 +10,6 @@ import "hardhat-deploy";
 
 dotenv.config();
 
-// interface NetworkConfig extends NetworksUserConfig {
-//   networks: {
-//     ropsten: {
-//       blockConfirmations?: number;
-//     };
-//   };
-// }
-
-//type HardhatUserCustomConfig = HardhatUserConfig & NetworkConfig;
-
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -30,31 +20,34 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
+// https://stackoverflow.com/questions/53636756/typescript-interface-extending-another-interface-with-nested-properties
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [{ version: "0.8.8" }, { version: "0.6.6" }],
   },
   defaultNetwork: "hardhat",
   networks: {
-    // ropsten: {
-    //   url: process.env.ROPSTEN_URL || "",
-    //   accounts:
-    //     process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    //   chainId: 42,
-    // },
+    localhost: {
+      url: "http://127.0.0.1:8545",
+      chainId: 31337,
+    },
     rinkeby: {
       url: process.env.RINKEBY_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts: [
+        process.env.ACCOUNT_PRIVATE_KEY1!,
+        process.env.ACCOUNT_PRIVATE_KEY2!,
+      ],
       chainId: 4,
     },
   },
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
+      4: 0,
+    },
+    user1: {
+      default: 1,
+      4: 1,
     },
   },
   gasReporter: {
@@ -63,6 +56,7 @@ const config: HardhatUserConfig = {
     outputFile: "gas-report.txt",
     noColors: true,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
+    // token: 'MATIC'
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,

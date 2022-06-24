@@ -1,11 +1,36 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.8;
 
+/* 
+Style Guide
+1. Pragma Statements
+2. Import Statements
+Errors
+3. Interfaces
+4. Libraries
+5. Contracts
+
+Inside each contract, library or interface, use the following order:
+1. Type Declarations
+2. State Variables
+3. Events
+4. Modifiers
+5. Functions
+
+*/
+
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 
 error NotOwner();
 
+// natspec format
+/** @title FundMe
+*   @author H Lim
+*   @notice This contract is to demo a sample funding contract
+*   @dev This implements price feeds as our library
+*/
+// solc --userdoc --devdoc ex1.sol
 contract FundMe {
     using PriceConverter for uint256;
 
