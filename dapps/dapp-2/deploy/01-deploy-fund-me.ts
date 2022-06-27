@@ -33,7 +33,7 @@ const func: DeployFunction = async ({
     from: deployer,
     args,
     log: true,
-    waitConfirmations: 6,
+    waitConfirmations: 1,
   });
   log(`Fund deployed at ${fundMe.address}`);
 
