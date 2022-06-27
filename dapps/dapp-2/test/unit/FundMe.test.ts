@@ -1,5 +1,5 @@
 import { deployments, ethers, getNamedAccounts } from "hardhat";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 import { FundMe } from "./../../typechain/FundMe.d";
@@ -11,6 +11,7 @@ describe("FundMe", function () {
   let mockV3Aggregator: MockV3Aggregator;
   let deployer: SignerWithAddress;
   let user1: SignerWithAddress;
+  const sendValue = ethers.utils.parseEther("1");
 
   beforeEach(async () => {
     const accounts: SignerWithAddress[] = await ethers.getSigners();
@@ -20,27 +21,63 @@ describe("FundMe", function () {
     mockV3Aggregator = await ethers.getContract("MockV3Aggregator", deployer);
   });
 
-  describe("constructor", async () => {
-    it("sets the aggregator addresses correctly", async () => {
+  describe("Constructor", async () => {
+    it("Sets the aggregator addresses correctly", async () => {
       const res = await fundMe.getPriceFeed();
       assert.equal(res, mockV3Aggregator.address);
     });
   });
+
+  describe("Fund", async () => {
+    it("Fails if you don't send enough ETH", async () => {
+      await expect(fundMe.fund()).to.be.revertedWith(
+        "You need to spend more ETH!"
+      );
+    });
+
+    it("Updates the amount funded data structure", async () => {
+      await fundMe.fund({ value: sendValue });
+      const response = await fundMe.getAddressToAmountFunded(deployer.address);
+      assert.equal(response.toString(), sendValue.toString());
+    });
+
+    it("Adds funder to array of funders", async () => {
+      await fundMe.fund({ value: sendValue });
+      const response = await fundMe.getFunder(0);
+      assert.equal(response, deployer.address);
+    });
+  });
+
+  describe("Withdraw", async () => {
+    beforeEach(async () => {
+      await fundMe.fund({ value: sendValue });
+    });
+
+    it("Withdraws ETH from a single funder", async () => {
+      const startingFundBalance = await fundMe.provider.getBalance(
+        fundMe.address
+      );
+      const startingDeployerBalance = await fundMe.provider.getBalance(
+        deployer.address
+      );
+
+      const txResponse = await fundMe.withdraw();
+      const txReceipt = await txResponse.wait();
+      const { gasUsed, effectiveGasPrice } = txReceipt;
+      const gasCost = gasUsed.mul(effectiveGasPrice);
+
+      const endingFundBalance = await fundMe.provider.getBalance(
+        fundMe.address
+      );
+      const endingDeployerBalance = await fundMe.provider.getBalance(
+        deployer.address
+      );
+
+      assert.equal(endingFundBalance.toNumber(), 0);
+      assert.equal(
+        startingFundBalance.add(startingDeployerBalance).toString(),
+        endingDeployerBalance.add(gasCost).toString()
+      );
+    });
+  });
 });
-
-// describe("Greeter", function () {
-//   it("Should return the new greeting once it's changed", async function () {
-//     const Greeter = await ethers.getContractFactory("Greeter");
-//     const greeter = await Greeter.deploy("Hello, world!");
-//     await greeter.deployed();
-
-//     expect(await greeter.greet()).to.equal("Hello, world!");
-
-//     const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
-
-//     // wait until the transaction is mined
-//     await setGreetingTx.wait();
-
-//     expect(await greeter.greet()).to.equal("Hola, mundo!");
-//   });
-// });

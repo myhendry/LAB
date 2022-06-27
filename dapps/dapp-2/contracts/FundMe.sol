@@ -19,6 +19,7 @@ Inside each contract, library or interface, use the following order:
 
 */
 
+import "hardhat/console.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 
@@ -39,8 +40,8 @@ contract FundMe {
     // Could we make this constant?  /* hint: no! We should make it immutable! */
     address private immutable i_owner;
     uint256 public constant MINIMUM_USD = 50 * 10**18;
-    address[] private s_funders;
-    mapping(address => uint256) private addressToAmountFunded;
+    address[] public s_funders;
+    mapping(address => uint256) private s_addressToAmountFunded;
     AggregatorV3Interface private s_priceFeed;
 
     // Events
@@ -72,7 +73,7 @@ contract FundMe {
             "You need to spend more ETH!"
         );
         // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
-        addressToAmountFunded[msg.sender] += msg.value;
+        s_addressToAmountFunded[msg.sender] += msg.value;
         s_funders.push(msg.sender);
     }
 
@@ -83,7 +84,7 @@ contract FundMe {
             funderIndex++
         ) {
             address funder = s_funders[funderIndex];
-            addressToAmountFunded[funder] = 0;
+            s_addressToAmountFunded[funder] = 0;
         }
         s_funders = new address[](0);
         // // transfer
@@ -116,6 +117,18 @@ contract FundMe {
 
     receive() external payable {
         fund();
+    }
+
+    /** @notice Gets the amount that an address has funded
+     *  @param fundingAddress the address of the funder
+     *  @return the amount funded
+     */
+    function getAddressToAmountFunded(address fundingAddress)
+        public
+        view
+        returns (uint256)
+    {
+        return s_addressToAmountFunded[fundingAddress];
     }
 
     function getVersion() public view returns (uint256) {
