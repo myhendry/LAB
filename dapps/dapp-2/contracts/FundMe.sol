@@ -40,7 +40,7 @@ contract FundMe {
     // Could we make this constant?  /* hint: no! We should make it immutable! */
     address private immutable i_owner;
     uint256 public constant MINIMUM_USD = 50 * 10**18;
-    address[] public s_funders;
+    address[] private s_funders;
     mapping(address => uint256) private s_addressToAmountFunded;
     AggregatorV3Interface private s_priceFeed;
 
@@ -68,6 +68,7 @@ contract FundMe {
     }
 
     function fund() public payable {
+        //todo can be refactor to revert which will consume less gas
         require(
             msg.value.getConversionRate(s_priceFeed) >= MINIMUM_USD,
             "You need to spend more ETH!"

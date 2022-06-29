@@ -1,5 +1,13 @@
 {
   "name": "hardhat-project",
+  "scripts": {
+    "test": "hardhat test",
+    "test:staging": "hardhat test --network rinkeby",
+    "lint": "solhint 'contracts/*.sol'",
+    "lint:fix": "solhint 'contracts/**/*.sol' --fix",
+    "format": "prettier --write .",
+    "coverage": "hardhat coverage"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",

@@ -1,5 +1,10 @@
 https://youtu.be/gyMwXuJrbJQ
-12:05
+12:32
+
+```
+npx hardhat run scripts/fund.ts --network localhost
+
+```
 
 # Advanced Sample Hardhat Project
 
