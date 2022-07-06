@@ -23,7 +23,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // https://stackoverflow.com/questions/53636756/typescript-interface-extending-another-interface-with-nested-properties
 const config: HardhatUserConfig = {
   solidity: {
-    compilers: [{ version: "0.8.8" }, { version: "0.6.6" }],
+    compilers: [
+      { version: "0.8.8" },
+      { version: "0.8.7" },
+      { version: "0.6.6" },
+    ],
   },
   defaultNetwork: "hardhat",
   networks: {
