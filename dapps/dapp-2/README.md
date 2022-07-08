@@ -1,5 +1,5 @@
 https://youtu.be/gyMwXuJrbJQ
-14:22
+14:29
 
 ```
 npx hardhat run scripts/fund.ts --network localhost
