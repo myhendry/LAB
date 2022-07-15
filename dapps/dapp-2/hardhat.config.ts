@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 
-import { HardhatUserConfig, task } from "hardhat/config";
+import { task } from "hardhat/config";
+import { HardhatUserConfig } from "hardhat/types";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
@@ -32,7 +33,10 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     localhost: {
-      url: "http://127.0.0.1:8545",
+      // url: "http://127.0.0.1:8545",
+      chainId: 31337,
+    },
+    hardhat: {
       chainId: 31337,
     },
     rinkeby: {

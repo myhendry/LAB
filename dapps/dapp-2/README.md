@@ -1,6 +1,6 @@
 https://youtu.be/gyMwXuJrbJQ
-Lecture: 14:56
-Practise: 14:29
+Lecture: 15:18
+Practise: 15:18
 
 ```
 npx hardhat run scripts/fund.ts --network localhost
