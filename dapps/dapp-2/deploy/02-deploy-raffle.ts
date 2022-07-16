@@ -1,3 +1,4 @@
+import { verify } from "./../utils/verify";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { ethers, network } from "hardhat";
@@ -53,6 +54,16 @@ const func: DeployFunction = async ({
   });
 
   log(`Raffle deployed at ${raffle.address}`);
+
+  if (
+    !developmentChains.includes(network.name) &&
+    process.env.ETHERSCAN_API_KEY
+  ) {
+    log("Verifying...");
+    await verify(raffle.address, args);
+  }
+
+  log("Verify Completed!!");
 };
 
 func.tags = ["all", "raffle"];

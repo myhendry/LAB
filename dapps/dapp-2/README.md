@@ -1,10 +1,16 @@
 https://youtu.be/gyMwXuJrbJQ
-Lecture: 15:18
-Practise: 15:18
+Lecture: 15:30
+Practise: 15:30
 
 ```
 npx hardhat run scripts/fund.ts --network localhost
 
+```
+
+# Write Only One Test
+
+```
+npx hardhat test --network localhost --grep 'enterRaffle'
 ```
 
 # Advanced Sample Hardhat Project
