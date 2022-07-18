@@ -7,6 +7,7 @@ import { Raffle } from "./../../typechain/Raffle.d";
 import { VRFConsumerBaseV2 } from "./../../typechain/VRFConsumerBaseV2.d";
 import { MockV3Aggregator } from "./../../typechain/MockV3Aggregator.d";
 import { developmentChains, networkConfig } from "../../helper-hardhat-config";
+import { BigNumber } from "ethers";
 
 !developmentChains.includes(network.name)
   ? describe.skip
@@ -14,6 +15,7 @@ import { developmentChains, networkConfig } from "../../helper-hardhat-config";
       let raffle: Raffle;
       let mockV3Aggregator: MockV3Aggregator;
       let vrfCoordinatorV2Mock: VRFConsumerBaseV2;
+      let interval: BigNumber;
       let raffleEntranceFee: any;
       let deployer: SignerWithAddress;
       let user1: SignerWithAddress;
@@ -32,6 +34,7 @@ import { developmentChains, networkConfig } from "../../helper-hardhat-config";
         );
 
         raffleEntranceFee = await raffle.getEntranceFee();
+        interval = await raffle.getInterval();
       });
 
       describe("Raffle Constructor", async () => {
@@ -40,7 +43,6 @@ import { developmentChains, networkConfig } from "../../helper-hardhat-config";
           const raffleState = await raffle.getRaffleState();
           assert.equal(raffleState.toString(), "0");
 
-          const interval = await raffle.getInterval();
           assert.equal(
             interval.toString(),
             networkConfig[chainId]["keepersUpdateInterval"]
@@ -69,6 +71,33 @@ import { developmentChains, networkConfig } from "../../helper-hardhat-config";
           await raffle.enterRaffle({ value: raffleEntranceFee });
           const playerFromContract = await raffle.getPlayer(0);
           assert.equal(playerFromContract, deployer.address);
+        });
+
+        it("Emits Event on Enter", async () => {
+          await expect(
+            raffle.enterRaffle({ value: raffleEntranceFee })
+          ).to.emit(raffle, "RaffleEnter");
+        });
+
+        it("Does not allow entrance when raffle is calculating", async () => {
+          await raffle.enterRaffle({ value: raffleEntranceFee });
+
+          //! Time Machine Travel
+          await network.provider.send("evm_increaseTime", [
+            interval.toNumber() + 1,
+          ]);
+
+          await network.provider.send("evm_mine", []);
+          //* Same thing as evm_mine above
+          // await network.provider.request({ method: "evm_mine", params: [] });
+
+          // We pretend to be a Chainlink Keeper since we fulill above
+          // pass an [] as empty callData
+          await raffle.performUpkeep([]);
+
+          await expect(
+            raffle.enterRaffle({ value: raffleEntranceFee })
+          ).to.be.revertedWith("Raffle__NotOpen");
         });
       });
 

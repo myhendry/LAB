@@ -1,10 +1,20 @@
 https://youtu.be/gyMwXuJrbJQ
-Lecture: 15:30
-Practise: 15:30
+Lecture: 16:07
+Practise: 15:37
 
 ```
 npx hardhat run scripts/fund.ts --network localhost
 
+```
+
+# Coverage
+
+```
+npx hardhat coverage
+
+- or -
+
+hh coverage
 ```
 
 # Write Only One Test
